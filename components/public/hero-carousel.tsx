@@ -70,7 +70,9 @@ export function HeroCarousel({ images }: { images: { url: string; alt: string }[
                 onClick={() => emblaApi?.scrollTo(i)}
                 className={cn(
                   "size-1.5 rounded-full transition-colors",
-                  i === selectedIndex ? "bg-primary" : "bg-foreground/40"
+                  i === selectedIndex
+                    ? "bg-primary"
+                    : "bg-foreground/40 hover:bg-foreground/70"
                 )}
               />
             ))}

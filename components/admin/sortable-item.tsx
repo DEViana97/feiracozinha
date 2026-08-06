@@ -31,7 +31,7 @@ export function SortableItem({
         type="button"
         {...attributes}
         {...listeners}
-        className="cursor-grab touch-none px-2 py-3 text-muted-foreground active:cursor-grabbing"
+        className="cursor-grab touch-none px-2 py-3 text-muted-foreground transition-colors hover:text-foreground active:cursor-grabbing"
         aria-label="Reordenar"
       >
         <GripVertical className="size-4" />

@@ -20,7 +20,7 @@ export function BackToTopButton() {
       aria-label="Voltar ao topo"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={cn(
-        "fixed bottom-5 right-5 z-40 flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all",
+        "fixed bottom-5 right-5 z-40 flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all hover:bg-primary/80",
         visible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-2"
       )}
     >

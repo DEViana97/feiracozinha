@@ -215,10 +215,10 @@ export function TagManager({ tags }: { tags: Tag[] }) {
                             key={iconName}
                             type="button"
                             onClick={() => field.onChange(iconName)}
-                            className={`flex size-9 items-center justify-center rounded-md border ${
+                            className={`flex size-9 items-center justify-center rounded-md border transition-colors ${
                               selected
                                 ? "border-primary bg-primary text-primary-foreground"
-                                : "border-border text-muted-foreground"
+                                : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
                             }`}
                           >
                             <Icon className="size-4" />
