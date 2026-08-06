@@ -21,6 +21,12 @@ export function ImageUploadField({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    if (file.size > 8 * 1024 * 1024) {
+      toast.error("Imagem muito grande. Envie um arquivo de até 8MB.");
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
 
