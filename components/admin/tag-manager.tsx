@@ -187,7 +187,9 @@ export function TagManager({ tags }: { tags: Tag[] }) {
                     <Select value={field.value} onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger className="w-full">
-                          <SelectValue />
+                          <SelectValue>
+                            {(value: string) => TYPE_LABELS[value] ?? value}
+                          </SelectValue>
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

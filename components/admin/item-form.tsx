@@ -155,7 +155,9 @@ export function ItemForm({
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Selecione" />
+                      <SelectValue placeholder="Selecione">
+                        {(value: string) => categories.find((c) => c.id === value)?.name}
+                      </SelectValue>
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -185,7 +187,13 @@ export function ItemForm({
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Nenhuma" />
+                      <SelectValue placeholder="Nenhuma">
+                        {(value: string) =>
+                          value === "__none__"
+                            ? "Nenhuma"
+                            : selectedCategory.subcategories.find((s) => s.id === value)?.name
+                        }
+                      </SelectValue>
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>

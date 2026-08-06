@@ -106,7 +106,13 @@ export function ItemList({
             onValueChange={(v) => setCategoryFilter(v ?? ALL_CATEGORIES)}
           >
             <SelectTrigger className="w-48">
-              <SelectValue />
+              <SelectValue>
+                {(value: string) =>
+                  value === ALL_CATEGORIES
+                    ? "Todas categorias"
+                    : categories.find((c) => c.id === value)?.name
+                }
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value={ALL_CATEGORIES}>Todas categorias</SelectItem>
