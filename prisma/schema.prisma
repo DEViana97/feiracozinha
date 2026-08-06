@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Auth (admin) ----------
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  passwordHash  String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ---------- Cardápio ----------
+
+model Category {
+  id            String        @id @default(cuid())
+  name          String
+  slug          String        @unique
+  coverImageUrl String?
+  order         Int           @default(0)
+  active        Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  subcategories Subcategory[]
+  menuItems     MenuItem[]
+
+  @@index([order])
+}
+
+model Subcategory {
+  id         String     @id @default(cuid())
+  categoryId String
+  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name       String
+  order      Int        @default(0)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  menuItems  MenuItem[]
+
+  @@index([categoryId, order])
+}
+
+model MenuItem {
+  id            String        @id @default(cuid())
+  categoryId    String
+  category      Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  subcategoryId String?
+  subcategory   Subcategory?  @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+
+  name          String
+  slug          String        @unique
+  description   String
+  basePrice     Decimal       @db.Decimal(10, 2)
+  imageUrl      String?
+  order         Int           @default(0)
+  featured      Boolean       @default(false)
+  active        Boolean       @default(true)
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  variants      ItemVariant[]
+  tags          MenuItemTag[]
+
+  @@index([categoryId, order])
+  @@index([subcategoryId, order])
+}
+
+model ItemVariant {
+  id          String   @id @default(cuid())
+  menuItemId  String
+  menuItem    MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  imageUrl    String?
+  order       Int      @default(0)
+
+  @@index([menuItemId, order])
+}
+
+enum TagType {
+  ALERGENICO
+  DIETA
+  INTENSIDADE
+}
+
+model Tag {
+  id    String        @id @default(cuid())
+  name  String        @unique
+  icon  String
+  type  TagType
+
+  items MenuItemTag[]
+}
+
+model MenuItemTag {
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  tagId      String
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([menuItemId, tagId])
+}
+
+model RestaurantInfo {
+  id          String  @id @default(cuid())
+  name        String  @default("Feira, Cozinha e Mesa")
+  tagline     String  @default("Da nossa terra para o centro da sua mesa")
+  address     String?
+  phone       String?
+  email       String?
+  instagram   String?
+  drawerText  String?
+}
