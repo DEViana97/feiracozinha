@@ -43,7 +43,7 @@ export function IdentityCarousel({ slides }: { slides: IdentitySlideData[] }) {
 
       <div className="overflow-hidden px-5" ref={emblaRef}>
         <div className="flex gap-3.5">
-          {slides.map((slide) => (
+          {slides.map((slide, i) => (
             <div key={slide.id} className="flex-[0_0_85%]">
               <div className="relative h-[210px] w-full overflow-hidden rounded-[10px] bg-taupe/20">
                 {failedSlides[slide.id] ? (
@@ -56,6 +56,7 @@ export function IdentityCarousel({ slides }: { slides: IdentitySlideData[] }) {
                     src={slide.imageUrl}
                     alt={slide.caption}
                     fill
+                    priority={i === 0}
                     className="object-cover"
                     sizes="85vw"
                     onError={() =>
