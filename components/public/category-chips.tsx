@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type CategoryChip = {
   key: string;
@@ -28,6 +28,27 @@ export function CategoryChips({
   onFontScaleChange,
 }: CategoryChipsProps) {
   const [a11yOpen, setA11yOpen] = useState(false);
+  const a11yRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!a11yOpen) return;
+
+    function handlePointerDown(e: PointerEvent) {
+      if (a11yRef.current && !a11yRef.current.contains(e.target as Node)) {
+        setA11yOpen(false);
+      }
+    }
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setA11yOpen(false);
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [a11yOpen]);
 
   return (
     <div className="flex items-center gap-2 py-4 pl-5 pr-[18px]">
@@ -51,7 +72,7 @@ export function CategoryChips({
         })}
       </div>
 
-      <div className="relative flex-shrink-0">
+      <div className="relative flex-shrink-0" ref={a11yRef}>
         <button
           onClick={() => setA11yOpen((v) => !v)}
           aria-label="Acessibilidade: ajustar tamanho da fonte"
