@@ -52,7 +52,7 @@ export function MenuFooter() {
           </a>
         </div>
 
-        <p className="mt-5 text-[10.5px] uppercase tracking-[1.5px] text-[#B99C82]">
+        <p className="mt-5 text-[10.5px] uppercase tracking-[1.5px] text-[#D9C3AB]">
           Da nossa terra para o centro da sua mesa.
         </p>
       </div>
