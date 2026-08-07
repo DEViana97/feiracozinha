@@ -1,3 +1,5 @@
+// Gestão de tags temporariamente desativada — ver nota em AGENTS.md.
+/*
 import { z } from "zod";
 
 export const tagSchema = z.object({
@@ -6,3 +8,5 @@ export const tagSchema = z.object({
   type: z.enum(["ALERGENICO", "DIETA", "INTENSIDADE"]),
 });
 export type TagInput = z.infer<typeof tagSchema>;
+
+*/

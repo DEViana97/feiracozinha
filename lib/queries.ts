@@ -90,9 +90,10 @@ export async function getCategoriesForSelect() {
   });
 }
 
-export async function getAllTags() {
-  return prisma.tag.findMany({ orderBy: { name: "asc" } });
-}
+// Tags temporariamente desativado — ver nota em AGENTS.md.
+// export async function getAllTags() {
+//   return prisma.tag.findMany({ orderBy: { name: "asc" } });
+// }
 
 export async function getAllMenuItemsForAdmin() {
   return prisma.menuItem.findMany({

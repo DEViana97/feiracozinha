@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { signOutAction } from "@/lib/actions/auth-signout";
-import { LayoutDashboard, FolderTree, UtensilsCrossed, Tags, Settings, Images, LogOut } from "lucide-react";
+import { LayoutDashboard, FolderTree, UtensilsCrossed, /* Tags, */ Settings, Images, LogOut } from "lucide-react";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/categories", label: "Categorias", icon: FolderTree },
   { href: "/admin/items", label: "Itens", icon: UtensilsCrossed },
-  { href: "/admin/tags", label: "Tags", icon: Tags },
+  // Tags temporariamente desativado — ver nota em AGENTS.md
+  // { href: "/admin/tags", label: "Tags", icon: Tags },
   { href: "/admin/carousel", label: "Carrossel", icon: Images },
   { href: "/admin/settings", label: "Restaurante", icon: Settings },
 ];

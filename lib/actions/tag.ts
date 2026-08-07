@@ -1,3 +1,5 @@
+// Gestão de tags temporariamente desativada — ver nota em AGENTS.md.
+/*
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -26,3 +28,5 @@ export async function deleteTag(id: string) {
   revalidatePath("/admin/tags");
   revalidatePath("/admin/items");
 }
+
+*/

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import {
   getCategoriesForSelect,
-  getAllTags,
+  // getAllTags, // Tags temporariamente desativado — ver nota em AGENTS.md.
   getMenuItemForEdit,
 } from "@/lib/queries";
 import { ItemForm } from "@/components/admin/item-form";
@@ -15,9 +15,8 @@ export default async function EditItemPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const [categories, tags, item] = await Promise.all([
+  const [categories, item] = await Promise.all([
     getCategoriesForSelect(),
-    getAllTags(),
     getMenuItemForEdit(id),
   ]);
 
@@ -32,6 +31,8 @@ export default async function EditItemPage({
     imageUrl: item.imageUrl,
     featured: item.featured,
     active: item.active,
+    // Mantém as tags já associadas ao item (sem UI pra editar enquanto
+    // a tela de tags estiver desativada — ver nota em AGENTS.md).
     tagIds: item.tags.map((t) => t.tagId),
     variants: item.variants.map((v) => ({
       id: v.id,
@@ -47,7 +48,7 @@ export default async function EditItemPage({
       <div>
         <h1 className="font-serif text-2xl">Editar item</h1>
       </div>
-      <ItemForm categories={categories} tags={tags} defaultValues={defaultValues} itemId={item.id} />
+      <ItemForm categories={categories} defaultValues={defaultValues} itemId={item.id} />
     </div>
   );
 }

@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getItemBySlug } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
-import { getTagIcon } from "@/lib/tag-icons";
+// Tags temporariamente desativado — ver nota em AGENTS.md.
+// import { getTagIcon } from "@/lib/tag-icons";
 import { FontSizeToggle } from "@/components/public/font-size-toggle";
 import { ShareButton } from "@/components/public/share-button";
 
@@ -60,6 +61,7 @@ export default async function ItemDetailPage({
             : formatPrice(item.basePrice)}
         </p>
 
+        {/* Tags temporariamente desativado — ver nota em AGENTS.md.
         {item.tags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-3">
             {item.tags.map(({ tag }) => {
@@ -76,6 +78,7 @@ export default async function ItemDetailPage({
             })}
           </div>
         )}
+        */}
 
         <p className="mt-4 leading-relaxed text-muted-foreground">
           {item.description}

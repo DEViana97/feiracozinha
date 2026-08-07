@@ -26,8 +26,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
-import { getTagIcon } from "@/lib/tag-icons";
-import { cn } from "@/lib/utils";
+// Tags temporariamente desativado — ver nota em AGENTS.md.
+// import { getTagIcon } from "@/lib/tag-icons";
+// import { cn } from "@/lib/utils";
 import { menuItemSchema, type MenuItemInput } from "@/lib/validations/item";
 import { createMenuItem, updateMenuItem } from "@/lib/actions/item";
 
@@ -36,16 +37,17 @@ type CategoryOption = {
   name: string;
   subcategories: { id: string; name: string }[];
 };
+// Tags temporariamente desativado — ver nota em AGENTS.md.
 type TagOption = { id: string; name: string; icon: string };
 
 export function ItemForm({
   categories,
-  tags,
+  // tags,
   defaultValues,
   itemId,
 }: {
   categories: CategoryOption[];
-  tags: TagOption[];
+  tags?: TagOption[];
   defaultValues?: MenuItemInput;
   itemId?: string;
 }) {
@@ -75,7 +77,7 @@ export function ItemForm({
 
   const categoryId = form.watch("categoryId");
   const selectedCategory = categories.find((c) => c.id === categoryId);
-  const tagIds = form.watch("tagIds");
+  // const tagIds = form.watch("tagIds"); // Tags temporariamente desativado — ver nota em AGENTS.md.
 
   function onSubmit(values: MenuItemInput) {
     startTransition(async () => {
@@ -225,6 +227,7 @@ export function ItemForm({
           )}
         />
 
+        {/* Tags temporariamente desativado — ver nota em AGENTS.md.
         <FormItem>
           <FormLabel>Tags</FormLabel>
           <div className="flex flex-wrap gap-2">
@@ -260,6 +263,7 @@ export function ItemForm({
             )}
           </div>
         </FormItem>
+        */}
 
         <div className="grid grid-cols-2 gap-4">
           <FormField

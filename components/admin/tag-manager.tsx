@@ -1,3 +1,6 @@
+// Gestão de tags temporariamente desativada — ver nota em AGENTS.md.
+// Componente inteiro comentado abaixo pra reativar facilmente depois.
+/*
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
@@ -259,3 +262,5 @@ export function TagManager({ tags }: { tags: Tag[] }) {
     </div>
   );
 }
+
+*/
