@@ -1,10 +1,3 @@
-import { SiteHeader } from "@/components/public/site-header";
-
 export default function CardapioLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <SiteHeader />
-      <main className="flex-1">{children}</main>
-    </div>
-  );
+  return <>{children}</>;
 }
