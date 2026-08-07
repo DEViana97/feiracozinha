@@ -69,9 +69,9 @@ export default async function CardapioPage() {
         <FontZoomProvider>
           <MenuHeader />
 
-          <section className="relative overflow-hidden bg-espresso px-6 pb-[30px] pt-9">
+          <section className="relative overflow-hidden px-6 pb-[30px] pt-9">
             <div
-              className="absolute inset-0 opacity-30"
+              className="absolute inset-0 opacity-[0.22]"
               style={{
                 backgroundImage: "url('/images/cobogo.png')",
                 backgroundSize: "220px",
@@ -79,10 +79,10 @@ export default async function CardapioPage() {
               }}
             />
             <div className="relative">
-              <h1 className="m-0 font-serif text-[30px] font-medium leading-tight text-floral-white">
+              <h1 className="m-0 font-serif text-[30px] font-medium leading-tight text-espresso">
                 Cozinha, mesa e território cearense.
               </h1>
-              <p className="mt-3 font-serif text-[15px] italic text-[#F1DFC9]">
+              <p className="mt-3 font-serif text-[15px] italic text-dark-wine">
                 A origem do Ceará no centro da mesa.
               </p>
             </div>
