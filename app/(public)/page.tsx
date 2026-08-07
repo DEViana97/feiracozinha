@@ -1,38 +1,23 @@
-import { getCategoriesWithItems, getRestaurantInfo } from "@/lib/queries";
-import { serializeCategories } from "@/lib/types";
-import { HeroCarousel } from "@/components/public/hero-carousel";
-import { HeroTitle } from "@/components/public/hero-title";
-import { MenuBrowser } from "@/components/public/menu-browser";
-import { WineSection } from "@/components/public/wine-section";
-import { BackToTopButton } from "@/components/public/back-to-top-button";
+import type { Metadata } from "next";
+import { LinktreeHero } from "@/components/public/linktree/hero";
+import { LinktreeLinkList } from "@/components/public/linktree/link-list";
+import { LinktreeCategoryPreview } from "@/components/public/linktree/category-preview";
+import { LinktreeFooter } from "@/components/public/linktree/footer";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const metadata: Metadata = {
+  title: "Feira — Cozinha e Mesa",
+  description: "A origem do Ceará no centro da mesa.",
+};
 
-export default async function HomePage() {
-  const [rawCategories, info] = await Promise.all([
-    getCategoriesWithItems(),
-    getRestaurantInfo(),
-  ]);
-
-  const categories = serializeCategories(rawCategories);
-  const wineCategory = categories.find((c) => c.slug === "da-adega");
-  const menuCategories = categories.filter((c) => c.slug !== "da-adega");
-
-  const heroImages = categories
-    .filter((c) => c.coverImageUrl)
-    .slice(0, 5)
-    .map((c) => ({ url: c.coverImageUrl as string, alt: c.name }));
-
+export default function LinktreePage() {
   return (
-    <div>
-      <HeroCarousel images={heroImages} />
-      <HeroTitle name={info.name} tagline={info.tagline} />
-      <MenuBrowser categories={menuCategories} />
-      {wineCategory && wineCategory.menuItems.length > 0 && (
-        <WineSection category={wineCategory} />
-      )}
-      <BackToTopButton />
+    <div className="flex min-h-screen justify-center bg-[#EDE4D6] font-sans">
+      <div className="relative min-h-screen w-full max-w-[420px] bg-floral-white shadow-[0_0_40px_rgba(0,0,0,0.08)]">
+        <LinktreeHero />
+        <LinktreeLinkList />
+        <LinktreeCategoryPreview />
+        <LinktreeFooter />
+      </div>
     </div>
   );
 }

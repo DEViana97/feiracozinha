@@ -53,7 +53,7 @@ export async function createMenuItem(input: MenuItemInput) {
     },
   });
 
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/items");
 }
 
@@ -92,19 +92,19 @@ export async function updateMenuItem(id: string, input: MenuItemInput) {
     }),
   ]);
 
-  revalidatePath("/");
-  revalidatePath(`/item/${slug}`);
+  revalidatePath("/cardapio");
+  revalidatePath(`/cardapio/${slug}`);
   revalidatePath("/admin/items");
 }
 
 export async function deleteMenuItem(id: string) {
   await prisma.menuItem.delete({ where: { id } });
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/items");
 }
 
 export async function toggleMenuItemActive(id: string, active: boolean) {
   await prisma.menuItem.update({ where: { id }, data: { active } });
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/items");
 }

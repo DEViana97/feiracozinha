@@ -27,7 +27,7 @@ export default async function ItemDetailPage({
     <div className="pb-12">
       <div className="flex items-center justify-between px-4 py-3">
         <Link
-          href="/"
+          href="/cardapio"
           className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="size-4" />

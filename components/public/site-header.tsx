@@ -19,7 +19,7 @@ export async function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-3">
         <RestaurantDrawer info={info} />
         <Link
-          href="/"
+          href="/cardapio"
           className="flex items-center gap-1.5 font-serif text-lg tracking-widest"
         >
           <span className="inline-block size-1.5 rotate-45 bg-primary" />

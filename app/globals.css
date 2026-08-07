@@ -51,6 +51,18 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Tokens de cor da marca — usados pelos componentes do Linktree (ver feira-components/tailwind-tokens-marca.md) */
+@theme {
+  --color-dark-wine: #6E2721;
+  --color-espresso: #5A1D14;
+  --color-ebony: #54573D;
+  --color-copperwood: #AF6B10;
+  --color-iron-grey: #3B4F54;
+  --color-olive-wood: #746350;
+  --color-taupe: #51433B;
+  --color-floral-white: #FCF5EB;
+}
+
 :root {
   /* Identidade Feira: fundo quase-preto, destaque terracota */
   --background: #0d0d0d;

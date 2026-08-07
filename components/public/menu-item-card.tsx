@@ -12,7 +12,7 @@ export function MenuItemCard({ item }: { item: SerializedMenuItem }) {
 
   return (
     <Link
-      href={`/item/${item.slug}`}
+      href={`/cardapio/${item.slug}`}
       className="group flex gap-4 rounded-xl border border-border bg-card p-3 transition-colors hover:border-primary/50"
     >
       <div className="relative size-24 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-28">

@@ -40,7 +40,7 @@ export async function createCategory(input: CategoryInput) {
     },
   });
 
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
@@ -62,19 +62,19 @@ export async function updateCategory(id: string, input: CategoryInput) {
     },
   });
 
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function deleteCategory(id: string) {
   await prisma.category.delete({ where: { id } });
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function toggleCategoryActive(id: string, active: boolean) {
   await prisma.category.update({ where: { id }, data: { active } });
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
@@ -84,7 +84,7 @@ export async function reorderCategories(orderedIds: string[]) {
       prisma.category.update({ where: { id }, data: { order: index } })
     )
   );
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
@@ -105,19 +105,19 @@ export async function createSubcategory(input: SubcategoryInput) {
     },
   });
 
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function updateSubcategory(id: string, name: string) {
   await prisma.subcategory.update({ where: { id }, data: { name } });
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function deleteSubcategory(id: string) {
   await prisma.subcategory.delete({ where: { id } });
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
@@ -127,6 +127,6 @@ export async function reorderSubcategories(orderedIds: string[]) {
       prisma.subcategory.update({ where: { id }, data: { order: index } })
     )
   );
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }

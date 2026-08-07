@@ -85,7 +85,7 @@ export function SearchOverlay({ items }: { items: SearchItem[] }) {
             {results.map((item) => (
               <li key={item.id}>
                 <Link
-                  href={`/item/${item.slug}`}
+                  href={`/cardapio/${item.slug}`}
                   onClick={() => setOpen(false)}
                   className="flex gap-3 items-center rounded-lg p-2 hover:bg-accent transition-colors"
                 >

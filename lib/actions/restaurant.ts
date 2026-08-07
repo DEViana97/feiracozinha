@@ -16,6 +16,6 @@ export async function updateRestaurantInfo(input: RestaurantInfoInput) {
     create: { id: "singleton", ...data },
   });
 
-  revalidatePath("/");
+  revalidatePath("/cardapio");
   revalidatePath("/admin/settings");
 }
