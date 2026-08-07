@@ -13,7 +13,7 @@ export type IdentitySlideData = {
 };
 
 export function IdentityCarousel({ slides }: { slides: IdentitySlideData[] }) {
-  const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const autoplay = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start" },
     [autoplay.current]
