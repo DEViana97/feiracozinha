@@ -1,4 +1,4 @@
-import { getCategoriesWithItems } from "@/lib/queries";
+import { getCategoriesWithItems, getIdentitySlides } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { MenuHeader } from "@/components/public/menu-header";
 import { IdentityCarousel } from "@/components/public/identity-carousel";
@@ -21,7 +21,10 @@ export const revalidate = 0;
 const TERRITORY_KEYS: CategoryIconKey[] = ["serra", "sertao", "mar"];
 
 export default async function CardapioPage() {
-  const categories = await getCategoriesWithItems();
+  const [categories, slides] = await Promise.all([
+    getCategoriesWithItems(),
+    getIdentitySlides(),
+  ]);
 
   const territoryCategories: TerritoryCategoryData[] = categories
     .filter((c): c is typeof c & { slug: CategoryIconKey } =>
@@ -85,7 +88,13 @@ export default async function CardapioPage() {
             </div>
           </section>
 
-          <IdentityCarousel />
+          <IdentityCarousel
+            slides={slides.map((s) => ({
+              id: s.id,
+              imageUrl: s.imageUrl,
+              caption: s.caption,
+            }))}
+          />
 
           <MenuView
             territoryCategories={territoryCategories}

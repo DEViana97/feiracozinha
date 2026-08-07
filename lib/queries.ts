@@ -116,6 +116,19 @@ export async function getMenuItemForEdit(id: string) {
   });
 }
 
+export async function getIdentitySlides() {
+  return prisma.identitySlide.findMany({
+    where: { active: true },
+    orderBy: { order: "asc" },
+  });
+}
+
+export async function getAllIdentitySlidesForAdmin() {
+  return prisma.identitySlide.findMany({
+    orderBy: { order: "asc" },
+  });
+}
+
 export async function getItemBySlug(slug: string) {
   return prisma.menuItem.findUnique({
     where: { slug },

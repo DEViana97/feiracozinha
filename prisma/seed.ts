@@ -26,6 +26,45 @@ async function main() {
     tags[t.name] = created.id;
   }
 
+  // ---------- Carrossel de identidade ----------
+  // Fotos de demonstração — substitua pelas fotos reais do restaurante
+  // pelo painel /admin/carousel assim que a sessão de fotografia sair.
+  const slideData = [
+    {
+      imageUrl:
+        "https://images.unsplash.com/photo-1488459716781-31db52582fe9?q=80&w=1200",
+      caption: "Direto da feira",
+    },
+    {
+      imageUrl:
+        "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?q=80&w=1200",
+      caption: "Produtores locais",
+    },
+    {
+      imageUrl:
+        "https://images.unsplash.com/photo-1467453678174-768ec283a940?q=80&w=1200",
+      caption: "Território cearense",
+    },
+    {
+      imageUrl:
+        "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=1200",
+      caption: "Ingredientes da estação",
+    },
+    {
+      imageUrl:
+        "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200",
+      caption: "Da terra à mesa",
+    },
+  ];
+  for (const [idx, slide] of slideData.entries()) {
+    const existing = await prisma.identitySlide.findFirst({
+      where: { caption: slide.caption },
+    });
+    if (!existing) {
+      await prisma.identitySlide.create({ data: { ...slide, order: idx } });
+    }
+  }
+
   // ---------- RestaurantInfo (singleton) ----------
   await prisma.restaurantInfo.upsert({
     where: { id: "singleton" },

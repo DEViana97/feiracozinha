@@ -6,42 +6,13 @@ import Autoplay from "embla-carousel-autoplay";
 import { ImageOff } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-// TODO: trocar `src` por fotos reais quando a sessão de fotografia
-// do restaurante estiver pronta. Por ora aponta para placeholders.
-const SLIDES = [
-  {
-    id: "carousel-1",
-    src: "/images/carousel/banca-da-feira.jpg",
-    placeholder: "Foto: banca da feira",
-    caption: "Direto da feira",
-  },
-  {
-    id: "carousel-2",
-    src: "/images/carousel/produtor-local.jpg",
-    placeholder: "Foto: produtor local",
-    caption: "Produtores locais",
-  },
-  {
-    id: "carousel-3",
-    src: "/images/carousel/ingrediente-cru.jpg",
-    placeholder: "Foto: ingrediente cru da estação",
-    caption: "Território cearense",
-  },
-  {
-    id: "carousel-4",
-    src: "/images/carousel/colheita-do-dia.jpg",
-    placeholder: "Foto: colheita do dia",
-    caption: "Ingredientes da estação",
-  },
-  {
-    id: "carousel-5",
-    src: "/images/carousel/terra-a-mesa.jpg",
-    placeholder: "Foto: caminho da terra à mesa",
-    caption: "Da terra à mesa",
-  },
-];
+export type IdentitySlideData = {
+  id: string;
+  imageUrl: string;
+  caption: string;
+};
 
-export function IdentityCarousel() {
+export function IdentityCarousel({ slides }: { slides: IdentitySlideData[] }) {
   const autoplay = useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true, stopOnMouseEnter: true })
   );
@@ -66,23 +37,25 @@ export function IdentityCarousel() {
     };
   }, [emblaApi, onSelect]);
 
+  if (slides.length === 0) return null;
+
   return (
     <section className="relative py-4 pb-[22px]">
       <CobogoDivider className="mb-3.5" />
 
       <div className="overflow-hidden px-5" ref={emblaRef}>
         <div className="flex gap-3.5">
-          {SLIDES.map((slide) => (
+          {slides.map((slide) => (
             <div key={slide.id} className="flex-[0_0_85%]">
               <div className="relative h-[210px] w-full overflow-hidden rounded-[10px] bg-taupe/20">
                 {failedSlides[slide.id] ? (
                   <div className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center">
                     <ImageOff className="size-7 text-taupe/50" />
-                    <span className="text-xs text-taupe/60">{slide.placeholder}</span>
+                    <span className="text-xs text-taupe/60">{slide.caption}</span>
                   </div>
                 ) : (
                   <Image
-                    src={slide.src}
+                    src={slide.imageUrl}
                     alt={slide.caption}
                     fill
                     className="object-cover"
@@ -102,7 +75,7 @@ export function IdentityCarousel() {
       </div>
 
       <div className="mt-3.5 flex justify-center gap-1.5">
-        {SLIDES.map((slide, i) => (
+        {slides.map((slide, i) => (
           <button
             key={slide.id}
             aria-label={`Ir para foto ${i + 1}`}
