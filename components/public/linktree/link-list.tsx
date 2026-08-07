@@ -51,9 +51,13 @@ function IconContact({ className }: { className?: string }) {
   );
 }
 
-// TODO: ajustar href de "Fale conosco" para o WhatsApp/Instagram real do
-// restaurante antes de publicar.
-function buildLinks(address: string | null): LinktreeLink[] {
+function buildWhatsappUrl(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  const withCountryCode = digits.startsWith("55") ? digits : `55${digits}`;
+  return `https://wa.me/${withCountryCode}`;
+}
+
+function buildLinks(address: string | null, phone: string | null): LinktreeLink[] {
   return [
     {
       title: "Ver cardápio",
@@ -78,16 +82,22 @@ function buildLinks(address: string | null): LinktreeLink[] {
     },
     {
       title: "Fale conosco",
-      subtitle: "WhatsApp e Instagram",
-      href: "https://wa.me/55SUBSTITUIR_NUMERO",
+      subtitle: phone ? `WhatsApp ${phone}` : "WhatsApp e Instagram",
+      href: phone ? buildWhatsappUrl(phone) : "https://wa.me/55SUBSTITUIR_NUMERO",
       icon: IconContact,
       external: true,
     },
   ];
 }
 
-export function LinktreeLinkList({ address }: { address: string | null }) {
-  const links = buildLinks(address);
+export function LinktreeLinkList({
+  address,
+  phone,
+}: {
+  address: string | null;
+  phone: string | null;
+}) {
+  const links = buildLinks(address, phone);
 
   return (
     <section className="flex flex-col gap-3 px-5 pb-2 pt-[26px]">

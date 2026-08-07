@@ -20,7 +20,7 @@ export default async function LinktreePage() {
     <div className="flex min-h-screen justify-center bg-[#EDE4D6] font-sans">
       <div className="relative min-h-screen w-full max-w-[420px] bg-floral-white shadow-[0_0_40px_rgba(0,0,0,0.08)]">
         <LinktreeHero />
-        <LinktreeLinkList address={info.address} />
+        <LinktreeLinkList address={info.address} phone={info.phone} />
         <LinktreeCategoryPreview />
         <LinktreeFooter />
       </div>

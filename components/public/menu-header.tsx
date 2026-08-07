@@ -17,7 +17,7 @@ export function MenuHeader() {
       <div className="flex items-center justify-between px-[18px] py-4">
         {isReservationView ? (
           <Link
-            href="/cardapio"
+            href="/"
             className="flex items-center gap-1.5 py-1.5 font-sans text-sm font-semibold text-dark-wine"
           >
             ← Cardápio
