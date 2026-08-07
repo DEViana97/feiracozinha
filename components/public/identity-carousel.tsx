@@ -68,7 +68,7 @@ export function IdentityCarousel() {
 
   return (
     <section className="relative py-4 pb-[22px]">
-      <CobogoDivider />
+      <CobogoDivider className="mb-3.5" />
 
       <div className="overflow-hidden px-5" ref={emblaRef}>
         <div className="flex gap-3.5">
@@ -116,14 +116,14 @@ export function IdentityCarousel() {
         ))}
       </div>
 
-      <CobogoDivider />
+      <CobogoDivider className="mt-3.5" />
     </section>
   );
 }
 
-function CobogoDivider() {
+function CobogoDivider({ className }: { className?: string }) {
   return (
-    <div className="relative mb-3.5 h-3.5 overflow-hidden">
+    <div className={`relative h-3.5 overflow-hidden ${className ?? ""}`}>
       <div
         className="absolute inset-0 bg-dark-wine opacity-25"
         style={{
