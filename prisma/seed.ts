@@ -44,41 +44,100 @@ async function main() {
   });
 
   // ---------- Categorias + Itens ----------
+  // Categorização, cores, taglines e itens vêm do bundle de design
+  // (Cardápio Feira, Cozinha e Mesa.dc.html — Component.CATEGORY_DEFS /
+  // SECONDARY_DEFS / ITEMS), já validado com o cliente. Substitui a
+  // categorização anterior (Da Feira/Do Mar/Da Terra/Da Doceira/Da Adega).
+  const NEW_SLUGS = ["serra", "sertao", "mar", "adega", "bebidas", "sobremesas"];
+  await prisma.category.deleteMany({ where: { slug: { notIn: NEW_SLUGS } } });
+
   const categories = [
     {
-      name: "Da Feira",
-      slug: "da-feira",
+      name: "Da Serra",
+      slug: "serra",
       order: 0,
       coverImageUrl:
         "https://images.unsplash.com/photo-1488459716781-31db52582fe9?q=80&w=1200",
       items: [
         {
-          name: "Tábua da Feira",
-          slug: "tabua-da-feira",
+          name: "Queijo Coalho na Brasa com Mel de Engenho",
+          slug: "queijo-coalho-brasa-mel-engenho",
           description:
-            "Queijo coalho grelhado, castanha de caju torrada, rapadura defumada e mel de engenho.",
+            "Queijo coalho grelhado, castanha de caju torrada e mel de engenho da serra.",
           basePrice: "42.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1541014741259-de529411b96a?q=80&w=1200",
           featured: true,
           tags: ["Vegetariano", "Contém Lactose"],
         },
         {
-          name: "Pastel de Vento e Carne de Sol",
-          slug: "pastel-vento-carne-de-sol",
+          name: "Salada de Hortaliças da Serra",
+          slug: "salada-hortalicas-da-serra",
           description:
-            "Massa fina crocante recheada com carne de sol desfiada e queijo coalho, acompanha molho de tomate verde.",
-          basePrice: "38.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?q=80&w=1200",
-          tags: ["Contém Glúten"],
+            "Folhas e legumes de pequenos produtores da Ibiapaba, vinagrete de manga.",
+          basePrice: "36.00",
+          tags: ["Vegetariano", "Vegano"],
+        },
+        {
+          name: "Creme de Inhame com Queijo de Coalho",
+          slug: "creme-de-inhame-queijo-coalho",
+          description:
+            "Inhame da serra, caldo cremoso, lascas de queijo coalho tostado.",
+          basePrice: "32.00",
+          tags: ["Vegetariano", "Contém Lactose"],
+        },
+        {
+          name: "Costela de Panela com Purê de Macaxeira",
+          slug: "costela-panela-pure-macaxeira",
+          description:
+            "Costela cozida lentamente, purê de macaxeira e farofa de castanha.",
+          basePrice: "62.00",
+          tags: [],
+        },
+      ],
+    },
+    {
+      name: "Do Sertão",
+      slug: "sertao",
+      order: 1,
+      coverImageUrl:
+        "https://images.unsplash.com/photo-1467453678174-768ec283a940?q=80&w=1200",
+      items: [
+        {
+          name: "Baião de Dois do Sertão",
+          slug: "baiao-de-dois-do-sertao",
+          description:
+            "Arroz e feijão de corda, queijo coalho, carne de sol e coentro fresco.",
+          basePrice: "54.00",
+          featured: true,
+          tags: ["Contém Lactose"],
+        },
+        {
+          name: "Macaxeira com Manteiga de Garrafa",
+          slug: "macaxeira-manteiga-de-garrafa",
+          description: "Macaxeira frita crocante, manteiga de garrafa e flor de sal.",
+          basePrice: "28.00",
+          tags: ["Vegetariano"],
+        },
+        {
+          name: "Carne de Sol na Nata com Feijão Verde",
+          slug: "carne-de-sol-nata-feijao-verde",
+          description: "Carne de sol desfiada, nata fresca e feijão verde do sertão.",
+          basePrice: "58.00",
+          tags: ["Contém Lactose"],
+        },
+        {
+          name: "Buchada de Bode com Farofa de Rapadura",
+          slug: "buchada-de-bode-farofa-rapadura",
+          description:
+            "Receita tradicional do sertão, servida com farofa levemente adocicada.",
+          basePrice: "49.00",
+          tags: [],
         },
       ],
     },
     {
       name: "Do Mar",
-      slug: "do-mar",
-      order: 1,
+      slug: "mar",
+      order: 2,
       coverImageUrl:
         "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200",
       items: [
@@ -86,10 +145,8 @@ async function main() {
           name: "Peixe do Dia na Folha de Bananeira",
           slug: "peixe-do-dia-folha-bananeira",
           description:
-            "Filé do pescado da manhã, assado na folha de bananeira com pirão de coco e vinagrete de manga.",
+            "Filé do pescado da manhã, pirão de coco e vinagrete de manga.",
           basePrice: "68.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200",
           featured: true,
           tags: [],
         },
@@ -97,51 +154,104 @@ async function main() {
           name: "Camarão na Moranga",
           slug: "camarao-na-moranga",
           description:
-            "Camarões salteados em creme de moranga cabotiá com toque de coentro, servido na própria moranga.",
+            "Camarões salteados em creme de moranga cabotiá, servido na própria moranga.",
           basePrice: "79.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?q=80&w=1200",
           tags: ["Contém Camarão", "Contém Lactose"],
-          variants: [
-            { name: "Individual", price: "79.00", order: 0 },
-            { name: "Para compartilhar (2 pessoas)", price: "129.00", order: 1 },
-          ],
         },
-      ],
-    },
-    {
-      name: "Da Terra",
-      slug: "da-terra",
-      order: 2,
-      coverImageUrl:
-        "https://images.unsplash.com/photo-1467453678174-768ec283a940?q=80&w=1200",
-      items: [
         {
-          name: "Baião de Dois da Feira",
-          slug: "baiao-de-dois-da-feira",
-          description:
-            "Arroz e feijão de corda, queijo coalho, carne de sol e coentro fresco colhido na horta do restaurante.",
-          basePrice: "54.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1516684732162-798a0062be99?q=80&w=1200",
+          name: "Lagosta Grelhada com Manteiga de Garrafa",
+          slug: "lagosta-grelhada-manteiga-de-garrafa",
+          description: "Lagosta da costa cearense grelhada, manteiga de garrafa e limão.",
+          basePrice: "98.00",
           tags: ["Contém Lactose"],
         },
         {
-          name: "Macaxeira com Manteiga de Garrafa",
-          slug: "macaxeira-manteiga-de-garrafa",
-          description:
-            "Macaxeira frita crocante, finalizada com manteiga de garrafa e flor de sal.",
-          basePrice: "28.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1598511796432-cabbc4e34f14?q=80&w=1200",
-          tags: ["Vegetariano", "Vegano"],
+          name: "Caldinho de Peixe com Coco",
+          slug: "caldinho-de-peixe-com-coco",
+          description: "Caldo cremoso de peixe branco, leite de coco e coentro.",
+          basePrice: "32.00",
+          tags: [],
         },
       ],
     },
     {
-      name: "Da Doceira",
-      slug: "da-doceira",
+      name: "Da Adega",
+      slug: "adega",
       order: 3,
+      coverImageUrl:
+        "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1200",
+      items: [
+        {
+          name: "Vinho Branco Alvarinho",
+          slug: "vinho-branco-alvarinho",
+          description: "Seco, fresco, notas cítricas — taça ou garrafa.",
+          basePrice: "28.00",
+          tags: [],
+        },
+        {
+          name: "Caipirinha de Caju",
+          slug: "caipirinha-de-caju",
+          description: "Cachaça artesanal, caju fresco da estação e limão.",
+          basePrice: "24.00",
+          tags: ["Apimentado"],
+        },
+        {
+          name: "Vinho Tinto Cabernet Sauvignon",
+          slug: "vinho-tinto-cabernet-sauvignon",
+          description: "Corpo médio, taninos suaves — taça ou garrafa.",
+          basePrice: "30.00",
+          tags: [],
+        },
+        {
+          name: "Coquetel de Maracujá com Cachaça",
+          slug: "coquetel-de-maracuja-com-cachaca",
+          description: "Cachaça envelhecida, maracujá fresco e xarope de rapadura.",
+          basePrice: "26.00",
+          tags: [],
+        },
+      ],
+    },
+    {
+      name: "Bebidas",
+      slug: "bebidas",
+      order: 4,
+      coverImageUrl:
+        "https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200",
+      items: [
+        {
+          name: "Suco de Caju com Hortelã",
+          slug: "suco-de-caju-com-hortela",
+          description: "Caju fresco batido com hortelã da horta do restaurante.",
+          basePrice: "14.00",
+          tags: ["Vegano"],
+        },
+        {
+          name: "Água de Coco Gelada",
+          slug: "agua-de-coco-gelada",
+          description: "Servida no próprio coco.",
+          basePrice: "12.00",
+          tags: ["Vegano"],
+        },
+        {
+          name: "Suco de Graviola",
+          slug: "suco-de-graviola",
+          description: "Graviola fresca batida na hora, sem adição de açúcar.",
+          basePrice: "15.00",
+          tags: ["Vegano"],
+        },
+        {
+          name: "Refrigerante Artesanal de Jabuticaba",
+          slug: "refrigerante-artesanal-de-jabuticaba",
+          description: "Produção local, fermentação natural.",
+          basePrice: "16.00",
+          tags: ["Vegano"],
+        },
+      ],
+    },
+    {
+      name: "Sobremesas",
+      slug: "sobremesas",
+      order: 5,
       coverImageUrl:
         "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200",
       items: [
@@ -149,52 +259,30 @@ async function main() {
           name: "Cartola",
           slug: "cartola",
           description:
-            "Banana da terra frita, queijo coalho derretido, canela e uma calda fina de rapadura.",
+            "Banana da terra frita, queijo coalho derretido e calda de rapadura.",
           basePrice: "26.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1621996659490-3891c4a3d0f2?q=80&w=1200",
           tags: ["Vegetariano", "Contém Lactose"],
         },
         {
           name: "Bolo de Rolo com Sorvete de Caju",
           slug: "bolo-de-rolo-sorvete-caju",
-          description:
-            "Fatia fina de bolo de rolo tradicional acompanhada de sorvete artesanal de caju.",
+          description: "Fatia fina de bolo de rolo com sorvete artesanal de caju.",
           basePrice: "24.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200",
           tags: ["Vegetariano", "Contém Glúten", "Contém Lactose"],
         },
-      ],
-    },
-    {
-      name: "Da Adega",
-      slug: "da-adega",
-      order: 4,
-      coverImageUrl:
-        "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1200",
-      items: [
         {
-          name: "Vinho Branco Alvarinho",
-          slug: "vinho-branco-alvarinho",
-          description: "Seco, fresco, notas cítricas — harmoniza com pratos do mar.",
-          basePrice: "0",
-          imageUrl:
-            "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=1200",
-          tags: [],
-          variants: [
-            { name: "Taça 125ml", price: "28.00", order: 0 },
-            { name: "Garrafa 750ml", price: "135.00", order: 1 },
-          ],
+          name: "Manjar de Coco com Calda de Rapadura",
+          slug: "manjar-de-coco-calda-de-rapadura",
+          description: "Manjar branco cremoso, calda de rapadura e coco fresco.",
+          basePrice: "22.00",
+          tags: ["Vegetariano", "Vegano"],
         },
         {
-          name: "Caipirinha de Caju",
-          slug: "caipirinha-de-caju",
-          description: "Cachaça artesanal, caju fresco da estação e limão.",
-          basePrice: "24.00",
-          imageUrl:
-            "https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200",
-          tags: ["Apimentado"],
+          name: "Pudim de Leite de Cabra",
+          slug: "pudim-de-leite-de-cabra",
+          description: "Pudim cremoso feito com leite de cabra da região.",
+          basePrice: "25.00",
+          tags: ["Vegetariano", "Contém Lactose"],
         },
       ],
     },

@@ -17,8 +17,8 @@ type CategoryChipsProps = {
 };
 
 const FONT_SCALE_STEP = 0.1;
-const FONT_SCALE_MIN = 0.85;
-const FONT_SCALE_MAX = 1.3;
+const FONT_SCALE_MIN = 0.8;
+const FONT_SCALE_MAX = 1.5;
 
 export function CategoryChips({
   categories,

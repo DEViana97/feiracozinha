@@ -23,16 +23,40 @@ const initialForm: FormState = {
 
 function validate(form: FormState): FormErrors {
   const errors: FormErrors = {};
-  if (!form.date) errors.date = "Escolha uma data.";
+
+  if (!form.date) {
+    errors.date = "Escolha uma data.";
+  } else {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const chosen = new Date(`${form.date}T00:00:00`);
+    if (chosen < today) errors.date = "A data não pode ser no passado.";
+  }
+
   if (!form.time) errors.time = "Escolha um horário.";
-  if (!form.people || Number(form.people) < 1) errors.people = "Informe ao menos 1 pessoa.";
+
+  const people = parseInt(form.people, 10);
+  if (!people || people < 1 || people > 20) {
+    errors.people = "Informe entre 1 e 20 pessoas.";
+  }
+
   if (!form.name.trim()) errors.name = "Informe seu nome.";
-  if (!form.contact.trim()) errors.contact = "Informe um WhatsApp para contato.";
+
+  if (!form.contact.trim()) {
+    errors.contact = "Informe um contato.";
+  } else {
+    const digits = form.contact.replace(/\D/g, "");
+    if (digits.length < 10) errors.contact = "Informe um WhatsApp válido com DDD.";
+  }
+
   return errors;
 }
 
-const fieldClass =
-  "w-full rounded-md border border-black/[0.15] bg-[#FFFDF9] px-3.5 py-3 font-sans text-sm text-[#3B2A26] outline-none focus:border-dark-wine focus:ring-1 focus:ring-dark-wine";
+function fieldClass(hasError: boolean) {
+  return `w-full rounded-md border ${
+    hasError ? "border-[#8b3a2e]" : "border-iron-grey/30"
+  } bg-[#FFFDF9] px-3 py-[11px] font-sans text-sm text-[#3B2A26] outline-none focus:border-dark-wine focus:ring-1 focus:ring-dark-wine`;
+}
 
 // NOTA DE INTEGRAÇÃO: o submit abaixo está com um placeholder local
 // (setSubmitted). Trocar `handleSubmit` para chamar a Server Action real de
@@ -44,10 +68,12 @@ export function ReservationForm() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [summary, setSummary] = useState("");
   const [isPending, startTransition] = useTransition();
 
   function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
+    setErrors((e) => ({ ...e, [key]: undefined }));
   }
 
   function handleSubmit() {
@@ -58,6 +84,14 @@ export function ReservationForm() {
     startTransition(async () => {
       // TODO: substituir por chamada real à Server Action de reserva.
       // await createReservation(form);
+      const dateFmt = new Date(`${form.date}T00:00:00`).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+      });
+      const people = Number(form.people);
+      setSummary(
+        `${form.name}, sua mesa para ${form.people} pessoa${people > 1 ? "s" : ""} está confirmada em ${dateFmt} às ${form.time}.`
+      );
       setSubmitted(true);
     });
   }
@@ -69,7 +103,6 @@ export function ReservationForm() {
   }
 
   if (submitted) {
-    const summary = `${form.name}, mesa para ${form.people} pessoa(s) em ${form.date} às ${form.time}.`;
     return <ReservationConfirmation summary={summary} onReset={resetForm} />;
   }
 
@@ -88,7 +121,7 @@ export function ReservationForm() {
             type="date"
             value={form.date}
             onChange={(e) => updateField("date", e.target.value)}
-            className={fieldClass}
+            className={fieldClass(!!errors.date)}
           />
         </Field>
 
@@ -98,7 +131,7 @@ export function ReservationForm() {
               type="time"
               value={form.time}
               onChange={(e) => updateField("time", e.target.value)}
-              className={fieldClass}
+              className={fieldClass(!!errors.time)}
             />
           </Field>
           <Field label="Pessoas" error={errors.people} className="flex-1">
@@ -108,7 +141,7 @@ export function ReservationForm() {
               max={20}
               value={form.people}
               onChange={(e) => updateField("people", e.target.value)}
-              className={fieldClass}
+              className={fieldClass(!!errors.people)}
             />
           </Field>
         </div>
@@ -119,7 +152,7 @@ export function ReservationForm() {
             placeholder="Seu nome completo"
             value={form.name}
             onChange={(e) => updateField("name", e.target.value)}
-            className={fieldClass}
+            className={fieldClass(!!errors.name)}
           />
         </Field>
 
@@ -129,7 +162,7 @@ export function ReservationForm() {
             placeholder="(85) 99999-0000"
             value={form.contact}
             onChange={(e) => updateField("contact", e.target.value)}
-            className={fieldClass}
+            className={fieldClass(!!errors.contact)}
           />
         </Field>
 
@@ -158,7 +191,7 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-iron-grey">
+      <label className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-[1px] text-iron-grey">
         {label}
       </label>
       {children}
@@ -180,12 +213,26 @@ function ReservationConfirmation({
         <div
           className="absolute inset-0 opacity-40"
           style={{
-            backgroundImage: "url('/images/cobogo-pattern.png')",
+            backgroundImage: "url('/images/cobogo.png')",
             backgroundSize: "200px",
             backgroundRepeat: "repeat",
           }}
         />
         <div className="relative">
+          <span
+            aria-hidden
+            className="mb-3.5 inline-block h-6 w-3 bg-floral-white"
+            style={{
+              WebkitMaskImage: "url('/images/cobogo-mark.png')",
+              maskImage: "url('/images/cobogo-mark.png')",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
           <h1 className="m-0 mb-2 font-serif text-[22px] text-floral-white">
             Mesa reservada
           </h1>

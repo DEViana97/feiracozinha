@@ -2,7 +2,7 @@
 // Se mudar a cor de uma categoria lá, espelhar aqui também — idealmente isso
 // vira uma fonte única compartilhada (ver observação no final do pacote).
 const CATEGORIES = [
-  { name: "Do Sertão", color: "#51433B" },
+  { name: "Do Sertão", color: "#6E2721" },
   { name: "Da Serra", color: "#54573D" },
   { name: "Do Mar", color: "#3B4F54" },
 ];

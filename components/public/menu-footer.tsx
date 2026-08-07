@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 // TODO: confirmar endereço, WhatsApp e Instagram reais com o Fernando antes
 // de publicar — os valores abaixo vieram do mockup do Claude Design e podem
 // ser placeholder.
@@ -15,14 +13,27 @@ export function MenuFooter() {
       <div
         className="absolute inset-0 opacity-30"
         style={{
-          backgroundImage: "url('/images/cobogo-pattern.png')",
+          backgroundImage: "url('/images/cobogo.png')",
           backgroundSize: "200px",
           backgroundRepeat: "repeat",
         }}
       />
       <div className="relative">
         <div className="mb-4 flex items-center gap-2">
-          <Image src="/images/logo-mark.svg" alt="" width={11} height={20} className="h-5 w-auto" />
+          <span
+            aria-hidden
+            className="inline-block h-5 w-[11px] bg-floral-white"
+            style={{
+              WebkitMaskImage: "url('/images/cobogo-mark.png')",
+              maskImage: "url('/images/cobogo-mark.png')",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
           <span className="font-serif text-base tracking-[2px]">
             FEIRA, COZINHA E MESA
           </span>

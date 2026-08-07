@@ -9,11 +9,36 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // TODO: trocar `src` por fotos reais quando a sessão de fotografia
 // do restaurante estiver pronta. Por ora aponta para placeholders.
 const SLIDES = [
-  { id: "carousel-1", src: "/images/carousel/banca-da-feira.jpg", caption: "Direto da feira" },
-  { id: "carousel-2", src: "/images/carousel/produtor-local.jpg", caption: "Produtores locais" },
-  { id: "carousel-3", src: "/images/carousel/ingrediente-cru.jpg", caption: "Território cearense" },
-  { id: "carousel-4", src: "/images/carousel/colheita-do-dia.jpg", caption: "Ingredientes da estação" },
-  { id: "carousel-5", src: "/images/carousel/terra-a-mesa.jpg", caption: "Da terra à mesa" },
+  {
+    id: "carousel-1",
+    src: "/images/carousel/banca-da-feira.jpg",
+    placeholder: "Foto: banca da feira",
+    caption: "Direto da feira",
+  },
+  {
+    id: "carousel-2",
+    src: "/images/carousel/produtor-local.jpg",
+    placeholder: "Foto: produtor local",
+    caption: "Produtores locais",
+  },
+  {
+    id: "carousel-3",
+    src: "/images/carousel/ingrediente-cru.jpg",
+    placeholder: "Foto: ingrediente cru da estação",
+    caption: "Território cearense",
+  },
+  {
+    id: "carousel-4",
+    src: "/images/carousel/colheita-do-dia.jpg",
+    placeholder: "Foto: colheita do dia",
+    caption: "Ingredientes da estação",
+  },
+  {
+    id: "carousel-5",
+    src: "/images/carousel/terra-a-mesa.jpg",
+    placeholder: "Foto: caminho da terra à mesa",
+    caption: "Da terra à mesa",
+  },
 ];
 
 export function IdentityCarousel() {
@@ -51,8 +76,9 @@ export function IdentityCarousel() {
             <div key={slide.id} className="flex-[0_0_85%]">
               <div className="relative h-[210px] w-full overflow-hidden rounded-[10px] bg-taupe/20">
                 {failedSlides[slide.id] ? (
-                  <div className="flex h-full w-full items-center justify-center">
-                    <ImageOff className="size-8 text-taupe/50" />
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center">
+                    <ImageOff className="size-7 text-taupe/50" />
+                    <span className="text-xs text-taupe/60">{slide.placeholder}</span>
                   </div>
                 ) : (
                   <Image
@@ -79,12 +105,12 @@ export function IdentityCarousel() {
         {SLIDES.map((slide, i) => (
           <button
             key={slide.id}
-            aria-label={`Ir para o slide ${i + 1}`}
+            aria-label={`Ir para foto ${i + 1}`}
             onClick={() => emblaApi?.scrollTo(i)}
-            className="h-1.5 rounded-full transition-all"
+            className="h-[7px] rounded-full transition-all"
             style={{
-              width: i === selectedIndex ? 18 : 6,
-              backgroundColor: i === selectedIndex ? "#6E2721" : "#D9CBBB",
+              width: i === selectedIndex ? 18 : 7,
+              backgroundColor: i === selectedIndex ? "#6E2721" : "#D8C6B8",
             }}
           />
         ))}
@@ -101,8 +127,8 @@ function CobogoDivider() {
       <div
         className="absolute inset-0 bg-dark-wine opacity-25"
         style={{
-          WebkitMaskImage: "url('/images/cobogo-pattern.png')",
-          maskImage: "url('/images/cobogo-pattern.png')",
+          WebkitMaskImage: "url('/images/cobogo.png')",
+          maskImage: "url('/images/cobogo.png')",
           WebkitMaskSize: "90px",
           maskSize: "90px",
           WebkitMaskRepeat: "repeat",

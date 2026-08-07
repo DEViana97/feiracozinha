@@ -1,19 +1,55 @@
 import Link from "next/link";
-import {
-  Menu,
-  CalendarDays,
-  MapPin,
-  MessageCircle,
-  type LucideIcon,
-} from "lucide-react";
 
 type LinktreeLink = {
   title: string;
   subtitle: string;
   href: string;
-  icon: LucideIcon;
+  icon: (props: { className?: string }) => React.ReactNode;
   external?: boolean;
 };
+
+function IconMenu({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
+      <path d="M4 6h16M4 12h16M4 18h10" stroke="#6E2721" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconReserve({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="4" y="5" width="16" height="15" rx="1.5" stroke="#6E2721" strokeWidth="1.6" />
+      <path d="M4 9.5h16M8 3v3M16 3v3" stroke="#6E2721" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconLocation({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"
+        stroke="#6E2721"
+        strokeWidth="1.6"
+      />
+      <circle cx="12" cy="9.5" r="2.2" stroke="#6E2721" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconContact({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        d="M4 5h16v13a1 1 0 0 1-1 1H8l-4 3V6a1 1 0 0 1 1-1Z"
+        stroke="#6E2721"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 // TODO: ajustar hrefs de "Como chegar" e "Fale conosco" para o endereço
 // real / links de WhatsApp e Instagram do restaurante antes de publicar.
@@ -22,26 +58,26 @@ const LINKS: LinktreeLink[] = [
     title: "Ver cardápio",
     subtitle: "Da Serra, Do Sertão e Do Mar",
     href: "/cardapio",
-    icon: Menu,
+    icon: IconMenu,
   },
   {
     title: "Reservar mesa",
     subtitle: "Escolha data e horário",
     href: "/reservas",
-    icon: CalendarDays,
+    icon: IconReserve,
   },
   {
     title: "Como chegar",
     subtitle: "Endereço e estacionamento",
     href: "https://maps.google.com/?q=SUBSTITUIR_ENDERECO",
-    icon: MapPin,
+    icon: IconLocation,
     external: true,
   },
   {
     title: "Fale conosco",
     subtitle: "WhatsApp e Instagram",
     href: "https://wa.me/55SUBSTITUIR_NUMERO",
-    icon: MessageCircle,
+    icon: IconContact,
     external: true,
   },
 ];
@@ -60,7 +96,7 @@ export function LinktreeLinkList() {
             className="flex items-center gap-3.5 rounded-[10px] border border-dark-wine/[0.14] bg-[#FFFDF9] px-4 py-3.5 text-[#3B2A26] transition-colors hover:border-dark-wine/40"
           >
             <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-dark-wine/[0.08]">
-              <Icon size={18} strokeWidth={1.6} className="text-dark-wine" />
+              <Icon />
             </div>
             <div className="min-w-0 flex-1">
               <div className="font-serif text-base text-[#3B2A26]">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CategoryChips, type CategoryChip } from "./category-chips";
 import { TerritorySection } from "./territory-section";
 import { SecondarySection } from "./secondary-section";
+import { useFontZoom } from "./font-zoom-provider";
 import type { MenuItem } from "./menu-item-card";
 import type { SecondaryMenuItem } from "./secondary-item-row";
 import type { CategoryIconKey } from "./category-icons";
@@ -29,21 +30,15 @@ type MenuViewProps = {
   secondaryCategories: SecondaryCategoryData[];
 };
 
-// Este componente é a "montagem" da página do cardápio. Os dados
-// (territoryCategories / secondaryCategories) devem vir do banco via
-// lib/queries.ts no Server Component da página — este componente aqui é
-// só a camada visual/interativa (client component, por causa do state dos
-// chips e do zoom de acessibilidade).
-//
-// Cor, tagline e ícone de cada categoria não fazem parte do schema do
-// Prisma hoje — são decisões de marca. Sugestão: um pequeno arquivo
-// `category-config.ts` mapeando o slug/nome da categoria no banco para
-// { color, tagline, icon }, mesclado com os itens reais na página.
+// Os chips de categoria funcionam como um filtro: só a seção território
+// ativa é exibida por vez (não é navegação por âncora/scroll). As seções
+// secundárias (Adega/Bebidas/Sobremesas) ficam sempre visíveis abaixo,
+// depois do divisor de cobogó — ver Cardápio Feira, Cozinha e Mesa.dc.html.
 export function MenuView({ territoryCategories, secondaryCategories }: MenuViewProps) {
   const [activeCategory, setActiveCategory] = useState<string>(
     territoryCategories[0]?.key ?? ""
   );
-  const [fontScale, setFontScale] = useState(1);
+  const { fontScale, setFontScale } = useFontZoom();
 
   const chips: CategoryChip[] = territoryCategories.map((c) => ({
     key: c.key,
@@ -51,48 +46,39 @@ export function MenuView({ territoryCategories, secondaryCategories }: MenuViewP
     color: c.color,
   }));
 
-  function handleSelectCategory(key: string) {
-    setActiveCategory(key);
-    document.getElementById(`section-${key}`)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
+  const activeSection =
+    territoryCategories.find((c) => c.key === activeCategory) ??
+    territoryCategories[0];
 
   return (
-    <div style={{ zoom: fontScale }}>
-      <CategoryChips
-        categories={chips}
-        activeCategory={activeCategory}
-        onSelect={handleSelectCategory}
-        fontScale={fontScale}
-        onFontScaleChange={setFontScale}
-      />
+    <div>
+      {territoryCategories.length > 0 && (
+        <CategoryChips
+          categories={chips}
+          activeCategory={activeCategory}
+          onSelect={setActiveCategory}
+          fontScale={fontScale}
+          onFontScaleChange={setFontScale}
+        />
+      )}
 
-      {territoryCategories.map((cat) => (
-        <div id={`section-${cat.key}`} key={cat.key}>
-          <TerritorySection
-            categoryKey={cat.key}
-            name={cat.name}
-            color={cat.color}
-            tagline={cat.tagline}
-            items={cat.items}
-          />
-        </div>
-      ))}
+      {activeSection && (
+        <TerritorySection
+          categoryKey={activeSection.key}
+          name={activeSection.name}
+          color={activeSection.color}
+          tagline={activeSection.tagline}
+          items={activeSection.items}
+        />
+      )}
 
       {/* Divisor de cobogó entre seções principais e secundárias */}
-      <div
-        className="relative h-9 overflow-hidden"
-        style={{
-          opacity: 0.3,
-        }}
-      >
+      <div className="relative h-9 overflow-hidden opacity-30">
         <div
           className="absolute inset-0 bg-dark-wine"
           style={{
-            WebkitMaskImage: "url('/images/cobogo-pattern.png')",
-            maskImage: "url('/images/cobogo-pattern.png')",
+            WebkitMaskImage: "url('/images/cobogo.png')",
+            maskImage: "url('/images/cobogo.png')",
             WebkitMaskSize: "150px",
             maskSize: "150px",
             WebkitMaskRepeat: "repeat",

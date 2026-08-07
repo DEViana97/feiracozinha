@@ -5,8 +5,8 @@ export function LinktreeFooter() {
         <div
           className="absolute inset-0 bg-dark-wine opacity-[0.35]"
           style={{
-            WebkitMaskImage: "url('/images/cobogo-pattern.png')",
-            maskImage: "url('/images/cobogo-pattern.png')",
+            WebkitMaskImage: "url('/images/cobogo.png')",
+            maskImage: "url('/images/cobogo.png')",
             WebkitMaskSize: "120px",
             maskSize: "120px",
             WebkitMaskRepeat: "repeat",
