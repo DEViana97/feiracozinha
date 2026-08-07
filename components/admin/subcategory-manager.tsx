@@ -112,7 +112,7 @@ export function SubcategoryManager({
 
   return (
     <div className="space-y-2 pl-8 pr-3 pb-3">
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext id={`subcategories-dnd-${categoryId}`} sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={items.map((i) => i.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-1.5">
             {items.map((sub) => (
