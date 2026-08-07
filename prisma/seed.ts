@@ -165,7 +165,7 @@ async function main() {
           description: "Macaxeira frita crocante, manteiga de garrafa e flor de sal.",
           basePrice: "28.00",
           imageUrl:
-            "https://images.unsplash.com/photo-1598511796432-cabbc4e34f14?q=80&w=1200",
+            "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=1200",
           tags: ["Vegetariano"],
         },
         {
