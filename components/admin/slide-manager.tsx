@@ -55,14 +55,12 @@ export function SlideManager({ slides }: { slides: Slide[] }) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
-    setItems((prev) => {
-      const oldIndex = prev.findIndex((i) => i.id === active.id);
-      const newIndex = prev.findIndex((i) => i.id === over.id);
-      const next = arrayMove(prev, oldIndex, newIndex);
-      startTransition(() => {
-        reorderSlides(next.map((i) => i.id));
-      });
-      return next;
+    const oldIndex = items.findIndex((i) => i.id === active.id);
+    const newIndex = items.findIndex((i) => i.id === over.id);
+    const next = arrayMove(items, oldIndex, newIndex);
+    setItems(next);
+    startTransition(() => {
+      reorderSlides(next.map((i) => i.id));
     });
   }
 

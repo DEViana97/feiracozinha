@@ -101,14 +101,12 @@ export function SubcategoryManager({
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    setItems((prev) => {
-      const oldIndex = prev.findIndex((i) => i.id === active.id);
-      const newIndex = prev.findIndex((i) => i.id === over.id);
-      const next = arrayMove(prev, oldIndex, newIndex);
-      startTransition(() => {
-        reorderSubcategories(next.map((i) => i.id));
-      });
-      return next;
+    const oldIndex = items.findIndex((i) => i.id === active.id);
+    const newIndex = items.findIndex((i) => i.id === over.id);
+    const next = arrayMove(items, oldIndex, newIndex);
+    setItems(next);
+    startTransition(() => {
+      reorderSubcategories(next.map((i) => i.id));
     });
   }
 
