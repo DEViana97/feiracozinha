@@ -27,7 +27,7 @@ export function MenuHeader() {
         )}
 
         <div className="flex items-center gap-1">
-          <Image src="/images/cobogo-mark.png" alt="" width={22} height={22} className="h-[22px] w-auto" />
+          <Image src="/images/cobogo-mark.png" alt="" width={11} height={22} className="h-[22px] w-auto" />
           <span className="font-serif text-xl tracking-[2px] text-dark-wine">
             FEIRA
           </span>
