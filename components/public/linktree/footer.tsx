@@ -4,7 +4,7 @@ export function LinktreeFooter() {
       <div className="pt-4 text-center text-[11.5px] uppercase tracking-[1.5px] text-olive-wood">
         Fortaleza, Ceará
       </div>
-      <div className="relative mt-4 mb-[26px] h-[22px] overflow-hidden">
+      <div className="relative mt-4 h-[22px] overflow-hidden">
         <div
           className="absolute inset-0 bg-dark-wine opacity-[0.35]"
           style={{
