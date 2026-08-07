@@ -14,8 +14,24 @@ export function LinktreeFooter() {
           }}
         />
       </div>
-      <div className="py-4 pb-[26px] text-center text-[11.5px] uppercase tracking-[1.5px] text-olive-wood">
-        Fortaleza, Ceará
+      <div className="flex flex-col items-center gap-3 py-4 pb-[26px]">
+        <span className="text-center text-[11.5px] uppercase tracking-[1.5px] text-olive-wood">
+          Fortaleza, Ceará
+        </span>
+        <span
+          aria-hidden
+          className="inline-block h-4 w-2 bg-dark-wine/40"
+          style={{
+            WebkitMaskImage: "url('/images/cobogo-mark.png')",
+            maskImage: "url('/images/cobogo-mark.png')",
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+          }}
+        />
       </div>
     </footer>
   );
