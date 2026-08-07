@@ -100,7 +100,7 @@ export function LinktreeLinkList({
   const links = buildLinks(address, phone);
 
   return (
-    <section className="flex flex-col gap-3 px-5 pb-2 pt-[26px]">
+    <section className="flex flex-col gap-3 px-5 pb-[26px] pt-[26px]">
       {links.map((link) => {
         const Icon = link.icon;
         return (
