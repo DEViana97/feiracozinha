@@ -1,4 +1,4 @@
-import { getCategoriesWithItems, getIdentitySlides } from "@/lib/queries";
+import { getCategoriesWithItems, getIdentitySlides, getRestaurantInfo } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { MenuHeader } from "@/components/public/menu-header";
 import { IdentityCarousel } from "@/components/public/identity-carousel";
@@ -21,9 +21,10 @@ export const revalidate = 0;
 const TERRITORY_KEYS: CategoryIconKey[] = ["serra", "sertao", "mar"];
 
 export default async function CardapioPage() {
-  const [categories, slides] = await Promise.all([
+  const [categories, slides, restaurantInfo] = await Promise.all([
     getCategoriesWithItems(),
     getIdentitySlides(),
+    getRestaurantInfo(),
   ]);
 
   const territoryCategories: TerritoryCategoryData[] = categories
@@ -104,7 +105,15 @@ export default async function CardapioPage() {
             secondaryCategories={secondaryCategories}
           />
 
-          <MenuFooter />
+          <MenuFooter
+            info={{
+              name: restaurantInfo.name,
+              tagline: restaurantInfo.tagline,
+              address: restaurantInfo.address,
+              phone: restaurantInfo.phone,
+              instagram: restaurantInfo.instagram,
+            }}
+          />
         </FontZoomProvider>
       </div>
     </div>

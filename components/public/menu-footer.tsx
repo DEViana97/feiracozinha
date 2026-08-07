@@ -1,13 +1,22 @@
-// TODO: confirmar endereço, WhatsApp e Instagram reais com o Fernando antes
-// de publicar — os valores abaixo vieram do mockup do Claude Design e podem
-// ser placeholder.
-const ADDRESS = "Rua das Flores, 123 — Praia de Iracema, Fortaleza/CE";
-const WHATSAPP_URL = "https://wa.me/5585999990000";
-const WHATSAPP_LABEL = "WhatsApp (85) 99999-0000";
-const INSTAGRAM_URL = "https://instagram.com/feiracozinhaemesa";
-const INSTAGRAM_LABEL = "@feiracozinhaemesa";
+export type MenuFooterInfo = {
+  name: string;
+  tagline: string;
+  address: string | null;
+  phone: string | null;
+  instagram: string | null;
+};
 
-export function MenuFooter() {
+function buildWhatsappUrl(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  const withCountryCode = digits.startsWith("55") ? digits : `55${digits}`;
+  return `https://wa.me/${withCountryCode}`;
+}
+
+function buildInstagramUrl(instagram: string) {
+  return `https://instagram.com/${instagram.replace("@", "")}`;
+}
+
+export function MenuFooter({ info }: { info: MenuFooterInfo }) {
   return (
     <footer className="relative overflow-hidden bg-espresso px-[22px] py-[26px] pt-[30px] text-floral-white">
       <div
@@ -34,26 +43,42 @@ export function MenuFooter() {
               maskPosition: "center",
             }}
           />
-          <span className="font-serif text-base tracking-[2px]">
-            FEIRA, COZINHA E MESA
+          <span className="font-serif text-base tracking-[2px] uppercase">
+            {info.name}
           </span>
         </div>
 
-        <p className="mb-3.5 text-[12.5px] leading-relaxed text-[#E9D9C6]">
-          {ADDRESS}
-        </p>
+        {info.address && (
+          <p className="mb-3.5 text-[12.5px] leading-relaxed text-[#E9D9C6]">
+            {info.address}
+          </p>
+        )}
 
         <div className="flex flex-col gap-1.5 text-[12.5px]">
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-[#F1DFC9]">
-            {WHATSAPP_LABEL}
-          </a>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-[#F1DFC9]">
-            {INSTAGRAM_LABEL}
-          </a>
+          {info.phone && (
+            <a
+              href={buildWhatsappUrl(info.phone)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F1DFC9]"
+            >
+              WhatsApp {info.phone}
+            </a>
+          )}
+          {info.instagram && (
+            <a
+              href={buildInstagramUrl(info.instagram)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F1DFC9]"
+            >
+              {info.instagram}
+            </a>
+          )}
         </div>
 
         <p className="mt-5 text-[10.5px] uppercase tracking-[1.5px] text-[#D9C3AB]">
-          Da nossa terra para o centro da sua mesa.
+          {info.tagline}
         </p>
       </div>
     </footer>
