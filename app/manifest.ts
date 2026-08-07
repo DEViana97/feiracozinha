@@ -7,13 +7,13 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Cardápio digital — cozinha contemporânea de território, Ceará.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0d0d0d",
-    theme_color: "#0d0d0d",
+    background_color: "#FCF5EB",
+    theme_color: "#6E2721",
     icons: [
       {
-        src: "/favicon.ico",
+        src: "/images/cobogo-mark.png",
         sizes: "any",
-        type: "image/x-icon",
+        type: "image/png",
       },
     ],
   };
