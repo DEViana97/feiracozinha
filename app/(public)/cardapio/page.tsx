@@ -71,11 +71,14 @@ export default async function CardapioPage() {
 
           <section className="relative overflow-hidden px-6 pb-[30px] pt-9">
             <div
-              className="absolute inset-0 opacity-[0.22]"
+              className="absolute inset-0 bg-dark-wine opacity-[0.22]"
               style={{
-                backgroundImage: "url('/images/cobogo.png')",
-                backgroundSize: "220px",
-                backgroundRepeat: "repeat",
+                WebkitMaskImage: "url('/images/cobogo.png')",
+                maskImage: "url('/images/cobogo.png')",
+                WebkitMaskSize: "220px",
+                maskSize: "220px",
+                WebkitMaskRepeat: "repeat",
+                maskRepeat: "repeat",
               }}
             />
             <div className="relative">
