@@ -43,6 +43,7 @@ export default async function CardapioPage() {
           description: item.description,
           price: formatPrice(item.basePrice),
           originLabel: c.name,
+          imageUrl: item.imageUrl,
         })),
       };
     });
@@ -60,6 +61,7 @@ export default async function CardapioPage() {
           name: item.name,
           description: item.description,
           price: formatPrice(item.basePrice),
+          imageUrl: item.imageUrl,
         })),
       };
     });

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CATEGORY_ICONS, type CategoryIconKey } from "./category-icons";
 
 export type MenuItem = {
@@ -5,6 +6,7 @@ export type MenuItem = {
   description: string;
   price: string;
   originLabel: string;
+  imageUrl?: string | null;
 };
 
 type MenuItemCardProps = {
@@ -13,19 +15,28 @@ type MenuItemCardProps = {
   color: string;
 };
 
-// Card com ícone circular — usado nas seções principais (Da Serra, Do Sertão,
-// Do Mar). As seções secundárias (Adega/Bebidas/Sobremesas) usam uma lista
-// mais simples, sem ícone — ver `secondary-item-row.tsx`.
+// Círculo com foto do prato quando disponível; cai pro ícone da categoria
+// quando o item ainda não tem imagem cadastrada.
 export function MenuItemCard({ item, categoryKey, color }: MenuItemCardProps) {
   const Icon = CATEGORY_ICONS[categoryKey];
 
   return (
     <div className="flex gap-4 rounded-md border border-black/[0.07] bg-[#FFFDF9] p-3.5">
       <div
-        className="flex h-[106px] w-[106px] flex-shrink-0 items-center justify-center rounded-full"
+        className="relative flex h-[106px] w-[106px] flex-shrink-0 items-center justify-center overflow-hidden rounded-full"
         style={{ backgroundColor: `${color}1A` /* ~10% opacity */ }}
       >
-        <Icon color={color} />
+        {item.imageUrl ? (
+          <Image
+            src={item.imageUrl}
+            alt={item.name}
+            fill
+            sizes="106px"
+            className="object-cover"
+          />
+        ) : (
+          <Icon color={color} />
+        )}
       </div>
 
       <div className="min-w-0 flex-1">
