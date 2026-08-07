@@ -341,7 +341,7 @@ async function main() {
             "Banana da terra frita, queijo coalho derretido e calda de rapadura.",
           basePrice: "26.00",
           imageUrl:
-            "https://images.unsplash.com/photo-1621996659490-3891c4a3d0f2?q=80&w=1200",
+            "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?q=80&w=1200",
           tags: ["Vegetariano", "Contém Lactose"],
         },
         {
