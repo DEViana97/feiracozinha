@@ -51,41 +51,47 @@ function IconContact({ className }: { className?: string }) {
   );
 }
 
-// TODO: ajustar hrefs de "Como chegar" e "Fale conosco" para o endereço
-// real / links de WhatsApp e Instagram do restaurante antes de publicar.
-const LINKS: LinktreeLink[] = [
-  {
-    title: "Ver cardápio",
-    subtitle: "Da Serra, Do Sertão e Do Mar",
-    href: "/cardapio",
-    icon: IconMenu,
-  },
-  {
-    title: "Reservar mesa",
-    subtitle: "Escolha data e horário",
-    href: "/reservas",
-    icon: IconReserve,
-  },
-  {
-    title: "Como chegar",
-    subtitle: "Endereço e estacionamento",
-    href: "https://maps.google.com/?q=SUBSTITUIR_ENDERECO",
-    icon: IconLocation,
-    external: true,
-  },
-  {
-    title: "Fale conosco",
-    subtitle: "WhatsApp e Instagram",
-    href: "https://wa.me/55SUBSTITUIR_NUMERO",
-    icon: IconContact,
-    external: true,
-  },
-];
+// TODO: ajustar href de "Fale conosco" para o WhatsApp/Instagram real do
+// restaurante antes de publicar.
+function buildLinks(address: string | null): LinktreeLink[] {
+  return [
+    {
+      title: "Ver cardápio",
+      subtitle: "Da Serra, Do Sertão e Do Mar",
+      href: "/cardapio",
+      icon: IconMenu,
+    },
+    {
+      title: "Reservar mesa",
+      subtitle: "Escolha data e horário",
+      href: "/reservas",
+      icon: IconReserve,
+    },
+    {
+      title: "Como chegar",
+      subtitle: address ?? "Endereço e estacionamento",
+      href: address
+        ? `https://maps.google.com/?q=${encodeURIComponent(address)}`
+        : "https://maps.google.com/?q=SUBSTITUIR_ENDERECO",
+      icon: IconLocation,
+      external: true,
+    },
+    {
+      title: "Fale conosco",
+      subtitle: "WhatsApp e Instagram",
+      href: "https://wa.me/55SUBSTITUIR_NUMERO",
+      icon: IconContact,
+      external: true,
+    },
+  ];
+}
 
-export function LinktreeLinkList() {
+export function LinktreeLinkList({ address }: { address: string | null }) {
+  const links = buildLinks(address);
+
   return (
     <section className="flex flex-col gap-3 px-5 pb-2 pt-[26px]">
-      {LINKS.map((link) => {
+      {links.map((link) => {
         const Icon = link.icon;
         return (
           <Link
