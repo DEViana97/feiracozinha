@@ -38,6 +38,16 @@ function IconLocation({ className }: { className?: string }) {
   );
 }
 
+function IconAbout({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
+      <circle cx="12" cy="12" r="9" stroke="#6E2721" strokeWidth="1.6" />
+      <path d="M12 11v6" stroke="#6E2721" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="12" cy="7.5" r="0.9" fill="#6E2721" />
+    </svg>
+  );
+}
+
 function IconContact({ className }: { className?: string }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
@@ -70,6 +80,12 @@ function buildLinks(address: string | null, phone: string | null): LinktreeLink[
       subtitle: "Escolha data e horário",
       href: "/reservas",
       icon: IconReserve,
+    },
+    {
+      title: "Sobre",
+      subtitle: "Nossa história e origem",
+      href: "/",
+      icon: IconAbout,
     },
     {
       title: "Como chegar",
