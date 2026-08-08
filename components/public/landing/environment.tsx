@@ -4,12 +4,10 @@ import Image from "next/image";
 import { ImageOff } from "lucide-react";
 import { useState } from "react";
 
-// TODO: trocar os `src` pelas fotos reais do espaço assim que a sessão de
-// fotografia do restaurante estiver pronta.
 const PHOTOS = [
-  { id: "salao", src: "/images/ambiente/salao.jpg", alt: "Salão do restaurante" },
-  { id: "cozinha-aberta", src: "/images/ambiente/cozinha-aberta.jpg", alt: "Bancada e cozinha aberta" },
-  { id: "mesa-posta", src: "/images/ambiente/mesa-posta.jpg", alt: "Mesa posta" },
+  { id: "salao", src: "/images/ambiente-1.jpg", alt: "Salão do restaurante" },
+  { id: "cozinha-aberta", src: "/images/ambiente-3.jpg", alt: "Bancada e cozinha aberta" },
+  { id: "mesa-posta", src: "/images/ambiente-2.jpg", alt: "Mesa posta" },
 ];
 
 function EnvironmentPhoto({
