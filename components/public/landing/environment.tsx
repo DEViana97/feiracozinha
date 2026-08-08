@@ -7,9 +7,9 @@ import { useState } from "react";
 // TODO: trocar os `src` pelas fotos reais do espaço assim que a sessão de
 // fotografia do restaurante estiver pronta.
 const PHOTOS = [
-  { key: "salao", src: "/images/ambiente/salao.jpg", alt: "Salão do restaurante" },
-  { key: "cozinha-aberta", src: "/images/ambiente/cozinha-aberta.jpg", alt: "Bancada e cozinha aberta" },
-  { key: "mesa-posta", src: "/images/ambiente/mesa-posta.jpg", alt: "Mesa posta" },
+  { id: "salao", src: "/images/ambiente/salao.jpg", alt: "Salão do restaurante" },
+  { id: "cozinha-aberta", src: "/images/ambiente/cozinha-aberta.jpg", alt: "Bancada e cozinha aberta" },
+  { id: "mesa-posta", src: "/images/ambiente/mesa-posta.jpg", alt: "Mesa posta" },
 ];
 
 function EnvironmentPhoto({
@@ -45,21 +45,24 @@ export function LandingEnvironment() {
     <section id="ambiente" className="mx-auto max-w-[1100px] px-8 pb-[110px]">
       <div className="grid h-[480px] grid-cols-[1.4fr_1fr] grid-rows-2 gap-4">
         <EnvironmentPhoto
+          key={PHOTOS[0].id}
           {...PHOTOS[0]}
-          failed={!!failed[PHOTOS[0].key]}
-          onError={() => setFailed((p) => ({ ...p, [PHOTOS[0].key]: true }))}
+          failed={!!failed[PHOTOS[0].id]}
+          onError={() => setFailed((p) => ({ ...p, [PHOTOS[0].id]: true }))}
           className="row-span-2"
         />
         <EnvironmentPhoto
+          key={PHOTOS[1].id}
           {...PHOTOS[1]}
-          failed={!!failed[PHOTOS[1].key]}
-          onError={() => setFailed((p) => ({ ...p, [PHOTOS[1].key]: true }))}
+          failed={!!failed[PHOTOS[1].id]}
+          onError={() => setFailed((p) => ({ ...p, [PHOTOS[1].id]: true }))}
           className=""
         />
         <EnvironmentPhoto
+          key={PHOTOS[2].id}
           {...PHOTOS[2]}
-          failed={!!failed[PHOTOS[2].key]}
-          onError={() => setFailed((p) => ({ ...p, [PHOTOS[2].key]: true }))}
+          failed={!!failed[PHOTOS[2].id]}
+          onError={() => setFailed((p) => ({ ...p, [PHOTOS[2].id]: true }))}
           className=""
         />
       </div>
