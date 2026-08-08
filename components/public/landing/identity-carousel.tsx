@@ -53,7 +53,7 @@ export function LandingIdentityCarousel({
   return (
     <section className="pb-[100px]">
       <div className="mx-auto max-w-[1100px]">
-        <CobogoDivider />
+        <CobogoDivider className="mb-[26px]" />
 
         <div className="overflow-hidden px-8" ref={emblaRef}>
           <div className="flex gap-5">
@@ -101,15 +101,15 @@ export function LandingIdentityCarousel({
           ))}
         </div>
 
-        <CobogoDivider />
+        <CobogoDivider className="mt-[26px]" />
       </div>
     </section>
   );
 }
 
-function CobogoDivider() {
+function CobogoDivider({ className }: { className?: string }) {
   return (
-    <div className="relative mb-[26px] h-3.5 overflow-hidden">
+    <div className={`relative h-3.5 overflow-hidden ${className ?? ""}`}>
       <div
         className="absolute inset-0 bg-dark-wine opacity-25"
         style={{
