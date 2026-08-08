@@ -12,7 +12,7 @@ export function LandingNav() {
           </span>
         </div>
         <Link
-          href="#reservar"
+          href="/reservas"
           className="border-b border-dark-wine pb-0.5 font-sans text-sm font-semibold text-dark-wine"
         >
           Reservar mesa

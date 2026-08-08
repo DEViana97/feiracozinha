@@ -26,7 +26,7 @@ export function LandingHero() {
           Cozinha, mesa e território cearense.
         </p>
         <Link
-          href="#reservar"
+          href="/reservas"
           className="border-b border-[#F1DFC9]/50 pb-[3px] font-sans text-[13.5px] font-semibold text-[#F1DFC9]"
         >
           Reservar mesa
