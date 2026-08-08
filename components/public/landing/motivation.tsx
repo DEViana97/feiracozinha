@@ -27,6 +27,8 @@ export function LandingMotivation() {
           src="/images/feira-why.jpg"
           alt="Ingredientes cearenses usados na cozinha da Feira"
           fill
+          sizes="(max-width: 768px) 100vw, 420px"
+          priority
           className="object-cover"
         />
       </div>
