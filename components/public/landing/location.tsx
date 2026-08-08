@@ -1,8 +1,3 @@
-"use client";
-
-import Image from "next/image";
-import { ImageOff } from "lucide-react";
-import { useState } from "react";
 import { buildWhatsappUrl, buildInstagramUrl } from "@/components/public/menu-footer";
 
 // TODO: horário de funcionamento — não existe campo no RestaurantInfo hoje,
@@ -18,7 +13,7 @@ export type LandingLocationInfo = {
 };
 
 export function LandingLocation({ info }: { info: LandingLocationInfo }) {
-  const [mapFailed, setMapFailed] = useState(false);
+  const mapQuery = encodeURIComponent(info.address ?? "Feira, Cozinha e Mesa");
 
   return (
     <section className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-12 px-8 py-[90px] md:grid-cols-2">
@@ -55,19 +50,13 @@ export function LandingLocation({ info }: { info: LandingLocationInfo }) {
       </div>
 
       <div className="relative h-80 w-full overflow-hidden rounded-[10px] bg-taupe/20">
-        {mapFailed ? (
-          <div className="flex h-full w-full items-center justify-center">
-            <ImageOff className="size-7 text-taupe/50" />
-          </div>
-        ) : (
-          <Image
-            src="/images/mapa-placeholder.jpg"
-            alt="Mapa de localização"
-            fill
-            className="object-cover"
-            onError={() => setMapFailed(true)}
-          />
-        )}
+        <iframe
+          title="Mapa de localização"
+          src={`https://maps.google.com/maps?q=${mapQuery}&z=16&output=embed`}
+          className="h-full w-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
       </div>
     </section>
   );
