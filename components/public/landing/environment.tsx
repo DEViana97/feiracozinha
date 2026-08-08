@@ -16,12 +16,14 @@ function EnvironmentPhoto({
   failed,
   onError,
   className,
+  sizes,
 }: {
   src: string;
   alt: string;
   failed: boolean;
   onError: () => void;
   className: string;
+  sizes: string;
 }) {
   return (
     <div className={`relative overflow-hidden rounded-[10px] bg-taupe/20 ${className}`}>
@@ -30,7 +32,7 @@ function EnvironmentPhoto({
           <ImageOff className="size-7 text-taupe/50" />
         </div>
       ) : (
-        <Image src={src} alt={alt} fill className="object-cover" onError={onError} />
+        <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" onError={onError} />
       )}
     </div>
   );
@@ -48,6 +50,7 @@ export function LandingEnvironment() {
           failed={!!failed[PHOTOS[0].id]}
           onError={() => setFailed((p) => ({ ...p, [PHOTOS[0].id]: true }))}
           className="row-span-2"
+          sizes="(max-width: 1100px) 58vw, 604px"
         />
         <EnvironmentPhoto
           key={PHOTOS[1].id}
@@ -55,6 +58,7 @@ export function LandingEnvironment() {
           failed={!!failed[PHOTOS[1].id]}
           onError={() => setFailed((p) => ({ ...p, [PHOTOS[1].id]: true }))}
           className=""
+          sizes="(max-width: 1100px) 42vw, 432px"
         />
         <EnvironmentPhoto
           key={PHOTOS[2].id}
@@ -62,6 +66,7 @@ export function LandingEnvironment() {
           failed={!!failed[PHOTOS[2].id]}
           onError={() => setFailed((p) => ({ ...p, [PHOTOS[2].id]: true }))}
           className=""
+          sizes="(max-width: 1100px) 42vw, 432px"
         />
       </div>
       <p className="mt-[22px] text-center font-serif text-[15px] italic text-dark-wine">
