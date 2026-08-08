@@ -22,7 +22,7 @@ export function LandingMotivation() {
         </p>
       </div>
 
-      <div className="relative mx-auto aspect-4/5 w-full max-w-[320px] overflow-hidden rounded-[10px]">
+      <div className="relative mx-auto aspect-4/3 w-full max-w-105 overflow-hidden rounded-[10px]">
         <Image
           src="/images/feira-why.jpg"
           alt="Ingredientes cearenses usados na cozinha da Feira"
