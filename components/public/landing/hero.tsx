@@ -14,7 +14,7 @@ export function LandingHero() {
       />
       <div className="relative mx-auto max-w-[680px]">
         <div className="mb-3.5 flex items-center justify-center gap-2">
-          <Image src="/images/cobogo-mark2-white.png" alt="" width={20} height={40} className="h-10 w-auto" />
+          <Image src="/images/cobogo-mark2-white.png" alt="" width={21} height={40} className="h-10 w-auto" />
           <h1 className="m-0 font-serif text-[58px] font-medium tracking-[3px] text-floral-white">
             FEIRA
           </h1>
