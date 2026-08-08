@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function LandingMotivation() {
   return (
     <section className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-16 px-8 pb-[100px] pt-[60px] md:grid-cols-[1.1fr_0.9fr]">
@@ -20,15 +22,14 @@ export function LandingMotivation() {
         </p>
       </div>
 
-      <svg viewBox="0 0 200 240" className="mx-auto w-full max-w-[280px]">
-        <g fill="none" stroke="#AF6B10" strokeWidth="1.3">
-          <path d="M100 220c-30-25-55-60-55-95a55 55 0 0 1 110 0c0 35-25 70-55 95Z" />
-          <path d="M100 220V90" />
-          <path d="M100 150c-18-10-30-8-42 2" />
-          <path d="M100 120c18-10 30-8 42 2" />
-          <path d="M100 95c-14-8-24-6-34 3" />
-        </g>
-      </svg>
+      <div className="relative mx-auto aspect-4/5 w-full max-w-[320px] overflow-hidden rounded-[10px]">
+        <Image
+          src="/images/feira-why.jpg"
+          alt="Ingredientes cearenses usados na cozinha da Feira"
+          fill
+          className="object-cover"
+        />
+      </div>
     </section>
   );
 }
