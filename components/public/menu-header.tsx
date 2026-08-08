@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 // Header fixo (sticky) usado tanto na página do cardápio quanto na de reserva.
 // No mockup original do Claude Design, cardápio e reserva eram uma única
@@ -11,17 +11,25 @@ import { usePathname } from "next/navigation";
 // URL — não precisa passar prop nem duplicar state.
 export function MenuHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const isReservationView = pathname?.startsWith("/reservas");
   return (
     <header className="sticky top-0 z-20 border-b border-dark-wine/[0.15] bg-floral-white">
       <div className="flex items-center justify-between px-[18px] py-4">
         {isReservationView ? (
-          <Link
-            href="/"
+          <button
+            type="button"
+            onClick={() => {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/");
+              }
+            }}
             className="flex items-center gap-1.5 py-1.5 font-sans text-sm font-semibold text-dark-wine"
           >
-            ← Cardápio
-          </Link>
+            ← Voltar
+          </button>
         ) : (
           <span className="w-[70px]" />
         )}

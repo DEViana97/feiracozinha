@@ -6,13 +6,13 @@ export type MenuFooterInfo = {
   instagram: string | null;
 };
 
-function buildWhatsappUrl(phone: string) {
+export function buildWhatsappUrl(phone: string) {
   const digits = phone.replace(/\D/g, "");
   const withCountryCode = digits.startsWith("55") ? digits : `55${digits}`;
   return `https://wa.me/${withCountryCode}`;
 }
 
-function buildInstagramUrl(instagram: string) {
+export function buildInstagramUrl(instagram: string) {
   return `https://instagram.com/${instagram.replace("@", "")}`;
 }
 

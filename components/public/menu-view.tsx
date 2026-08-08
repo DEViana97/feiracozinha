@@ -28,15 +28,22 @@ export type SecondaryCategoryData = {
 type MenuViewProps = {
   territoryCategories: TerritoryCategoryData[];
   secondaryCategories: SecondaryCategoryData[];
+  initialCategory?: string;
 };
 
 // Os chips de categoria funcionam como um filtro: só a seção território
 // ativa é exibida por vez (não é navegação por âncora/scroll). As seções
 // secundárias (Adega/Bebidas/Sobremesas) ficam sempre visíveis abaixo,
 // depois do divisor de cobogó — ver Cardápio Feira, Cozinha e Mesa.dc.html.
-export function MenuView({ territoryCategories, secondaryCategories }: MenuViewProps) {
+//
+// `initialCategory` permite abrir já filtrado numa categoria específica —
+// usado pelo link "Ver no cardápio" da landing (?categoria=serra), lido em
+// cardapio/page.tsx e repassado aqui.
+export function MenuView({ territoryCategories, secondaryCategories, initialCategory }: MenuViewProps) {
   const [activeCategory, setActiveCategory] = useState<string>(
-    territoryCategories[0]?.key ?? ""
+    (initialCategory && territoryCategories.some((c) => c.key === initialCategory)
+      ? initialCategory
+      : territoryCategories[0]?.key) ?? ""
   );
   const { fontScale, setFontScale } = useFontZoom();
 

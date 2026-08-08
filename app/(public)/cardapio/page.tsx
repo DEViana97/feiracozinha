@@ -20,7 +20,12 @@ export const revalidate = 0;
 // Mesa.dc.html / Component.CATEGORY_DEFS.
 const TERRITORY_KEYS: CategoryIconKey[] = ["serra", "sertao", "mar"];
 
-export default async function CardapioPage() {
+export default async function CardapioPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ categoria?: string }>;
+}) {
+  const { categoria } = await searchParams;
   const [categories, slides, restaurantInfo] = await Promise.all([
     getCategoriesWithItems(),
     getIdentitySlides(),
@@ -105,6 +110,7 @@ export default async function CardapioPage() {
           <MenuView
             territoryCategories={territoryCategories}
             secondaryCategories={secondaryCategories}
+            initialCategory={categoria}
           />
 
           <MenuFooter

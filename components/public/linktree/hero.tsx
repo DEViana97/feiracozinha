@@ -24,7 +24,7 @@ export function LinktreeHero() {
 
         {/* Logotipo principal */}
         <div className="flex items-center justify-center gap-1">
-          <Image src="/images/cobogo-mark2-white.png" alt="" width={17} height={34} className="h-[34px] w-auto" />
+          <Image src="/images/cobogo-mark2-white.png" alt="" width={18} height={34} className="h-[34px] w-auto" />
           <h1 className="m-0 font-serif text-[38px] font-medium tracking-[3px] text-floral-white">
             FEIRA
           </h1>
