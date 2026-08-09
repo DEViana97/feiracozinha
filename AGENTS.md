@@ -45,6 +45,22 @@ Pra reativar: descomentar esses trechos (procurar "Subcategorias temporariamente
 desativado" no código) e restaurar o texto de instrução em
 `app/admin/(dashboard)/categories/page.tsx`.
 
+## Feature de variações de item temporariamente desativada
+
+A UI de variações (sabor/tamanho) de um item do cardápio está **comentada**, não
+removida. Schema do Prisma (`ItemVariant`) e dados no banco continuam intactos;
+o form de item ainda carrega e reenvia as variações existentes sem alteração
+(pass-through), então salvar um item editado não apaga variações já cadastradas.
+
+Partes comentadas:
+- `components/admin/item-form.tsx` — import de `useFieldArray`/`Plus`/`Trash2`,
+  destructure `fields`/`append`/`remove`, seção "Variações (sabor/tamanho)" no form
+- `app/(public)/cardapio/[slug]/page.tsx` — `hasVariants`, preço "A partir de",
+  seção "Variações" na página do item
+
+Pra reativar: descomentar esses trechos (procurar "Variações temporariamente
+desativado" no código).
+
 ## Quick agent guide
 
 - **Run (dev):** `npm run dev` — starts Next (v16) dev server.

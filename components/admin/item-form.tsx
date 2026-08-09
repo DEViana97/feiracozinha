@@ -2,10 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+// useFieldArray: usado pelo campo de variações (temporariamente desativado)
+// import { useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Plus, Trash2 } from "lucide-react";
+// Plus, Trash2: usados pelo campo de variações (temporariamente desativado)
+// import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -70,10 +73,11 @@ export function ItemForm({
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "variants",
-  });
+  // Variações temporariamente desativado
+  // const { fields, append, remove } = useFieldArray({
+  //   control: form.control,
+  //   name: "variants",
+  // });
 
   const categoryId = form.watch("categoryId");
   const selectedCategory = categories.find((c) => c.id === categoryId);
@@ -292,6 +296,7 @@ export function ItemForm({
           />
         </div>
 
+        {/* Variações temporariamente desativado — ver nota em AGENTS.md.
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <FormLabel>Variações (sabor/tamanho)</FormLabel>
@@ -330,6 +335,7 @@ export function ItemForm({
             </div>
           ))}
         </div>
+        */}
 
         <Button type="submit" disabled={isPending}>
           {isPending ? "Salvando..." : "Salvar item"}

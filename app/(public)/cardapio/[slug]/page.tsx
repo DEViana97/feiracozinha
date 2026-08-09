@@ -22,7 +22,8 @@ export default async function ItemDetailPage({
 
   if (!item || !item.active) notFound();
 
-  const hasVariants = item.variants.length > 0;
+  // Variações temporariamente desativado — ver nota em AGENTS.md.
+  // const hasVariants = item.variants.length > 0;
 
   return (
     <div className="pb-12">
@@ -63,9 +64,10 @@ export default async function ItemDetailPage({
           )}
         </div>
         <p className="mt-1 text-lg text-primary font-medium">
-          {hasVariants
+          {/* Variações temporariamente desativado — ver nota em AGENTS.md.
+          hasVariants
             ? `A partir de ${formatPrice(item.variants[0].price)}`
-            : formatPrice(item.basePrice)}
+            : */ formatPrice(item.basePrice)}
         </p>
 
         {/* Tags temporariamente desativado — ver nota em AGENTS.md.
@@ -91,6 +93,7 @@ export default async function ItemDetailPage({
           {item.description}
         </p>
 
+        {/* Variações temporariamente desativado — ver nota em AGENTS.md.
         {hasVariants && (
           <div className="mt-6 space-y-3">
             <h2 className="font-serif text-xl">Variações</h2>
@@ -125,6 +128,7 @@ export default async function ItemDetailPage({
             ))}
           </div>
         )}
+        */}
       </div>
     </div>
   );
