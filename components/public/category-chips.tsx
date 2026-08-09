@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export type CategoryChip = {
   key: string;
   name: string;
   color: string;
+  coverImageUrl?: string | null;
 };
 
 type CategoryChipsProps = {
@@ -52,21 +54,44 @@ export function CategoryChips({
 
   return (
     <div className="flex items-center gap-2 py-4 pl-5 pr-[18px]">
-      <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+      <div className="flex min-w-0 flex-1 gap-2.5 overflow-x-auto [&::-webkit-scrollbar]:hidden">
         {categories.map((cat) => {
           const isActive = cat.key === activeCategory;
           return (
             <button
               key={cat.key}
               onClick={() => onSelect(cat.key)}
-              className="flex-shrink-0 whitespace-nowrap rounded-full px-3.5 py-2 font-sans text-[13px] font-medium transition-colors"
+              className="relative h-12 w-36 shrink-0 overflow-hidden rounded-2xl transition-all"
               style={{
-                backgroundColor: isActive ? cat.color : "transparent",
-                color: isActive ? "#FCF5EB" : cat.color,
-                border: `1px solid ${cat.color}`,
+                outline: isActive ? `2px solid ${cat.color}` : "2px solid transparent",
+                outlineOffset: "2px",
               }}
             >
-              {cat.name}
+              {cat.coverImageUrl ? (
+                <Image
+                  src={cat.coverImageUrl}
+                  alt=""
+                  fill
+                  sizes="144px"
+                  className="object-cover"
+                />
+              ) : (
+                <div
+                  className="absolute inset-0"
+                  style={{ backgroundColor: cat.color }}
+                />
+              )}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: isActive
+                    ? `linear-gradient(0deg, ${cat.color}E6 0%, ${cat.color}66 55%, ${cat.color}33 100%)`
+                    : "linear-gradient(0deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0.12) 100%)",
+                }}
+              />
+              <span className="absolute inset-0 flex items-center justify-center px-2 text-center font-sans text-[13px] font-semibold leading-tight text-floral-white">
+                {cat.name}
+              </span>
             </button>
           );
         })}

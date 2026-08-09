@@ -43,6 +43,7 @@ export default async function CardapioPage({
         name: c.name,
         color: brand?.color ?? "#6E2721",
         tagline: brand?.tagline ?? "",
+        coverImageUrl: c.coverImageUrl,
         items: c.menuItems.map((item) => ({
           name: item.name,
           description: item.description,

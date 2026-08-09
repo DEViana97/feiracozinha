@@ -14,6 +14,7 @@ export type TerritoryCategoryData = {
   name: string;
   color: string;
   tagline: string;
+  coverImageUrl?: string | null;
   items: MenuItem[];
 };
 
@@ -51,6 +52,7 @@ export function MenuView({ territoryCategories, secondaryCategories, initialCate
     key: c.key,
     name: c.name,
     color: c.color,
+    coverImageUrl: c.coverImageUrl,
   }));
 
   const activeSection =
