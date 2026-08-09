@@ -5,6 +5,7 @@ export type SecondaryMenuItem = {
   description: string;
   price: string;
   imageUrl?: string | null;
+  isNew?: boolean;
 };
 
 type SecondaryItemRowProps = {
@@ -24,7 +25,14 @@ export function SecondaryItemRow({ item }: SecondaryItemRowProps) {
           </div>
         )}
         <div className="min-w-0">
-          <h3 className="m-0 font-serif text-[15px] text-[#3B2A26]">{item.name}</h3>
+          <div className="flex items-center gap-1.5">
+            <h3 className="m-0 font-serif text-[15px] text-[#3B2A26]">{item.name}</h3>
+            {item.isNew && (
+              <span className="shrink-0 rounded-full bg-copperwood px-1.5 py-px text-[9px] font-semibold uppercase tracking-[1px] text-floral-white">
+                Novidade
+              </span>
+            )}
+          </div>
           <p className="mt-[3px] text-xs text-[#5A4E45]">{item.description}</p>
         </div>
       </div>

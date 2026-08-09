@@ -7,6 +7,7 @@ export type MenuItem = {
   price: string;
   originLabel: string;
   imageUrl?: string | null;
+  isNew?: boolean;
 };
 
 type MenuItemCardProps = {
@@ -40,9 +41,16 @@ export function MenuItemCard({ item, categoryKey, color }: MenuItemCardProps) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="m-0 font-serif text-[15px] leading-tight text-[#3B2A26]">
-          {item.name}
-        </h3>
+        <div className="flex items-center gap-1.5">
+          <h3 className="m-0 font-serif text-[15px] leading-tight text-[#3B2A26]">
+            {item.name}
+          </h3>
+          {item.isNew && (
+            <span className="shrink-0 rounded-full bg-copperwood px-1.5 py-px text-[9px] font-semibold uppercase tracking-[1px] text-floral-white">
+              Novidade
+            </span>
+          )}
+        </div>
         <p className="mb-2 mt-1 text-[11.5px] leading-relaxed text-[#5A4E45]">
           {item.description}
         </p>

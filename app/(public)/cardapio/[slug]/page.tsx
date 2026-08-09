@@ -54,7 +54,14 @@ export default async function ItemDetailPage({
       )}
 
       <div className="px-4 pt-5">
-        <h1 className="font-serif text-3xl">{item.name}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="font-serif text-3xl">{item.name}</h1>
+          {item.featured && (
+            <span className="shrink-0 rounded-full bg-copperwood px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[1px] text-floral-white">
+              Novidade
+            </span>
+          )}
+        </div>
         <p className="mt-1 text-lg text-primary font-medium">
           {hasVariants
             ? `A partir de ${formatPrice(item.variants[0].price)}`
