@@ -15,7 +15,8 @@ import {
   verticalListSortingStrategy,
   arrayMove,
 } from "@dnd-kit/sortable";
-import { ChevronDown, ChevronUp, Pencil, Plus, Trash2 } from "lucide-react";
+// ChevronDown, ChevronUp: usados pelo botão de expandir subcategorias (temporariamente desativado)
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -31,7 +32,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { SortableItem } from "@/components/admin/sortable-item";
 import { CategoryFormDialog } from "@/components/admin/category-form-dialog";
-import { SubcategoryManager } from "@/components/admin/subcategory-manager";
+// Subcategorias temporariamente desativado
+// import { SubcategoryManager } from "@/components/admin/subcategory-manager";
 import {
   deleteCategory,
   reorderCategories,
@@ -45,7 +47,8 @@ export function CategoryManager({ categories }: { categories: CategoryWithSub[] 
   const [items, setItems] = useState(categories);
   useEffect(() => setItems(categories), [categories]);
 
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  // Subcategorias temporariamente desativado
+  // const [expandedId, setExpandedId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<CategoryWithSub | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -126,7 +129,8 @@ export function CategoryManager({ categories }: { categories: CategoryWithSub[] 
                   <div className="min-w-0 flex-1">
                     <p className="font-medium">{cat.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {cat.subcategories.length} subcategoria(s) · {cat.menuItems.length} item(ns)
+                      {/* Subcategorias temporariamente desativado: {cat.subcategories.length} subcategoria(s) · */}
+                      {cat.menuItems.length} item(ns)
                     </p>
                   </div>
                   <Switch
@@ -146,6 +150,7 @@ export function CategoryManager({ categories }: { categories: CategoryWithSub[] 
                   <Button size="icon-sm" variant="ghost" onClick={() => setDeletingId(cat.id)}>
                     <Trash2 className="size-3.5" />
                   </Button>
+                  {/* Subcategorias temporariamente desativado: botão de expandir
                   <Button
                     size="icon-sm"
                     variant="ghost"
@@ -157,10 +162,13 @@ export function CategoryManager({ categories }: { categories: CategoryWithSub[] 
                       <ChevronDown className="size-3.5" />
                     )}
                   </Button>
+                  */}
                 </div>
+                {/* Subcategorias temporariamente desativado
                 {expandedId === cat.id && (
                   <SubcategoryManager categoryId={cat.id} subcategories={cat.subcategories} />
                 )}
+                */}
               </SortableItem>
             ))}
           </div>

@@ -13,7 +13,7 @@ export default async function AdminCategoriesPage() {
       <div>
         <h1 className="font-serif text-2xl">Categorias</h1>
         <p className="text-sm text-muted-foreground">
-          Arraste para reordenar. Expanda uma categoria para gerenciar subcategorias.
+          Arraste para reordenar.
         </p>
       </div>
       <CategoryManager categories={categories} />
