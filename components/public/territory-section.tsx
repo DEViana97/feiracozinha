@@ -1,4 +1,5 @@
 import { MenuItemCard, type MenuItem } from "./menu-item-card";
+import { ItemDetailModal } from "./item-detail-modal";
 import type { CategoryIconKey } from "./category-icons";
 
 type TerritorySectionProps = {
@@ -31,12 +32,9 @@ export function TerritorySection({
 
       <div className="flex flex-col gap-3">
         {items.map((item) => (
-          <MenuItemCard
-            key={item.name}
-            item={item}
-            categoryKey={categoryKey}
-            color={color}
-          />
+          <ItemDetailModal key={item.name} item={item}>
+            <MenuItemCard item={item} categoryKey={categoryKey} color={color} />
+          </ItemDetailModal>
         ))}
       </div>
     </section>

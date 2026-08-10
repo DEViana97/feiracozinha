@@ -1,4 +1,5 @@
 import { SecondaryItemRow, type SecondaryMenuItem } from "./secondary-item-row";
+import { ItemDetailModal } from "./item-detail-modal";
 
 type SecondarySectionProps = {
   name: string;
@@ -23,7 +24,9 @@ export function SecondarySection({ name, color, tagline, items }: SecondarySecti
 
       <div className="flex flex-col gap-2.5">
         {items.map((item) => (
-          <SecondaryItemRow key={item.name} item={item} />
+          <ItemDetailModal key={item.name} item={item}>
+            <SecondaryItemRow item={item} />
+          </ItemDetailModal>
         ))}
       </div>
     </section>
