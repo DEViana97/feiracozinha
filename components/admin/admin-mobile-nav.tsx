@@ -14,8 +14,7 @@ export function AdminMobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between border-b border-border px-4 py-3 md:hidden">
-      <span className="font-serif text-lg text-foreground">Feira</span>
+    <div className="flex items-center gap-2 border-b border-border px-4 py-3 md:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <Button
           variant="ghost"
@@ -32,6 +31,7 @@ export function AdminMobileNav() {
           </div>
         </SheetContent>
       </Sheet>
+      <span className="font-serif text-lg text-foreground">Feira</span>
     </div>
   );
 }
