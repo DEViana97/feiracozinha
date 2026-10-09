@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 // Cabeçalho estilo "perfil": banner arredondado com o fundo de cobogó vinho,
-// avatar com a marca na base do banner e o nome embaixo.
+// avatar com a marca na base do banner.
 export function LinktreeHero() {
   return (
-    <section className="px-4 pt-4 text-center">
+    <section className="px-4 pb-0 pt-4 text-center">
       <div className="relative h-[200px] rounded-[22px] bg-dark-wine">
         <div
           aria-hidden
@@ -31,9 +31,8 @@ export function LinktreeHero() {
         </div>
       </div>
 
-      <h1 className="m-0 mt-3.5 pb-6 font-sans text-[28px] font-bold leading-tight text-[#1F1A17]">
-        Feira Cozinha
-      </h1>
+      {/* Só para leitores de tela e SEO: o nome não aparece na tela. */}
+      <h1 className="sr-only">Feira, Cozinha e Mesa</h1>
     </section>
   );
 }
