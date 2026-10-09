@@ -224,7 +224,7 @@ export function ItemForm({
             <FormItem>
               <FormLabel>Imagem</FormLabel>
               <FormControl>
-                <ImageUploadField value={field.value} onChange={field.onChange} />
+                <ImageUploadField value={field.value} onChange={field.onChange} aspect={1} />
               </FormControl>
               <FormMessage />
             </FormItem>

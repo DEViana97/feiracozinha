@@ -91,7 +91,11 @@ export function SlideFormDialog({
                 <FormItem>
                   <FormLabel>Imagem</FormLabel>
                   <FormControl>
-                    <ImageUploadField value={field.value} onChange={(url) => field.onChange(url ?? "")} />
+                    <ImageUploadField
+                      value={field.value}
+                      onChange={(url) => field.onChange(url ?? "")}
+                      aspect={21 / 9}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

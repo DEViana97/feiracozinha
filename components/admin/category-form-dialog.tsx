@@ -104,7 +104,7 @@ export function CategoryFormDialog({
                 <FormItem>
                   <FormLabel>Imagem de capa</FormLabel>
                   <FormControl>
-                    <ImageUploadField value={field.value} onChange={field.onChange} />
+                    <ImageUploadField value={field.value} onChange={field.onChange} aspect={3} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
