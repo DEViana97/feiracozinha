@@ -1,18 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Faculty_Glyphic } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-});
-
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
+// Fonte única do site (títulos e texto corrido). Só existe o peso 400: negrito
+// e itálico são sintetizados pelo navegador.
+const glyphic = Faculty_Glyphic({
+  variable: "--font-glyphic",
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased dark`}
+      className={`${glyphic.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}

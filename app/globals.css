@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-glyphic), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
+  --font-serif: var(--font-glyphic), ui-serif, Georgia, serif;
   --font-heading: var(--font-serif);
   --color-terracota: var(--terracota);
   --color-terracota-foreground: var(--terracota-foreground);
@@ -146,6 +146,26 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Hero da landing: faixa de fotos deslizando para a direita (ver landing/hero.tsx) */
+@keyframes hero-pan {
+  from {
+    transform: translateX(-25%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.hero-pan {
+  animation: hero-pan 30s linear infinite;
+  will-change: transform;
+}
+/* Quem pede "reduzir movimento" no sistema vê o mesmo deslize, só bem mais lento. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-pan {
+    animation-duration: 120s;
   }
 }
 
