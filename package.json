@@ -9,6 +9,8 @@
     "lint": "eslint",
     "seed": "tsx prisma/seed.ts",
     "seed:reservations": "tsx prisma/seed-reservations.ts",
+    "seed:wines": "tsx prisma/seed-wines.ts",
+    "seed:menu": "tsx prisma/seed-menu.ts",
     "create-admin": "tsx prisma/create-admin.ts",
     "postinstall": "prisma generate"
   },
