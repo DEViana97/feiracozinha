@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getItemBySlug } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
-// Tags temporariamente desativado — ver nota em AGENTS.md.
+// Tags temporariamente desativado - ver nota em AGENTS.md.
 // import { getTagIcon } from "@/lib/tag-icons";
 import { FontSizeToggle } from "@/components/public/font-size-toggle";
 import { ShareButton } from "@/components/public/share-button";
@@ -22,7 +22,7 @@ export default async function ItemDetailPage({
 
   if (!item || !item.active) notFound();
 
-  // Variações temporariamente desativado — ver nota em AGENTS.md.
+  // Variações temporariamente desativado - ver nota em AGENTS.md.
   // const hasVariants = item.variants.length > 0;
 
   return (
@@ -64,13 +64,13 @@ export default async function ItemDetailPage({
           )}
         </div>
         <p className="mt-1 text-lg text-primary font-medium">
-          {/* Variações temporariamente desativado — ver nota em AGENTS.md.
+          {/* Variações temporariamente desativado - ver nota em AGENTS.md.
           hasVariants
             ? `A partir de ${formatPrice(item.variants[0].price)}`
             : */ formatPrice(item.basePrice)}
         </p>
 
-        {/* Tags temporariamente desativado — ver nota em AGENTS.md.
+        {/* Tags temporariamente desativado - ver nota em AGENTS.md.
         {item.tags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-3">
             {item.tags.map(({ tag }) => {
@@ -93,7 +93,7 @@ export default async function ItemDetailPage({
           {item.description}
         </p>
 
-        {/* Variações temporariamente desativado — ver nota em AGENTS.md.
+        {/* Variações temporariamente desativado - ver nota em AGENTS.md.
         {hasVariants && (
           <div className="mt-6 space-y-3">
             <h2 className="font-serif text-xl">Variações</h2>

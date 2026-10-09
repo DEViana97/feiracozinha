@@ -7,7 +7,7 @@ export function LandingManifesto() {
       </p>
       <p className="mt-8 text-base leading-[1.85] text-taupe">
         O verdadeiro valor de uma cozinha não está no prato em si, mas na
-        profundidade da emoção que ele evoca — a memória que reconstrói, o
+        profundidade da emoção que ele evoca: a memória que reconstrói, o
         lugar que nomeia, a mão que se reconhece nele. Com a comida
         cearense, esse princípio é o mesmo: o valor sempre esteve lá.
         Faltava contá-lo.

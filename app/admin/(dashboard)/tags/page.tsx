@@ -1,4 +1,4 @@
-// Tela de gestão de tags temporariamente desativada — ver nota em AGENTS.md.
+// Tela de gestão de tags temporariamente desativada - ver nota em AGENTS.md.
 // import { getAllTags } from "@/lib/queries";
 // import { TagManager } from "@/components/admin/tag-manager";
 //

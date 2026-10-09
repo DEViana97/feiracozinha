@@ -1,5 +1,5 @@
 /**
- * DADOS DE DEMONSTRAÇÃO — substitua ou edite pelo painel /admin.
+ * DADOS DE DEMONSTRAÇÃO - substitua ou edite pelo painel /admin.
  * Rode com: npm run seed
  */
 import { PrismaClient, TagType } from "@prisma/client";
@@ -27,7 +27,7 @@ async function main() {
   }
 
   // ---------- Carrossel de identidade ----------
-  // Fotos de demonstração — substitua pelas fotos reais do restaurante
+  // Fotos de demonstração - substitua pelas fotos reais do restaurante
   // pelo painel /admin/carousel assim que a sessão de fotografia sair.
   const slideData = [
     {
@@ -73,18 +73,18 @@ async function main() {
       id: "singleton",
       name: "Feira, Cozinha e Mesa",
       tagline: "Da nossa terra para o centro da sua mesa",
-      address: "Rua das Flores, 123 — Praia de Iracema, Fortaleza/CE",
+      address: "Rua das Flores, 123, Praia de Iracema, Fortaleza/CE",
       phone: "(85) 99999-0000",
       email: "contato@feiracozinha.com.br",
       instagram: "@feiracozinhaemesa",
       drawerText:
-        "Nascemos da feira, do mercado, do gesto de escolher o peixe do dia e a raiz da estação. Cozinha contemporânea de território — cada prato carrega um pedaço do Ceará.",
+        "Nascemos da feira, do mercado, do gesto de escolher o peixe do dia e a raiz da estação. Cozinha contemporânea de território: cada prato carrega um pedaço do Ceará.",
     },
   });
 
   // ---------- Categorias + Itens ----------
   // Categorização, cores, taglines e itens vêm do bundle de design
-  // (Cardápio Feira, Cozinha e Mesa.dc.html — Component.CATEGORY_DEFS /
+  // (Cardápio Feira, Cozinha e Mesa.dc.html - Component.CATEGORY_DEFS /
   // SECONDARY_DEFS / ITEMS), já validado com o cliente. Substitui a
   // categorização anterior (Da Feira/Do Mar/Da Terra/Da Doceira/Da Adega).
   const NEW_SLUGS = ["serra", "sertao", "mar", "adega", "bebidas", "sobremesas"];
@@ -247,7 +247,7 @@ async function main() {
         {
           name: "Vinho Branco Alvarinho",
           slug: "vinho-branco-alvarinho",
-          description: "Seco, fresco, notas cítricas — taça ou garrafa.",
+          description: "Seco, fresco, notas cítricas. Taça ou garrafa.",
           basePrice: "28.00",
           imageUrl:
             "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=1200",
@@ -265,7 +265,7 @@ async function main() {
         {
           name: "Vinho Tinto Cabernet Sauvignon",
           slug: "vinho-tinto-cabernet-sauvignon",
-          description: "Corpo médio, taninos suaves — taça ou garrafa.",
+          description: "Corpo médio, taninos suaves. Taça ou garrafa.",
           basePrice: "30.00",
           imageUrl:
             "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1200",

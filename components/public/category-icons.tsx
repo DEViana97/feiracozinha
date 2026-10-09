@@ -1,6 +1,6 @@
 type IconProps = { color: string };
 
-// Ícones extraídos diretamente do export do Claude Design — um por categoria,
+// Ícones extraídos diretamente do export do Claude Design - um por categoria,
 // desenhados para evitar clichê regionalista (sem cactos/chapéu/sol).
 export function IconServa({ color }: IconProps) {
   return (

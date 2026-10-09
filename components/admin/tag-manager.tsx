@@ -1,4 +1,4 @@
-// Gestão de tags temporariamente desativada — ver nota em AGENTS.md.
+// Gestão de tags temporariamente desativada - ver nota em AGENTS.md.
 // Componente inteiro comentado abaixo pra reativar facilmente depois.
 /*
 "use client";

@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Feira — Cozinha e Mesa",
+  title: "Feira, Cozinha e Mesa",
   description: "A origem do Ceará no centro da mesa.",
 };
 

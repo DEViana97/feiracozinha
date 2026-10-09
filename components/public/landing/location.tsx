@@ -1,6 +1,6 @@
 import { buildWhatsappUrl, buildInstagramUrl } from "@/components/public/menu-footer";
 
-// TODO: horário de funcionamento — não existe campo no RestaurantInfo hoje,
+// TODO: horário de funcionamento - não existe campo no RestaurantInfo hoje,
 // confirmar com o Fernando e cadastrar em /admin/settings (ou adicionar o
 // campo ao model) quando definido. Endereço/WhatsApp/Instagram já vêm do
 // banco (mesmos dados usados no rodapé do cardápio).

@@ -15,14 +15,14 @@ de tags no formulário de item, badges na página do item) está **comentada**, 
 removida. Schema do Prisma e dados no banco continuam intactos.
 
 Partes comentadas:
-- `components/admin/admin-nav.tsx` — link "Tags" no menu
-- `app/admin/(dashboard)/tags/page.tsx` — tela de gestão (stub no lugar)
-- `components/admin/tag-manager.tsx` — componente inteiro
-- `lib/actions/tag.ts`, `lib/validations/tag.ts` — arquivos inteiros
-- `components/admin/item-form.tsx` — seletor de tags no formulário de item
-- `app/admin/(dashboard)/items/new/page.tsx` e `.../[id]/edit/page.tsx` — chamada a `getAllTags()`
-- `lib/queries.ts` — função `getAllTags()`
-- `app/(public)/cardapio/[slug]/page.tsx` — badges de tags na página do item
+- `components/admin/admin-nav.tsx` - link "Tags" no menu
+- `app/admin/(dashboard)/tags/page.tsx` - tela de gestão (stub no lugar)
+- `components/admin/tag-manager.tsx` - componente inteiro
+- `lib/actions/tag.ts`, `lib/validations/tag.ts` - arquivos inteiros
+- `components/admin/item-form.tsx` - seletor de tags no formulário de item
+- `app/admin/(dashboard)/items/new/page.tsx` e `.../[id]/edit/page.tsx` - chamada a `getAllTags()`
+- `lib/queries.ts` - função `getAllTags()`
+- `app/(public)/cardapio/[slug]/page.tsx` - badges de tags na página do item
 
 Pra reativar: descomentar esses trechos (procurar "Tags temporariamente desativado" no
 código) e devolver o link no admin-nav.
@@ -53,9 +53,9 @@ o form de item ainda carrega e reenvia as variações existentes sem alteração
 (pass-through), então salvar um item editado não apaga variações já cadastradas.
 
 Partes comentadas:
-- `components/admin/item-form.tsx` — import de `useFieldArray`/`Plus`/`Trash2`,
+- `components/admin/item-form.tsx` - import de `useFieldArray`/`Plus`/`Trash2`,
   destructure `fields`/`append`/`remove`, seção "Variações (sabor/tamanho)" no form
-- `app/(public)/cardapio/[slug]/page.tsx` — `hasVariants`, preço "A partir de",
+- `app/(public)/cardapio/[slug]/page.tsx` - `hasVariants`, preço "A partir de",
   seção "Variações" na página do item
 
 Pra reativar: descomentar esses trechos (procurar "Variações temporariamente
@@ -63,7 +63,7 @@ desativado" no código).
 
 ## Quick agent guide
 
-- **Run (dev):** `npm run dev` — starts Next (v16) dev server.
+- **Run (dev):** `npm run dev` - starts Next (v16) dev server.
 - **Build & start:** `npm run build` then `npm run start` for production.
 - **DB / Prisma:** `npm run seed` populates sample data, `npm run create-admin` creates an admin user, and `postinstall` runs `prisma generate`.
 - **Lint:** `npm run lint`.
@@ -77,7 +77,7 @@ desativado" no código).
 
 ### Conventions & notes for agents
 
-- This project uses Next 16 and its changed conventions — consult `node_modules/next/dist/docs/` if unsure.
+- This project uses Next 16 and its changed conventions - consult `node_modules/next/dist/docs/` if unsure.
 - The `Tag`/allergens feature is intentionally commented out; see the "Feature de tags temporariamente desativada" section above for affected files before re-enabling.
 - Avoid destructive DB commands against production. For local development, use `npm run seed` and the provided migrations.
 - When editing code, prefer small, targeted changes and add tests or manual verification steps where appropriate.

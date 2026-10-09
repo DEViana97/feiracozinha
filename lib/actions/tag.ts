@@ -1,4 +1,4 @@
-// Gestão de tags temporariamente desativada — ver nota em AGENTS.md.
+// Gestão de tags temporariamente desativada - ver nota em AGENTS.md.
 /*
 "use server";
 

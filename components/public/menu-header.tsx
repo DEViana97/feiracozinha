@@ -8,7 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 // No mockup original do Claude Design, cardápio e reserva eram uma única
 // página com state interno (view: 'menu' | 'reservation'). Aqui, como o
 // projeto usa rotas reais (/cardapio e /reservas), a view é detectada pela
-// URL — não precisa passar prop nem duplicar state.
+// URL - não precisa passar prop nem duplicar state.
 export function MenuHeader() {
   const pathname = usePathname();
   const router = useRouter();

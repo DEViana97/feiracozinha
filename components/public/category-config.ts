@@ -1,12 +1,12 @@
 import type { CategoryIconKey } from "./category-icons";
 
-// Isso NÃO é dado de cardápio (nome do prato, preço) — é decisão de marca
+// Isso NÃO é dado de cardápio (nome do prato, preço) - é decisão de marca
 // (cor, texto de apoio, ícone). Fica separado do banco de propósito: se
 // amanhã quiserem uma cor diferente para "Do Mar", muda aqui, sem precisar
 // de migration.
 //
 // A chave (serra/sertao/mar/adega/bebidas/sobremesas) precisa bater com o
-// slug ou nome normalizado da categoria salva no banco — ajustar o mapeamento
+// slug ou nome normalizado da categoria salva no banco - ajustar o mapeamento
 // na página conforme o schema real do Prisma.
 export const CATEGORY_BRAND_CONFIG: Record<
   string,

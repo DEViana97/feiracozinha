@@ -4,7 +4,7 @@ import { ItemForm } from "@/components/admin/item-form";
 export const dynamic = "force-dynamic";
 
 export default async function NewItemPage() {
-  // Tags temporariamente desativado — ver nota em AGENTS.md.
+  // Tags temporariamente desativado - ver nota em AGENTS.md.
   const categories = await getCategoriesForSelect();
 
   return (

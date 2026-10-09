@@ -10,7 +10,7 @@ type FontZoomContextValue = {
 const FontZoomContext = createContext<FontZoomContextValue | null>(null);
 
 // Envolve a página inteira (header, hero, carrossel, seções, footer) com o
-// zoom de acessibilidade — no mockup original, tudo é uma única view com um
+// zoom de acessibilidade - no mockup original, tudo é uma única view com um
 // `style="zoom: {{ fontZoom }}"` no wrapper de mais alto nível.
 export function FontZoomProvider({ children }: { children: React.ReactNode }) {
   const [fontScale, setFontScale] = useState(1);

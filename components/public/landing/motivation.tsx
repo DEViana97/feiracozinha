@@ -9,13 +9,13 @@ export function LandingMotivation() {
         </h2>
         <p className="mb-[18px] text-[15.5px] leading-[1.85] text-taupe">
           A Feira nasce de uma percepção simples e incômoda: os ingredientes
-          do Ceará — a carne de sol, a macaxeira, o queijo coalho, o peixe
-          da manhã — são tratados como cotidianos demais para sustentar uma
+          do Ceará (a carne de sol, a macaxeira, o queijo coalho, o peixe
+          da manhã) são tratados como cotidianos demais para sustentar uma
           cozinha de alto padrão. Como se precisassem de outro sotaque para
           merecer atenção.
         </p>
         <p className="m-0 text-[15.5px] leading-[1.85] text-taupe">
-          Não precisam. A Feira parte do Ceará como território alimentar —
+          Não precisam. A Feira parte do Ceará como território alimentar,
           não como tema, não como decoração. O que muda é a técnica, o
           cuidado e o contexto em que esse ingrediente é servido. A origem
           permanece intacta.

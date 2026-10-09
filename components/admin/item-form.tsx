@@ -29,7 +29,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
-// Tags temporariamente desativado — ver nota em AGENTS.md.
+// Tags temporariamente desativado - ver nota em AGENTS.md.
 // import { getTagIcon } from "@/lib/tag-icons";
 // import { cn } from "@/lib/utils";
 import { menuItemSchema, type MenuItemInput } from "@/lib/validations/item";
@@ -40,7 +40,7 @@ type CategoryOption = {
   name: string;
   subcategories: { id: string; name: string }[];
 };
-// Tags temporariamente desativado — ver nota em AGENTS.md.
+// Tags temporariamente desativado - ver nota em AGENTS.md.
 type TagOption = { id: string; name: string; icon: string };
 
 export function ItemForm({
@@ -81,7 +81,7 @@ export function ItemForm({
 
   const categoryId = form.watch("categoryId");
   const selectedCategory = categories.find((c) => c.id === categoryId);
-  // const tagIds = form.watch("tagIds"); // Tags temporariamente desativado — ver nota em AGENTS.md.
+  // const tagIds = form.watch("tagIds"); // Tags temporariamente desativado - ver nota em AGENTS.md.
 
   function onSubmit(values: MenuItemInput) {
     startTransition(async () => {
@@ -231,7 +231,7 @@ export function ItemForm({
           )}
         />
 
-        {/* Tags temporariamente desativado — ver nota em AGENTS.md.
+        {/* Tags temporariamente desativado - ver nota em AGENTS.md.
         <FormItem>
           <FormLabel>Tags</FormLabel>
           <div className="flex flex-wrap gap-2">
@@ -296,7 +296,7 @@ export function ItemForm({
           />
         </div>
 
-        {/* Variações temporariamente desativado — ver nota em AGENTS.md.
+        {/* Variações temporariamente desativado - ver nota em AGENTS.md.
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <FormLabel>Variações (sabor/tamanho)</FormLabel>

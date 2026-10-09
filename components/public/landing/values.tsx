@@ -13,7 +13,7 @@ const VALUES = [
   },
   {
     title: "Hospitalidade",
-    quote: "Acolher sem perder refinamento — a mesa como lugar de encontro real.",
+    quote: "Acolher sem perder refinamento: a mesa como lugar de encontro real.",
   },
 ];
 

@@ -1,15 +1,15 @@
-# Feira, Cozinha e Mesa — Cardápio Digital
+# Feira, Cozinha e Mesa - Cardápio Digital
 
 Cardápio digital para o restaurante **Feira** (Ceará), pensado para acesso via QR code na mesa.
 Site público mobile-first + painel administrativo (`/admin`) para a equipe gerenciar categorias,
-itens, variações, tags e informações do restaurante — sem tocar em código.
+itens, variações, tags e informações do restaurante - sem tocar em código.
 
 ## Stack
 
 - Next.js (App Router, Server Components + Server Actions) + TypeScript
 - Tailwind CSS + shadcn/ui
 - Prisma ORM + PostgreSQL (Neon)
-- Auth.js (Credentials — e-mail/senha) para proteger `/admin`
+- Auth.js (Credentials - e-mail/senha) para proteger `/admin`
 - Vercel Blob para upload/armazenamento de imagens
 - Framer Motion, Embla Carousel, lucide-react
 
@@ -74,7 +74,7 @@ prisma/seed.ts           dados de demonstração
 prisma/create-admin.ts   cria/atualiza o usuário admin inicial
 ```
 
-Toda escrita passa por Server Actions que chamam `revalidatePath` — mudanças feitas no admin
+Toda escrita passa por Server Actions que chamam `revalidatePath` - mudanças feitas no admin
 aparecem imediatamente no site público, sem precisar de rebuild.
 
 ## 6. Deploy na Vercel
@@ -90,7 +90,7 @@ aparecem imediatamente no site público, sem precisar de rebuild.
    DATABASE_URL="<url-de-producao>" ADMIN_EMAIL=... ADMIN_PASSWORD=... npm run create-admin
    ```
 4. Faça o deploy. Site público e painel admin ficam no mesmo projeto/domínio.
-5. Gere o QR code apontando para a URL publicada (ex.: `https://seudominio.com`) — isso é feito
+5. Gere o QR code apontando para a URL publicada (ex.: `https://seudominio.com`) - isso é feito
    fora do código, em qualquer gerador de QR code.
 
 ## 7. Comandos úteis
