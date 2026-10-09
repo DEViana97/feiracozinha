@@ -31,6 +31,28 @@ export function CategoryChips({
 }: CategoryChipsProps) {
   const [a11yOpen, setA11yOpen] = useState(false);
   const a11yRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+
+  // A barra gruda logo abaixo do header fixo da página (altura não é fixa).
+  useEffect(() => {
+    const header = document.querySelector("header");
+    const bar = barRef.current;
+    if (!header || !bar) return;
+    const apply = () => {
+      bar.style.top = `${header.getBoundingClientRect().height}px`;
+    };
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
+  // Com muitas categorias a lista rola na horizontal: mantém a ativa visível.
+  useEffect(() => {
+    const el = listRef.current?.querySelector<HTMLElement>('[data-active="true"]');
+    el?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+  }, [activeCategory]);
 
   useEffect(() => {
     if (!a11yOpen) return;
@@ -53,13 +75,20 @@ export function CategoryChips({
   }, [a11yOpen]);
 
   return (
-    <div className="flex items-center gap-2 py-4 pl-5 pr-[18px]">
-      <div className="flex min-w-0 flex-1 gap-2.5 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+    <div
+      ref={barRef}
+      className="sticky top-[98px] z-10 flex items-center gap-2 border-b border-black/[0.06] bg-floral-white py-3 pl-5 pr-[18px]"
+    >
+      <div
+        ref={listRef}
+        className="flex min-w-0 flex-1 gap-2.5 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+      >
         {categories.map((cat) => {
           const isActive = cat.key === activeCategory;
           return (
             <button
               key={cat.key}
+              data-active={isActive}
               onClick={() => onSelect(cat.key)}
               className="relative h-12 w-36 shrink-0 overflow-hidden rounded-2xl transition-all"
               style={{
