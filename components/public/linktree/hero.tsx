@@ -1,43 +1,39 @@
 import Image from "next/image";
 
+// Cabeçalho estilo "perfil": banner arredondado com o fundo de cobogó vinho,
+// avatar com a marca na base do banner e o nome embaixo.
 export function LinktreeHero() {
   return (
-    <section className="relative overflow-hidden bg-dark-wine px-6 pb-9 pt-11 text-center">
-      {/* Padrão de cobogó como textura de fundo */}
-      <div
-        className="absolute inset-0 opacity-[0.14]"
-        style={{
-          backgroundImage: "url('/images/cobogo.png')",
-          backgroundSize: "200px",
-          backgroundRepeat: "repeat",
-        }}
-      />
+    <section className="px-4 pt-4 text-center">
+      <div className="relative h-[200px] rounded-[22px] bg-dark-wine">
+        <div
+          aria-hidden
+          className="absolute inset-0 overflow-hidden rounded-[22px]"
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/cobogo-wine.jpg')" }}
+          />
+        </div>
 
-      <div className="relative">
-        {/* Avatar */}
-        <div className="mx-auto mb-4 flex h-[76px] w-[76px] items-center justify-center gap-0.5 rounded-full bg-floral-white">
-          <Image src="/images/cobogo-mark2.png" alt="" width={8} height={16} className="h-4 w-auto" />
-          <span className="font-serif text-[17px] tracking-wide text-dark-wine">
+        {/* Avatar: sobrepõe a borda inferior do banner */}
+        <div className="absolute -bottom-2 left-1/2 flex h-[124px] w-[124px] -translate-x-1/2 items-center justify-center gap-1 rounded-full bg-floral-white shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+          <Image
+            src="/images/cobogo-mark2.png"
+            alt=""
+            width={12}
+            height={24}
+            className="h-7 w-auto"
+          />
+          <span className="font-serif text-[29px] leading-none text-dark-wine">
             FEIRA
           </span>
         </div>
-
-        {/* Logotipo principal */}
-        <div className="flex items-center justify-center gap-1">
-          <Image src="/images/cobogo-mark2-white.png" alt="" width={18} height={34} className="h-[34px] w-auto" />
-          <h1 className="m-0 font-serif text-[38px] font-medium tracking-[3px] text-floral-white">
-            FEIRA
-          </h1>
-        </div>
-
-        <div className="mt-2 text-[11.5px] uppercase tracking-[3.5px] text-[#E9D9C6]">
-          Cozinha e Mesa
-        </div>
-
-        <p className="mt-4 font-serif text-[14.5px] italic text-[#F1DFC9]">
-          A origem do Ceará no centro da mesa.
-        </p>
       </div>
+
+      <h1 className="m-0 mt-3.5 pb-6 font-sans text-[28px] font-bold leading-tight text-[#1F1A17]">
+        Feira Cozinha
+      </h1>
     </section>
   );
 }
