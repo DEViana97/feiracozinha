@@ -5,14 +5,11 @@ export function LandingHero() {
   return (
     <section className="relative overflow-hidden bg-dark-wine px-8 pb-[100px] pt-[110px] text-center">
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/images/cobogo-wine.jpg')",
-          backgroundSize: "140px auto",
-          backgroundRepeat: "repeat",
-          backgroundPosition: "center",
-        }}
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/hero-mesa.jpg')" }}
       />
+      {/* Escurece a foto para o texto claro continuar legível */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#3a100c]/75 via-[#3a100c]/65 to-[#3a100c]/80" />
       <div className="relative mx-auto max-w-[680px]">
         <div className="mb-3.5 flex items-center justify-center gap-2">
           <Image src="/images/cobogo-mark2-white.png" alt="" width={21} height={40} className="h-10 w-auto" />
