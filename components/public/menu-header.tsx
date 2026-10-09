@@ -15,7 +15,7 @@ export function MenuHeader() {
   const isReservationView = pathname?.startsWith("/reservas");
   return (
     <header className="sticky top-0 z-20 border-b border-dark-wine/[0.15] bg-floral-white">
-      <div className="flex items-center justify-between px-[18px] py-4">
+      <div className="flex items-center justify-between px-[18px] py-2.5">
         {isReservationView ? (
           <button
             type="button"
@@ -34,12 +34,14 @@ export function MenuHeader() {
           <span className="w-[70px]" />
         )}
 
-        <div className="flex items-center gap-1">
-          <Image src="/images/cobogo-mark.png" alt="" width={11} height={22} className="h-[22px] w-auto" />
-          <span className="font-serif text-xl tracking-[2px] text-dark-wine">
-            FEIRA
-          </span>
-        </div>
+        <Image
+          src="/images/logo-feira-vermelho.svg"
+          alt="Feira, Cozinha e Mesa"
+          width={676}
+          height={434}
+          priority
+          className="h-[60px] w-auto"
+        />
 
         {!isReservationView ? (
           <Link
@@ -51,9 +53,6 @@ export function MenuHeader() {
         ) : (
           <span className="w-[70px]" />
         )}
-      </div>
-      <div className="pb-2.5 text-center font-sans text-[11px] uppercase tracking-[3px] text-olive-wood">
-        Cozinha e Mesa
       </div>
     </header>
   );
