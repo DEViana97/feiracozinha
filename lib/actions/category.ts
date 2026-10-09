@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { requireAuth } from "@/lib/require-auth";
 import { slugify } from "@/lib/slugify";
 import {
   categorySchema,
@@ -26,6 +27,7 @@ async function uniqueCategorySlug(name: string, excludeId?: string) {
 }
 
 export async function createCategory(input: CategoryInput) {
+  await requireAuth();
   const data = categorySchema.parse(input);
   const slug = await uniqueCategorySlug(data.name);
   const maxOrder = await prisma.category.aggregate({ _max: { order: true } });
@@ -45,6 +47,7 @@ export async function createCategory(input: CategoryInput) {
 }
 
 export async function updateCategory(id: string, input: CategoryInput) {
+  await requireAuth();
   const data = categorySchema.parse(input);
   const existing = await prisma.category.findUniqueOrThrow({ where: { id } });
   const slug =
@@ -67,18 +70,21 @@ export async function updateCategory(id: string, input: CategoryInput) {
 }
 
 export async function deleteCategory(id: string) {
+  await requireAuth();
   await prisma.category.delete({ where: { id } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function toggleCategoryActive(id: string, active: boolean) {
+  await requireAuth();
   await prisma.category.update({ where: { id }, data: { active } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function reorderCategories(orderedIds: string[]) {
+  await requireAuth();
   await prisma.$transaction(
     orderedIds.map((id, index) =>
       prisma.category.update({ where: { id }, data: { order: index } })
@@ -91,6 +97,7 @@ export async function reorderCategories(orderedIds: string[]) {
 // ---------- Subcategorias ----------
 
 export async function createSubcategory(input: SubcategoryInput) {
+  await requireAuth();
   const data = subcategorySchema.parse(input);
   const maxOrder = await prisma.subcategory.aggregate({
     _max: { order: true },
@@ -110,18 +117,21 @@ export async function createSubcategory(input: SubcategoryInput) {
 }
 
 export async function updateSubcategory(id: string, name: string) {
+  await requireAuth();
   await prisma.subcategory.update({ where: { id }, data: { name } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function deleteSubcategory(id: string) {
+  await requireAuth();
   await prisma.subcategory.delete({ where: { id } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/categories");
 }
 
 export async function reorderSubcategories(orderedIds: string[]) {
+  await requireAuth();
   await prisma.$transaction(
     orderedIds.map((id, index) =>
       prisma.subcategory.update({ where: { id }, data: { order: index } })

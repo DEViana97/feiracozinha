@@ -2,9 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { requireAuth } from "@/lib/require-auth";
 import { slideSchema, type SlideInput } from "@/lib/validations/slide";
 
 export async function createSlide(input: SlideInput) {
+  await requireAuth();
   const data = slideSchema.parse(input);
   const maxOrder = await prisma.identitySlide.aggregate({ _max: { order: true } });
 
@@ -17,6 +19,7 @@ export async function createSlide(input: SlideInput) {
 }
 
 export async function updateSlide(id: string, input: SlideInput) {
+  await requireAuth();
   const data = slideSchema.parse(input);
   await prisma.identitySlide.update({ where: { id }, data });
 
@@ -25,6 +28,7 @@ export async function updateSlide(id: string, input: SlideInput) {
 }
 
 export async function deleteSlide(id: string) {
+  await requireAuth();
   await prisma.identitySlide.delete({ where: { id } });
 
   revalidatePath("/cardapio");
@@ -32,6 +36,7 @@ export async function deleteSlide(id: string) {
 }
 
 export async function toggleSlideActive(id: string, active: boolean) {
+  await requireAuth();
   await prisma.identitySlide.update({ where: { id }, data: { active } });
 
   revalidatePath("/cardapio");
@@ -39,6 +44,7 @@ export async function toggleSlideActive(id: string, active: boolean) {
 }
 
 export async function reorderSlides(orderedIds: string[]) {
+  await requireAuth();
   await prisma.$transaction(
     orderedIds.map((id, index) =>
       prisma.identitySlide.update({ where: { id }, data: { order: index } })

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { requireAuth } from "@/lib/require-auth";
 import { slugify } from "@/lib/slugify";
 import { menuItemSchema, type MenuItemInput } from "@/lib/validations/item";
 
@@ -21,6 +22,7 @@ async function uniqueItemSlug(name: string, excludeId?: string) {
 }
 
 export async function createMenuItem(input: MenuItemInput) {
+  await requireAuth();
   const data = menuItemSchema.parse(input);
   const slug = await uniqueItemSlug(data.name);
   const maxOrder = await prisma.menuItem.aggregate({
@@ -58,6 +60,7 @@ export async function createMenuItem(input: MenuItemInput) {
 }
 
 export async function updateMenuItem(id: string, input: MenuItemInput) {
+  await requireAuth();
   const data = menuItemSchema.parse(input);
   const existing = await prisma.menuItem.findUniqueOrThrow({ where: { id } });
   const slug =
@@ -98,12 +101,14 @@ export async function updateMenuItem(id: string, input: MenuItemInput) {
 }
 
 export async function deleteMenuItem(id: string) {
+  await requireAuth();
   await prisma.menuItem.delete({ where: { id } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/items");
 }
 
 export async function toggleMenuItemActive(id: string, active: boolean) {
+  await requireAuth();
   await prisma.menuItem.update({ where: { id }, data: { active } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/items");
