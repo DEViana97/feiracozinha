@@ -16,12 +16,21 @@ export default async function LinktreePage() {
   const info = await getRestaurantInfo();
 
   return (
-    <div className="flex min-h-screen justify-center bg-[#EDE4D6] font-sans">
-      <div className="relative min-h-screen w-full max-w-[420px]">
+    <div
+      className="flex min-h-screen flex-col bg-[#EDE4D6] font-sans"
+      style={{
+        backgroundImage: "url('/images/cobogo-cream.jpg')",
+        backgroundSize: "140px auto",
+        backgroundRepeat: "repeat",
+      }}
+    >
+      {/* Conteúdo centralizado e estreito; o cobogó é o fundo da tela toda e o
+          rodapé fica fora da coluna, colado no fim da tela. */}
+      <div className="mx-auto w-full max-w-[420px] flex-1">
         <LinktreeHero />
         <LinktreeLinkList address={info.address} phone={info.phone} />
-        <LinktreeFooter />
       </div>
+      <LinktreeFooter />
     </div>
   );
 }
