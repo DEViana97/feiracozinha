@@ -51,7 +51,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Tokens de cor da marca — usados pelos componentes do Linktree (ver feira-components/tailwind-tokens-marca.md) */
+/* Tokens de cor da marca - usados pelos componentes do Linktree (ver feira-components/tailwind-tokens-marca.md) */
 @theme {
   --color-dark-wine: #6E2721;
   --color-espresso: #5A1D14;
@@ -161,4 +161,36 @@ html[data-font-scale="lg"] {
 }
 html[data-font-scale="xl"] {
   font-size: 20px;
+}
+
+/* Painel admin: paleta clara da landing (floral-white / dark-wine / espresso / taupe).
+   Aplicado no body (via :has) para que portais - dialogs, sheets, toasts - herdem. */
+body:has(.admin-theme) {
+  --background: #fcf5eb;
+  --foreground: #5a1d14;
+  --card: #fffdf9;
+  --card-foreground: #5a1d14;
+  --popover: #fffdf9;
+  --popover-foreground: #5a1d14;
+  --primary: #6e2721;
+  --primary-foreground: #fcf5eb;
+  --secondary: #ede4d6;
+  --secondary-foreground: #5a1d14;
+  --muted: #f3eadc;
+  --muted-foreground: #51433b;
+  --accent: #ede4d6;
+  --accent-foreground: #5a1d14;
+  --destructive: #a3362a;
+  --border: rgb(81 67 59 / 0.2);
+  --input: rgb(81 67 59 / 0.3);
+  --ring: #6e2721;
+  --sidebar: #f6ecdd;
+  --sidebar-foreground: #5a1d14;
+  --sidebar-primary: #6e2721;
+  --sidebar-primary-foreground: #fcf5eb;
+  --sidebar-accent: #ede4d6;
+  --sidebar-accent-foreground: #5a1d14;
+  --sidebar-border: rgb(81 67 59 / 0.2);
+  --sidebar-ring: #6e2721;
+  color-scheme: light;
 }
