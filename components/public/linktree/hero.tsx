@@ -17,17 +17,16 @@ export function LinktreeHero() {
         </div>
 
         {/* Avatar: sobrepõe a borda inferior do banner */}
-        <div className="absolute -bottom-2 left-1/2 flex h-[124px] w-[124px] -translate-x-1/2 items-center justify-center gap-1 rounded-full bg-floral-white shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+        <div className="absolute -bottom-2 left-1/2 flex h-[124px] w-[124px] -translate-x-1/2 items-center justify-center overflow-hidden rounded-full bg-floral-white shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
+          {/* O SVG "claro" é quadrado e já traz fundo creme com respiro; o círculo recorta. */}
           <Image
-            src="/images/cobogo-mark2.png"
-            alt=""
-            width={12}
-            height={24}
-            className="h-7 w-auto"
+            src="/images/logo-feira-claro.svg"
+            alt="Feira, Cozinha e Mesa"
+            width={1080}
+            height={1080}
+            priority
+            className="h-auto w-[156px] max-w-none"
           />
-          <span className="font-serif text-[29px] leading-none text-dark-wine">
-            FEIRA
-          </span>
         </div>
       </div>
 
