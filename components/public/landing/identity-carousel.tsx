@@ -2,7 +2,7 @@
 
 // Mesma lógica e mesmos slides do IdentityCarousel já usado em /cardapio
 // (components/public/identity-carousel.tsx), só que com cards de largura
-// fixa (340px) em vez de 85% — layout pensado pra tela grande. Se preferir
+// fixa (340px) em vez de 85% - layout pensado pra tela grande. Se preferir
 // evitar duplicação, dá pra extrair um componente base compartilhado com
 // uma prop `cardWidth`; deixei separado aqui pra não arriscar quebrar o
 // carrossel do cardápio que você já validou.
@@ -111,14 +111,11 @@ function CobogoDivider({ className }: { className?: string }) {
   return (
     <div className={`relative h-3.5 overflow-hidden ${className ?? ""}`}>
       <div
-        className="absolute inset-0 bg-dark-wine opacity-25"
+        className="absolute inset-0"
         style={{
-          WebkitMaskImage: "url('/images/cobogo.png')",
-          maskImage: "url('/images/cobogo.png')",
-          WebkitMaskSize: "90px",
-          maskSize: "90px",
-          WebkitMaskRepeat: "repeat",
-          maskRepeat: "repeat",
+          backgroundImage: "url('/images/cobogo-cream.jpg')",
+          backgroundSize: "140px auto",
+          backgroundRepeat: "repeat",
         }}
       />
     </div>

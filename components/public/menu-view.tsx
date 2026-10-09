@@ -35,9 +35,9 @@ type MenuViewProps = {
 // Os chips de categoria funcionam como um filtro: só a seção território
 // ativa é exibida por vez (não é navegação por âncora/scroll). As seções
 // secundárias (Adega/Bebidas/Sobremesas) ficam sempre visíveis abaixo,
-// depois do divisor de cobogó — ver Cardápio Feira, Cozinha e Mesa.dc.html.
+// depois do divisor de cobogó - ver Cardápio Feira, Cozinha e Mesa.dc.html.
 //
-// `initialCategory` permite abrir já filtrado numa categoria específica —
+// `initialCategory` permite abrir já filtrado numa categoria específica -
 // usado pelo link "Ver no cardápio" da landing (?categoria=serra), lido em
 // cardapio/page.tsx e repassado aqui.
 export function MenuView({ territoryCategories, secondaryCategories, initialCategory }: MenuViewProps) {
@@ -82,16 +82,13 @@ export function MenuView({ territoryCategories, secondaryCategories, initialCate
       )}
 
       {/* Divisor de cobogó entre seções principais e secundárias */}
-      <div className="relative h-9 overflow-hidden opacity-30">
+      <div className="relative h-4 overflow-hidden">
         <div
-          className="absolute inset-0 bg-dark-wine"
+          className="absolute inset-0"
           style={{
-            WebkitMaskImage: "url('/images/cobogo.png')",
-            maskImage: "url('/images/cobogo.png')",
-            WebkitMaskSize: "150px",
-            maskSize: "150px",
-            WebkitMaskRepeat: "repeat",
-            maskRepeat: "repeat",
+            backgroundImage: "url('/images/cobogo-cream.jpg')",
+            backgroundSize: "140px auto",
+            backgroundRepeat: "repeat",
           }}
         />
       </div>

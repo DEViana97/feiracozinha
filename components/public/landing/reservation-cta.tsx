@@ -7,11 +7,12 @@ export function LandingReservationCta() {
       className="relative overflow-hidden bg-dark-wine px-8 py-[90px] text-center"
     >
       <div
-        className="absolute inset-0 opacity-[0.14]"
+        className="absolute inset-0"
         style={{
-          backgroundImage: "url('/images/cobogo.png')",
-          backgroundSize: "220px",
+          backgroundImage: "url('/images/cobogo-wine.jpg')",
+          backgroundSize: "140px auto",
           backgroundRepeat: "repeat",
+          backgroundPosition: "center",
         }}
       />
       <div className="relative mx-auto max-w-[560px]">
@@ -19,7 +20,7 @@ export function LandingReservationCta() {
           Reserve sua mesa na Feira
         </h2>
         <p className="mb-8 text-[15px] leading-[1.6] text-[#F1DFC9]">
-          A origem do Ceará no centro da mesa — separe seu lugar.
+          A origem do Ceará no centro da mesa. Separe seu lugar.
         </p>
         <Link
           href="/reservas"

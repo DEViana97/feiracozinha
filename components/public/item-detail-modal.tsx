@@ -24,7 +24,7 @@ type ItemDetailModalProps = {
   children: ReactNode;
 };
 
-// Modal de detalhe do item, aberto ao tocar no card/linha do cardápio —
+// Modal de detalhe do item, aberto ao tocar no card/linha do cardápio -
 // foto grande no topo, botão de fechar sobreposto (seta pra baixo, como
 // referência de mercado), nome/preço/descrição num painel escuro embaixo.
 export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
@@ -37,7 +37,7 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
       }}
       onOpenChangeComplete={(open) => {
         // O lock de scroll da lib às vezes deixa a página no topo ao
-        // fechar o modal — restaura a posição de leitura manualmente.
+        // fechar o modal - restaura a posição de leitura manualmente.
         if (!open) window.scrollTo(0, scrollYRef.current);
       }}
     >
@@ -68,11 +68,12 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
 
         <div className="relative overflow-hidden bg-espresso px-5 py-5">
           <div
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0"
             style={{
-              backgroundImage: "url('/images/cobogo.png')",
-              backgroundSize: "200px",
+              backgroundImage: "url('/images/cobogo-wine.jpg')",
+              backgroundSize: "140px auto",
               backgroundRepeat: "repeat",
+              backgroundPosition: "center",
             }}
           />
           <div className="relative">

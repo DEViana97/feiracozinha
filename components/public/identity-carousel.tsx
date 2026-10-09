@@ -97,14 +97,11 @@ function CobogoDivider({ className }: { className?: string }) {
   return (
     <div className={`relative h-3.5 overflow-hidden ${className ?? ""}`}>
       <div
-        className="absolute inset-0 bg-dark-wine opacity-25"
+        className="absolute inset-0"
         style={{
-          WebkitMaskImage: "url('/images/cobogo.png')",
-          maskImage: "url('/images/cobogo.png')",
-          WebkitMaskSize: "90px",
-          maskSize: "90px",
-          WebkitMaskRepeat: "repeat",
-          maskRepeat: "repeat",
+          backgroundImage: "url('/images/cobogo-cream.jpg')",
+          backgroundSize: "140px auto",
+          backgroundRepeat: "repeat",
         }}
       />
     </div>

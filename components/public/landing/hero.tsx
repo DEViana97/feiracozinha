@@ -5,11 +5,12 @@ export function LandingHero() {
   return (
     <section className="relative overflow-hidden bg-dark-wine px-8 pb-[100px] pt-[110px] text-center">
       <div
-        className="absolute inset-0 opacity-[0.14]"
+        className="absolute inset-0"
         style={{
-          backgroundImage: "url('/images/cobogo.png')",
-          backgroundSize: "220px",
+          backgroundImage: "url('/images/cobogo-wine.jpg')",
+          backgroundSize: "140px auto",
           backgroundRepeat: "repeat",
+          backgroundPosition: "center",
         }}
       />
       <div className="relative mx-auto max-w-[680px]">

@@ -20,11 +20,12 @@ export function MenuFooter({ info }: { info: MenuFooterInfo }) {
   return (
     <footer className="relative overflow-hidden bg-espresso px-[22px] py-[26px] pt-[30px] text-floral-white">
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0"
         style={{
-          backgroundImage: "url('/images/cobogo.png')",
-          backgroundSize: "200px",
+          backgroundImage: "url('/images/cobogo-wine.jpg')",
+          backgroundSize: "140px auto",
           backgroundRepeat: "repeat",
+          backgroundPosition: "center",
         }}
       />
       <div className="relative">

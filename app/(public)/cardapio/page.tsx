@@ -15,7 +15,7 @@ import type { CategoryIconKey } from "@/components/public/category-icons";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-// Categorias "território" (com ícone e card grande) — as demais viram
+// Categorias "território" (com ícone e card grande) - as demais viram
 // seção secundária (lista simples). Ver Cardápio Feira, Cozinha e
 // Mesa.dc.html / Component.CATEGORY_DEFS.
 const TERRITORY_KEYS: CategoryIconKey[] = ["serra", "sertao", "mar"];
@@ -82,14 +82,12 @@ export default async function CardapioPage({
 
           <section className="relative overflow-hidden px-6 pb-[30px] pt-9">
             <div
-              className="absolute inset-0 bg-dark-wine opacity-[0.22]"
+              className="absolute inset-0"
               style={{
-                WebkitMaskImage: "url('/images/cobogo.png')",
-                maskImage: "url('/images/cobogo.png')",
-                WebkitMaskSize: "220px",
-                maskSize: "220px",
-                WebkitMaskRepeat: "repeat",
-                maskRepeat: "repeat",
+                backgroundImage: "url('/images/cobogo-cream.jpg')",
+                backgroundSize: "140px auto",
+                backgroundRepeat: "repeat",
+                backgroundPosition: "center",
               }}
             />
             <div className="relative">
