@@ -90,7 +90,7 @@ export async function getCategoriesForSelect() {
   });
 }
 
-// Tags temporariamente desativado — ver nota em AGENTS.md.
+// Tags temporariamente desativado - ver nota em AGENTS.md.
 // export async function getAllTags() {
 //   return prisma.tag.findMany({ orderBy: { name: "asc" } });
 // }
@@ -139,5 +139,27 @@ export async function getItemBySlug(slug: string) {
       category: true,
       subcategory: true,
     },
+  });
+}
+
+export async function getEnvironmentsForAdmin() {
+  return prisma.environment.findMany({
+    orderBy: { order: "asc" },
+    include: { tableGroups: { orderBy: { seats: "asc" } } },
+  });
+}
+
+export async function getReservationsForAdmin() {
+  return prisma.reservation.findMany({
+    orderBy: [{ date: "asc" }, { time: "asc" }],
+    include: { environment: { select: { name: true } } },
+  });
+}
+
+export async function getActiveEnvironments() {
+  return prisma.environment.findMany({
+    where: { active: true },
+    orderBy: { order: "asc" },
+    select: { id: true, name: true, description: true },
   });
 }

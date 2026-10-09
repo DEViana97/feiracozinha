@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx prisma/seed.ts",
+    "seed:reservations": "tsx prisma/seed-reservations.ts",
     "create-admin": "tsx prisma/create-admin.ts",
     "postinstall": "prisma generate"
   },
