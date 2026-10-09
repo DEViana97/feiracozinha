@@ -2,66 +2,49 @@
 
 import { useState } from "react";
 import { CategoryChips, type CategoryChip } from "./category-chips";
-import { TerritorySection } from "./territory-section";
-import { SecondarySection } from "./secondary-section";
+import { SecondarySection, type MenuGroup } from "./secondary-section";
 import { useFontZoom } from "./font-zoom-provider";
-import type { MenuItem } from "./menu-item-card";
-import type { SecondaryMenuItem } from "./secondary-item-row";
-import type { CategoryIconKey } from "./category-icons";
 
-export type TerritoryCategoryData = {
-  key: CategoryIconKey;
-  name: string;
-  color: string;
-  tagline: string;
-  coverImageUrl?: string | null;
-  items: MenuItem[];
-};
-
-export type SecondaryCategoryData = {
+export type MenuCategoryData = {
   key: string;
   name: string;
   color: string;
   tagline: string;
-  items: SecondaryMenuItem[];
+  coverImageUrl?: string | null;
+  groups: MenuGroup[];
 };
 
 type MenuViewProps = {
-  territoryCategories: TerritoryCategoryData[];
-  secondaryCategories: SecondaryCategoryData[];
+  categories: MenuCategoryData[];
   initialCategory?: string;
 };
 
-// Os chips de categoria funcionam como um filtro: só a seção território
-// ativa é exibida por vez (não é navegação por âncora/scroll). As seções
-// secundárias (Adega/Bebidas/Sobremesas) ficam sempre visíveis abaixo,
-// depois do divisor de cobogó - ver Cardápio Feira, Cozinha e Mesa.dc.html.
+// Os chips de categoria funcionam como um filtro: só a categoria ativa é
+// exibida por vez (não é navegação por âncora/scroll). Dentro dela os itens
+// aparecem agrupados por subcategoria (ex.: Drinks > Autorais, Clássicos).
 //
-// `initialCategory` permite abrir já filtrado numa categoria específica -
-// usado pelo link "Ver no cardápio" da landing (?categoria=serra), lido em
-// cardapio/page.tsx e repassado aqui.
-export function MenuView({ territoryCategories, secondaryCategories, initialCategory }: MenuViewProps) {
+// `initialCategory` permite abrir já filtrado numa categoria específica
+// (?categoria=<slug>), lido em cardapio/page.tsx e repassado aqui.
+export function MenuView({ categories, initialCategory }: MenuViewProps) {
   const [activeCategory, setActiveCategory] = useState<string>(
-    (initialCategory && territoryCategories.some((c) => c.key === initialCategory)
+    (initialCategory && categories.some((c) => c.key === initialCategory)
       ? initialCategory
-      : territoryCategories[0]?.key) ?? ""
+      : categories[0]?.key) ?? ""
   );
   const { fontScale, setFontScale } = useFontZoom();
 
-  const chips: CategoryChip[] = territoryCategories.map((c) => ({
+  const chips: CategoryChip[] = categories.map((c) => ({
     key: c.key,
     name: c.name,
     color: c.color,
     coverImageUrl: c.coverImageUrl,
   }));
 
-  const activeSection =
-    territoryCategories.find((c) => c.key === activeCategory) ??
-    territoryCategories[0];
+  const activeSection = categories.find((c) => c.key === activeCategory) ?? categories[0];
 
   return (
     <div>
-      {territoryCategories.length > 0 && (
+      {categories.length > 0 && (
         <CategoryChips
           categories={chips}
           activeCategory={activeCategory}
@@ -72,36 +55,14 @@ export function MenuView({ territoryCategories, secondaryCategories, initialCate
       )}
 
       {activeSection && (
-        <TerritorySection
-          categoryKey={activeSection.key}
+        <SecondarySection
+          key={activeSection.key}
           name={activeSection.name}
           color={activeSection.color}
           tagline={activeSection.tagline}
-          items={activeSection.items}
+          groups={activeSection.groups}
         />
       )}
-
-      {/* Divisor de cobogó entre seções principais e secundárias */}
-      <div className="relative h-4 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('/images/cobogo-cream.jpg')",
-            backgroundSize: "140px auto",
-            backgroundRepeat: "repeat",
-          }}
-        />
-      </div>
-
-      {secondaryCategories.map((sec) => (
-        <SecondarySection
-          key={sec.key}
-          name={sec.name}
-          color={sec.color}
-          tagline={sec.tagline}
-          items={sec.items}
-        />
-      ))}
     </div>
   );
 }

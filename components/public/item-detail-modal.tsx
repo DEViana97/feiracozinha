@@ -90,9 +90,11 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
             <p className="mt-1 font-sans text-[15px] font-semibold text-[#E3A94A]">
               {item.price}
             </p>
-            <p className="mt-3 text-[13.5px] leading-relaxed text-[#F1DFC9]">
-              {item.description}
-            </p>
+            {item.description && (
+              <p className="mt-3 text-[13.5px] leading-relaxed text-[#F1DFC9]">
+                {item.description}
+              </p>
+            )}
           </div>
         </div>
       </DialogContent>

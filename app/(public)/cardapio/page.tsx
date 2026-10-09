@@ -2,23 +2,16 @@ import { getCategoriesWithItems, getIdentitySlides, getRestaurantInfo } from "@/
 import { formatPrice } from "@/lib/format";
 import { MenuHeader } from "@/components/public/menu-header";
 import { IdentityCarousel } from "@/components/public/identity-carousel";
-import {
-  MenuView,
-  type TerritoryCategoryData,
-  type SecondaryCategoryData,
-} from "@/components/public/menu-view";
+import { MenuView, type MenuCategoryData } from "@/components/public/menu-view";
 import { MenuFooter } from "@/components/public/menu-footer";
 import { FontZoomProvider } from "@/components/public/font-zoom-provider";
-import { CATEGORY_BRAND_CONFIG } from "@/components/public/category-config";
-import type { CategoryIconKey } from "@/components/public/category-icons";
+import {
+  CATEGORY_BRAND_CONFIG,
+  DEFAULT_CATEGORY_COLOR,
+} from "@/components/public/category-config";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-// Categorias "território" (com ícone e card grande) - as demais viram
-// seção secundária (lista simples). Ver Cardápio Feira, Cozinha e
-// Mesa.dc.html / Component.CATEGORY_DEFS.
-const TERRITORY_KEYS: CategoryIconKey[] = ["serra", "sertao", "mar"];
 
 export default async function CardapioPage({
   searchParams,
@@ -32,45 +25,35 @@ export default async function CardapioPage({
     getRestaurantInfo(),
   ]);
 
-  const territoryCategories: TerritoryCategoryData[] = categories
-    .filter((c): c is typeof c & { slug: CategoryIconKey } =>
-      TERRITORY_KEYS.includes(c.slug as CategoryIconKey)
-    )
+  // Cada categoria vira uma aba; dentro dela os itens são agrupados pela
+  // subcategoria (na ordem cadastrada). Itens sem subcategoria vêm primeiro.
+  const menuCategories: MenuCategoryData[] = categories
+    .filter((c) => c.menuItems.length > 0)
     .map((c) => {
       const brand = CATEGORY_BRAND_CONFIG[c.slug];
+      const toRow = (item: (typeof c.menuItems)[number]) => ({
+        name: item.name,
+        description: item.description,
+        price: formatPrice(item.basePrice),
+        imageUrl: item.imageUrl,
+        isNew: item.featured,
+      });
+
+      const groups: MenuCategoryData["groups"] = [];
+      const loose = c.menuItems.filter((i) => !i.subcategoryId);
+      if (loose.length > 0) groups.push({ items: loose.map(toRow) });
+      for (const sub of c.subcategories) {
+        const items = c.menuItems.filter((i) => i.subcategoryId === sub.id);
+        if (items.length > 0) groups.push({ title: sub.name, items: items.map(toRow) });
+      }
+
       return {
         key: c.slug,
         name: c.name,
-        color: brand?.color ?? "#6E2721",
+        color: brand?.color ?? DEFAULT_CATEGORY_COLOR,
         tagline: brand?.tagline ?? "",
         coverImageUrl: c.coverImageUrl,
-        items: c.menuItems.map((item) => ({
-          name: item.name,
-          description: item.description,
-          price: formatPrice(item.basePrice),
-          originLabel: c.name,
-          imageUrl: item.imageUrl,
-          isNew: item.featured,
-        })),
-      };
-    });
-
-  const secondaryCategories: SecondaryCategoryData[] = categories
-    .filter((c) => !TERRITORY_KEYS.includes(c.slug as CategoryIconKey))
-    .map((c) => {
-      const brand = CATEGORY_BRAND_CONFIG[c.slug];
-      return {
-        key: c.slug,
-        name: c.name,
-        color: brand?.color ?? "#746350",
-        tagline: brand?.tagline ?? "",
-        items: c.menuItems.map((item) => ({
-          name: item.name,
-          description: item.description,
-          price: formatPrice(item.basePrice),
-          imageUrl: item.imageUrl,
-          isNew: item.featured,
-        })),
+        groups,
       };
     });
 
@@ -108,11 +91,7 @@ export default async function CardapioPage({
             }))}
           />
 
-          <MenuView
-            territoryCategories={territoryCategories}
-            secondaryCategories={secondaryCategories}
-            initialCategory={categoria}
-          />
+          <MenuView categories={menuCategories} initialCategory={categoria} />
 
           <MenuFooter
             info={{

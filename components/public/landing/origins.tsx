@@ -55,7 +55,7 @@ export function LandingOrigins() {
               {origin.story}
             </p>
             <a
-              href={`/cardapio?categoria=${origin.key}`}
+              href="/cardapio"
               className="text-[13px] font-semibold opacity-85"
               style={{ color: origin.color }}
             >

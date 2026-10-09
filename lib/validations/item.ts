@@ -16,7 +16,8 @@ export type VariantInput = z.infer<typeof variantSchema>;
 
 export const menuItemSchema = z.object({
   name: z.string().min(1, "Nome obrigatório").max(120),
-  description: z.string().min(1, "Descrição obrigatória"),
+  // Opcional: bebidas e destilados costumam ter só nome e preço.
+  description: z.string(),
   basePrice: priceString,
   categoryId: z.string().min(1, "Selecione uma categoria"),
   subcategoryId: z.string().nullable().optional(),

@@ -33,7 +33,9 @@ export function SecondaryItemRow({ item }: SecondaryItemRowProps) {
               </span>
             )}
           </div>
-          <p className="mt-[3px] text-xs text-[#5A4E45]">{item.description}</p>
+          {item.description && (
+            <p className="mt-[3px] text-xs text-[#5A4E45]">{item.description}</p>
+          )}
         </div>
       </div>
       <span className="whitespace-nowrap text-[13px] font-semibold text-dark-wine">
