@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getRestaurantInfo, getIdentitySlides } from "@/lib/queries";
-import { LandingNav } from "@/components/public/landing/nav";
 import { LandingHero } from "@/components/public/landing/hero";
 import { LandingManifesto } from "@/components/public/landing/manifesto";
 import { LandingMotivation } from "@/components/public/landing/motivation";
@@ -26,7 +25,6 @@ export default async function LandingPage() {
 
   return (
     <div className="bg-floral-white font-sans text-[#3B2A26]">
-      <LandingNav />
       <LandingHero />
       <LandingManifesto />
       <LandingMotivation />
