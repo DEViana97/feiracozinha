@@ -41,13 +41,8 @@ export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: Menu
         </>
       ) : (
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('/images/cobogo-wine.jpg')",
-            backgroundSize: "140px auto",
-            backgroundRepeat: "repeat",
-            backgroundPosition: "center",
-          }}
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/cobogo-wine.jpg')" }}
         />
       )}
       <div className="relative">
