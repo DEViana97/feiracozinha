@@ -1,14 +1,14 @@
 import Image from "next/image";
 
-// Cabeçalho estilo "perfil": banner arredondado com o fundo de cobogó vinho,
-// avatar com a marca na base do banner.
+// Cabeçalho estilo "perfil": banner de cobogó vinho de ponta a ponta no topo do
+// cartão (os cantos arredondados vêm do cartão) e avatar com a marca na base.
 export function LinktreeHero() {
   return (
-    <section className="px-4 pb-0 pt-4 text-center">
-      <div className="relative h-[200px] rounded-[22px] bg-dark-wine">
+    <section className="pb-0 text-center">
+      <div className="relative h-[230px] bg-dark-wine">
         <div
           aria-hidden
-          className="absolute inset-0 overflow-hidden rounded-[22px]"
+          className="absolute inset-0 overflow-hidden"
         >
           <div
             className="absolute inset-0 bg-cover bg-center"

@@ -11,7 +11,7 @@ type LinktreeLink = {
 function IconMenu({ className }: { className?: string }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
-      <path d="M4 6h16M4 12h16M4 18h10" stroke="#6E2721" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -19,8 +19,8 @@ function IconMenu({ className }: { className?: string }) {
 function IconReserve({ className }: { className?: string }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
-      <rect x="4" y="5" width="16" height="15" rx="1.5" stroke="#6E2721" strokeWidth="1.6" />
-      <path d="M4 9.5h16M8 3v3M16 3v3" stroke="#6E2721" strokeWidth="1.6" strokeLinecap="round" />
+      <rect x="4" y="5" width="16" height="15" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M4 9.5h16M8 3v3M16 3v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -30,10 +30,10 @@ function IconLocation({ className }: { className?: string }) {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
       <path
         d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"
-        stroke="#6E2721"
+        stroke="currentColor"
         strokeWidth="1.6"
       />
-      <circle cx="12" cy="9.5" r="2.2" stroke="#6E2721" strokeWidth="1.6" />
+      <circle cx="12" cy="9.5" r="2.2" stroke="currentColor" strokeWidth="1.6" />
     </svg>
   );
 }
@@ -41,9 +41,9 @@ function IconLocation({ className }: { className?: string }) {
 function IconAbout({ className }: { className?: string }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
-      <circle cx="12" cy="12" r="9" stroke="#6E2721" strokeWidth="1.6" />
-      <path d="M12 11v6" stroke="#6E2721" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="12" cy="7.5" r="0.9" fill="#6E2721" />
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 11v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="12" cy="7.5" r="0.9" fill="currentColor" />
     </svg>
   );
 }
@@ -53,7 +53,7 @@ function IconContact({ className }: { className?: string }) {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={className}>
       <path
         d="M4 5h16v13a1 1 0 0 1-1 1H8l-4 3V6a1 1 0 0 1 1-1Z"
-        stroke="#6E2721"
+        stroke="currentColor"
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
@@ -67,8 +67,13 @@ function buildWhatsappUrl(phone: string) {
   return `https://wa.me/${withCountryCode}`;
 }
 
-function buildLinks(address: string | null, phone: string | null): LinktreeLink[] {
-  return [
+function buildLinks(
+  address: string | null,
+  phone: string | null,
+  reservationsEnabled: boolean,
+  mapsUrl?: string | null
+): LinktreeLink[] {
+  const links: LinktreeLink[] = [
     {
       title: "Ver cardápio",
       subtitle: "Da Serra, Do Sertão e Do Mar",
@@ -90,7 +95,9 @@ function buildLinks(address: string | null, phone: string | null): LinktreeLink[
     {
       title: "Como chegar",
       subtitle: address ?? "Endereço e estacionamento",
-      href: address
+      href: mapsUrl
+        ? mapsUrl
+        : address
         ? `https://maps.google.com/?q=${encodeURIComponent(address)}`
         : "https://maps.google.com/?q=SUBSTITUIR_ENDERECO",
       icon: IconLocation,
@@ -104,16 +111,21 @@ function buildLinks(address: string | null, phone: string | null): LinktreeLink[
       external: true,
     },
   ];
+  return reservationsEnabled ? links : links.filter((l) => l.href !== "/reservas");
 }
 
 export function LinktreeLinkList({
   address,
   phone,
+  reservationsEnabled = true,
+  mapsUrl,
 }: {
   address: string | null;
   phone: string | null;
+  reservationsEnabled?: boolean;
+  mapsUrl?: string | null;
 }) {
-  const links = buildLinks(address, phone);
+  const links = buildLinks(address, phone, reservationsEnabled, mapsUrl);
 
   return (
     <section className="flex flex-col gap-3 px-5 pb-[26px] pt-[26px]">
@@ -125,16 +137,16 @@ export function LinktreeLinkList({
             href={link.href}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            className="flex items-center gap-3.5 rounded-[10px] border border-dark-wine/[0.14] bg-[#FFFDF9] px-4 py-3.5 text-[#3B2A26] transition-colors hover:border-dark-wine/40"
+            className="flex items-center gap-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] px-4 py-3 text-white transition-colors hover:bg-white/[0.12]"
           >
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-dark-wine/[0.08]">
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center text-white">
               <Icon />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="font-serif text-base text-[#3B2A26]">
+              <div className="font-serif text-[17px] text-white [text-shadow:0_1px_8px_rgba(0,0,0,0.55)]">
                 {link.title}
               </div>
-              <div className="mt-0.5 text-[12.5px] text-[#5A4E45]">
+              <div className="mt-0.5 text-[12.5px] text-white/85 [text-shadow:0_1px_8px_rgba(0,0,0,0.55)]">
                 {link.subtitle}
               </div>
             </div>
@@ -143,11 +155,11 @@ export function LinktreeLinkList({
               height="16"
               viewBox="0 0 24 24"
               fill="none"
-              className="flex-shrink-0"
+              className="flex-shrink-0 text-white/85"
             >
               <path
                 d="M9 5l7 7-7 7"
-                stroke="#6E2721"
+                stroke="currentColor"
                 strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
