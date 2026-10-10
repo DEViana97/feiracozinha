@@ -16,18 +16,40 @@ export function buildInstagramUrl(instagram: string) {
   return `https://instagram.com/${instagram.replace("@", "")}`;
 }
 
-export function MenuFooter({ info }: { info: MenuFooterInfo }) {
+export type MenuFooterVideo = { src: string; poster: string };
+
+// `video` (opcional): usa um vídeo mudo em loop como fundo, com camada escura
+// por cima para o texto claro continuar legível. Sem ele, usa o cobogó.
+export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: MenuFooterVideo }) {
   return (
     <footer className="relative overflow-hidden bg-espresso px-[22px] py-[26px] pt-[30px] text-floral-white">
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/images/cobogo-wine.jpg')",
-          backgroundSize: "140px auto",
-          backgroundRepeat: "repeat",
-          backgroundPosition: "center",
-        }}
-      />
+      {video ? (
+        <>
+          <video
+            aria-hidden
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={video.poster}
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_72%]"
+          >
+            <source src={video.src} type="video/mp4" />
+          </video>
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-[#3a100c]/75 via-[#3a100c]/65 to-[#3a100c]/85" />
+        </>
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/cobogo-wine.jpg')",
+            backgroundSize: "140px auto",
+            backgroundRepeat: "repeat",
+            backgroundPosition: "center",
+          }}
+        />
+      )}
       <div className="relative">
         <div className="mb-4 flex items-center gap-2">
           <span
