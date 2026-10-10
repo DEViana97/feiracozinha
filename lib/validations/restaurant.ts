@@ -8,5 +8,7 @@ export const restaurantInfoSchema = z.object({
   email: z.string().email("E-mail inválido").optional().or(z.literal("")),
   instagram: z.string().optional(),
   drawerText: z.string().optional(),
+  mapsUrl: z.string().url("Link inválido").optional().or(z.literal("")),
+  reservationsEnabled: z.boolean(),
 });
 export type RestaurantInfoInput = z.infer<typeof restaurantInfoSchema>;

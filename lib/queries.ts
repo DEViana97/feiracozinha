@@ -12,8 +12,17 @@ export async function getRestaurantInfo() {
       email: null,
       instagram: null,
       drawerText: null,
+      mapsUrl: null,
+      reservationsEnabled: true,
     }
   );
+}
+
+// Interruptor geral das reservas (Restaurante > Aceitar reservas). Sem o campo
+// (cliente Prisma antigo) ou sem registro, conta como ligado.
+export async function areReservationsEnabled() {
+  const info = await getRestaurantInfo();
+  return (info as { reservationsEnabled?: boolean }).reservationsEnabled !== false;
 }
 
 export async function getCategoriesWithItems() {

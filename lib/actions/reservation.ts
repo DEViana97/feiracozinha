@@ -12,6 +12,7 @@ import {
 } from "@/lib/validations/reservation";
 import { hasStarted, pickTable } from "@/lib/reservation-availability";
 import { contactKey, namesMatch } from "@/lib/contact-key";
+import { areReservationsEnabled } from "@/lib/queries";
 import { escapeHtml, sendTelegramMessage } from "@/lib/telegram";
 
 function revalidateAll() {
@@ -133,6 +134,7 @@ export async function checkAvailability(input: {
   time: string;
   people: number;
 }): Promise<EnvironmentAvailability[]> {
+  if (!(await areReservationsEnabled())) return [];
   const q = availabilityQuerySchema.parse(input);
 
   const [environments, booked] = await Promise.all([
@@ -173,6 +175,7 @@ export type PublicReservation = {
 };
 
 export async function getReservationByToken(token: string): Promise<PublicReservation | null> {
+  if (!(await areReservationsEnabled())) return null;
   if (!token || token.length > 100) return null;
   const r = await prisma.reservation.findUnique({
     where: { cancelToken: token },
@@ -193,6 +196,9 @@ export async function getReservationByToken(token: string): Promise<PublicReserv
 export async function cancelReservationByToken(
   token: string
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  if (!(await areReservationsEnabled())) {
+    return { ok: false, error: "As reservas estão indisponíveis no momento." };
+  }
   const r = await prisma.reservation.findUnique({
     where: { cancelToken: token },
     include: { environment: { select: { name: true } } },
@@ -222,6 +228,7 @@ export async function findMyReservations(input: {
   name: string;
   contact: string;
 }): Promise<MyReservation[]> {
+  if (!(await areReservationsEnabled())) return [];
   const name = String(input?.name ?? "").slice(0, 80);
   const key = contactKey(String(input?.contact ?? "").slice(0, 40));
   if (key.length < 10 || name.trim().length < 2) return [];
@@ -252,6 +259,9 @@ export type CreateReservationResult =
 export async function createReservation(
   input: ReservationInput
 ): Promise<CreateReservationResult> {
+  if (!(await areReservationsEnabled())) {
+    return { ok: false, error: "As reservas estão indisponíveis no momento." };
+  }
   const parsed = reservationSchema.safeParse(input);
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Dados inválidos." };

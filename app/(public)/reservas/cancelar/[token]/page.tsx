@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { areReservationsEnabled } from "@/lib/queries";
 import { MenuHeader } from "@/components/public/menu-header";
 import { CancelReservationButton } from "@/components/public/cancel-reservation-button";
 import { getReservationByToken } from "@/lib/actions/reservation";
@@ -10,6 +12,7 @@ export default async function CancelarReservaPage({
 }: {
   params: Promise<{ token: string }>;
 }) {
+  if (!(await areReservationsEnabled())) notFound();
   const { token } = await params;
   const reservation = await getReservationByToken(token);
 

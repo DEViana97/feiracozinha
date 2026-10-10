@@ -8,6 +8,7 @@ const HOURS = "Terça a domingo, 12h às 23h";
 
 export type LandingLocationInfo = {
   address: string | null;
+  mapsUrl?: string | null;
   phone: string | null;
   instagram: string | null;
 };
@@ -23,6 +24,16 @@ export function LandingLocation({ info }: { info: LandingLocationInfo }) {
         </h2>
         {info.address && (
           <p className="mb-2 text-[14.5px] leading-[1.7] text-taupe">{info.address}</p>
+        )}
+        {info.mapsUrl && (
+          <a
+            href={info.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-2 inline-block text-[14.5px] font-semibold text-dark-wine underline underline-offset-2"
+          >
+            Abrir no Google Maps
+          </a>
         )}
         <p className="mb-5 text-[14.5px] leading-[1.7] text-taupe">{HOURS}</p>
         <div className="flex flex-col gap-1.5 text-[14.5px]">

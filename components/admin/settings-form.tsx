@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import {
   Form,
   FormControl,
@@ -112,6 +113,19 @@ export function SettingsForm({ defaultValues }: { defaultValues: RestaurantInfoI
         </div>
         <FormField
           control={form.control}
+          name="mapsUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Link do Google Maps</FormLabel>
+              <FormControl>
+                <Input placeholder="https://maps.app.goo.gl/..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="instagram"
           render={({ field }) => (
             <FormItem>
@@ -133,6 +147,25 @@ export function SettingsForm({ defaultValues }: { defaultValues: RestaurantInfoI
                 <Textarea rows={4} {...field} />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="reservationsEnabled"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between gap-4 rounded-lg border border-border p-3">
+              <div className="space-y-0.5">
+                <FormLabel>Aceitar reservas</FormLabel>
+                <p className="text-xs text-muted-foreground">
+                  Desligado, o site esconde o botão e as páginas de reserva, o link no
+                  /links e o item Reservas deste painel. As reservas já feitas ficam
+                  guardadas.
+                </p>
+              </div>
+              <FormControl>
+                <Switch checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
             </FormItem>
           )}
         />

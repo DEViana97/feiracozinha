@@ -1,9 +1,15 @@
-import { getEnvironmentsForAdmin, getReservationsForAdmin } from "@/lib/queries";
+import { redirect } from "next/navigation";
+import {
+  areReservationsEnabled,
+  getEnvironmentsForAdmin,
+  getReservationsForAdmin,
+} from "@/lib/queries";
 import { ReservationsTabs } from "@/components/admin/reservations-tabs";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminReservationsPage() {
+  if (!(await areReservationsEnabled())) redirect("/admin/settings");
   const [environments, reservations] = await Promise.all([
     getEnvironmentsForAdmin(),
     getReservationsForAdmin(),

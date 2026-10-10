@@ -126,14 +126,18 @@ model IdentitySlide {
 }
 
 model RestaurantInfo {
-  id         String  @id @default(cuid())
-  name       String  @default("Feira, Cozinha e Mesa")
-  tagline    String  @default("Da nossa terra para o centro da sua mesa")
-  address    String?
-  phone      String?
-  email      String?
-  instagram  String?
-  drawerText String?
+  id                  String  @id @default(cuid())
+  name                String  @default("Feira, Cozinha e Mesa")
+  tagline             String  @default("Da nossa terra para o centro da sua mesa")
+  address             String?
+  phone               String?
+  email               String?
+  instagram           String?
+  drawerText          String?
+  // Link do Google Maps do restaurante (botão "Como chegar").
+  mapsUrl             String?
+  // Liga/desliga todo o fluxo de reservas (site, links, admin e ações).
+  reservationsEnabled Boolean @default(true)
 }
 
 // ---------- Reservas ----------

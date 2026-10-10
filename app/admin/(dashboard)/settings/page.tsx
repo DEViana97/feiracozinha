@@ -23,6 +23,8 @@ export default async function AdminSettingsPage() {
           email: info.email ?? "",
           instagram: info.instagram ?? "",
           drawerText: info.drawerText ?? "",
+          mapsUrl: (info as { mapsUrl?: string | null }).mapsUrl ?? "",
+          reservationsEnabled: (info as { reservationsEnabled?: boolean }).reservationsEnabled !== false,
         }}
       />
     </div>

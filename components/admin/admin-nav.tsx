@@ -18,8 +18,9 @@ const links = [
   { href: "/admin/settings", label: "Restaurante", icon: Settings },
 ];
 
-export function AdminNav() {
+export function AdminNav({ reservationsEnabled = true }: { reservationsEnabled?: boolean }) {
   const pathname = usePathname();
+  const visibleLinks = links.filter((l) => reservationsEnabled || l.href !== "/admin/reservations");
 
   return (
     <nav className="flex flex-col h-full justify-between">
@@ -28,7 +29,7 @@ export function AdminNav() {
           <span className="font-serif text-xl text-foreground">Feira</span>
           <p className="text-xs text-muted-foreground">Painel administrativo</p>
         </div>
-        {links.map((link) => {
+        {visibleLinks.map((link) => {
           const active = pathname === link.href;
           const Icon = link.icon;
           return (

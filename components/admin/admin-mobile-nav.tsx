@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { AdminNav } from "@/components/admin/admin-nav";
 
-export function AdminMobileNav() {
+export function AdminMobileNav({ reservationsEnabled = true }: { reservationsEnabled?: boolean }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ export function AdminMobileNav() {
         <SheetContent side="left" className="w-64 p-0">
           <SheetTitle className="sr-only">Menu administrativo</SheetTitle>
           <div onClick={() => setOpen(false)}>
-            <AdminNav />
+            <AdminNav reservationsEnabled={reservationsEnabled} />
           </div>
         </SheetContent>
       </Sheet>

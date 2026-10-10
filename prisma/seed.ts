@@ -73,7 +73,7 @@ async function main() {
       id: "singleton",
       name: "Feira, Cozinha e Mesa",
       tagline: "Da nossa terra para o centro da sua mesa",
-      address: "Rua das Flores, 123, Praia de Iracema, Fortaleza/CE",
+      address: "R. Monsenhor Bruno, 1320 - Meireles, Fortaleza - CE, 60115-191",
       phone: "(85) 99999-0000",
       email: "contato@feiracozinha.com.br",
       instagram: "@feiracozinhaemesa",

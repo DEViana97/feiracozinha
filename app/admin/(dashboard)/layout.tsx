@@ -1,13 +1,15 @@
 import { AdminNav } from "@/components/admin/admin-nav";
 import { AdminMobileNav } from "@/components/admin/admin-mobile-nav";
+import { areReservationsEnabled } from "@/lib/queries";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const reservationsEnabled = await areReservationsEnabled();
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-background text-foreground">
       <aside className="hidden md:flex w-56 shrink-0 border-r border-border">
-        <AdminNav />
+        <AdminNav reservationsEnabled={reservationsEnabled} />
       </aside>
-      <AdminMobileNav />
+      <AdminMobileNav reservationsEnabled={reservationsEnabled} />
       <main className="flex-1 p-6 md:p-8">{children}</main>
     </div>
   );

@@ -9,7 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 // página com state interno (view: 'menu' | 'reservation'). Aqui, como o
 // projeto usa rotas reais (/cardapio e /reservas), a view é detectada pela
 // URL - não precisa passar prop nem duplicar state.
-export function MenuHeader() {
+export function MenuHeader({ showReserve = true }: { showReserve?: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
   const isReservationView = pathname?.startsWith("/reservas");
@@ -43,7 +43,7 @@ export function MenuHeader() {
           className="h-[60px] w-auto"
         />
 
-        {!isReservationView ? (
+        {!isReservationView && showReserve ? (
           <Link
             href="/reservas"
             className="rounded-full bg-dark-wine px-3.5 py-2 font-sans text-[13px] font-semibold text-floral-white"

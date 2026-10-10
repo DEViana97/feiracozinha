@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getRestaurantInfo, getIdentitySlides } from "@/lib/queries";
+import { areReservationsEnabled, getRestaurantInfo, getIdentitySlides } from "@/lib/queries";
 import { LandingHero } from "@/components/public/landing/hero";
 import { LandingManifesto } from "@/components/public/landing/manifesto";
 import { LandingMotivation } from "@/components/public/landing/motivation";
@@ -21,11 +21,15 @@ export const metadata: Metadata = {
 };
 
 export default async function LandingPage() {
-  const [info, slides] = await Promise.all([getRestaurantInfo(), getIdentitySlides()]);
+  const [info, slides, reservationsEnabled] = await Promise.all([
+    getRestaurantInfo(),
+    getIdentitySlides(),
+    areReservationsEnabled(),
+  ]);
 
   return (
     <div className="bg-floral-white font-sans text-[#3B2A26]">
-      <LandingHero />
+      <LandingHero reservationsEnabled={reservationsEnabled} />
       <LandingManifesto />
       <LandingMotivation />
       <LandingIdentityCarousel
@@ -35,11 +39,17 @@ export default async function LandingPage() {
       <LandingValues />
       <LandingVision />
       <LandingEnvironment />
-      <LandingReservationCta />
+      {reservationsEnabled && <LandingReservationCta />}
       <LandingLocation
-        info={{ address: info.address, phone: info.phone, instagram: info.instagram }}
+        info={{
+          address: info.address,
+          mapsUrl: (info as { mapsUrl?: string | null }).mapsUrl || null,
+          phone: info.phone,
+          instagram: info.instagram,
+        }}
       />
       <MenuFooter
+        video={{ src: "/videos/footer-bg.mp4", poster: "/videos/footer-bg.jpg" }}
         info={{
           name: info.name,
           tagline: info.tagline,
