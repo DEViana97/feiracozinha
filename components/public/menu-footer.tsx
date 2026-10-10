@@ -1,3 +1,5 @@
+import { BackgroundVideo } from "@/components/public/linktree/background-video";
+
 export type MenuFooterInfo = {
   name: string;
   tagline: string;
@@ -25,18 +27,12 @@ export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: Menu
     <footer className="relative overflow-hidden bg-espresso px-[22px] py-[26px] pt-[30px] text-floral-white">
       {video ? (
         <>
-          <video
-            aria-hidden
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster={video.poster}
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_72%]"
-          >
-            <source src={video.src} type="video/mp4" />
-          </video>
+          {/* O mesmo vídeo duas vezes: o BackgroundVideo faz a dissolução entre as
+              cópias, então o fim do loop não dá salto. */}
+          <BackgroundVideo
+            clips={[video, video]}
+            className="pointer-events-none h-full w-full object-cover object-[center_72%]"
+          />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-[#3a100c]/75 via-[#3a100c]/65 to-[#3a100c]/85" />
         </>
       ) : (

@@ -53,7 +53,7 @@ export function BackgroundVideo({
     <>
       {clips.map((clip, i) => (
         <video
-          key={clip.src}
+          key={`${clip.src}-${i}`}
           ref={(el) => {
             refs.current[i] = el;
           }}
