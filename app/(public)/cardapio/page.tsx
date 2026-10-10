@@ -86,13 +86,8 @@ export default async function CardapioPage({
 
           <section className="relative overflow-hidden px-6 pb-[30px] pt-9">
             <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: "url('/images/cobogo-cream.jpg')",
-                backgroundSize: "140px auto",
-                backgroundRepeat: "repeat",
-                backgroundPosition: "center",
-              }}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: "url('/images/cobogo-cream.jpg')" }}
             />
             <div className="relative">
               <h1 className="m-0 font-serif text-[30px] font-medium leading-tight text-espresso">
