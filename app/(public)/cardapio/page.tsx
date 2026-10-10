@@ -1,4 +1,9 @@
-import { getCategoriesWithItems, getIdentitySlides, getRestaurantInfo } from "@/lib/queries";
+import {
+  areReservationsEnabled,
+  getCategoriesWithItems,
+  getIdentitySlides,
+  getRestaurantInfo,
+} from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { MenuHeader } from "@/components/public/menu-header";
 import { IdentityCarousel } from "@/components/public/identity-carousel";
@@ -19,11 +24,20 @@ export default async function CardapioPage({
   searchParams: Promise<{ categoria?: string }>;
 }) {
   const { categoria } = await searchParams;
-  const [categories, slides, restaurantInfo] = await Promise.all([
+  const [categories, slides, restaurantInfo, reservationsEnabled] = await Promise.all([
     getCategoriesWithItems(),
     getIdentitySlides(),
     getRestaurantInfo(),
+    areReservationsEnabled(),
   ]);
+
+  // O grupo "Para acompanhar" (cadastrado como subcategoria de Entradas) é
+  // fixo: aparece também em Pratos Principais, sem duplicar o item no banco.
+  const SIDE_GROUP = "Para acompanhar";
+  const SIDE_GROUP_CATEGORIES = ["entradas", "pratos-principais"];
+  const sideSource = categories.find((c) => c.subcategories.some((s) => s.name === SIDE_GROUP));
+  const sideSub = sideSource?.subcategories.find((s) => s.name === SIDE_GROUP);
+  const sideItems = sideSource?.menuItems.filter((i) => i.subcategoryId === sideSub?.id) ?? [];
 
   // Cada categoria vira uma aba; dentro dela os itens são agrupados pela
   // subcategoria (na ordem cadastrada). Itens sem subcategoria vêm primeiro.
@@ -46,6 +60,13 @@ export default async function CardapioPage({
         const items = c.menuItems.filter((i) => i.subcategoryId === sub.id);
         if (items.length > 0) groups.push({ title: sub.name, items: items.map(toRow) });
       }
+      if (
+        SIDE_GROUP_CATEGORIES.includes(c.slug) &&
+        sideItems.length > 0 &&
+        !groups.some((g) => g.title === SIDE_GROUP)
+      ) {
+        groups.push({ title: SIDE_GROUP, items: sideItems.map(toRow) });
+      }
 
       return {
         key: c.slug,
@@ -61,7 +82,7 @@ export default async function CardapioPage({
     <div className="flex min-h-screen justify-center bg-[#EDE4D6] font-sans">
       <div className="relative min-h-screen w-full max-w-[480px] bg-floral-white shadow-[0_0_40px_rgba(0,0,0,0.08)]">
         <FontZoomProvider>
-          <MenuHeader />
+          <MenuHeader showReserve={reservationsEnabled} />
 
           <section className="relative overflow-hidden px-6 pb-[30px] pt-9">
             <div
