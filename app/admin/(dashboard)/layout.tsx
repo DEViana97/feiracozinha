@@ -2,6 +2,10 @@ import { AdminNav } from "@/components/admin/admin-nav";
 import { AdminMobileNav } from "@/components/admin/admin-mobile-nav";
 import { areReservationsEnabled } from "@/lib/queries";
 
+// O layout consulta o banco: sem isso, páginas estáticas do painel (ex.: tags) tentam
+// acessar o banco durante o build.
+export const dynamic = "force-dynamic";
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const reservationsEnabled = await areReservationsEnabled();
   return (
