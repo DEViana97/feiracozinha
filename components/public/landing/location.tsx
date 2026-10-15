@@ -1,8 +1,8 @@
-import { buildWhatsappUrl, buildInstagramUrl } from "@/components/public/menu-footer";
+import { buildInstagramUrl } from "@/components/public/menu-footer";
 
 // TODO: horário de funcionamento - não existe campo no RestaurantInfo hoje,
 // confirmar com o Fernando e cadastrar em /admin/settings (ou adicionar o
-// campo ao model) quando definido. Endereço/WhatsApp/Instagram já vêm do
+// campo ao model) quando definido. Endereço/Instagram já vêm do
 // banco (mesmos dados usados no rodapé do cardápio).
 const HOURS = [
   "Quarta a sexta, 12h às 15h e 17h às 22h",
@@ -47,16 +47,6 @@ export function LandingLocation({ info }: { info: LandingLocationInfo }) {
           ))}
         </div>
         <div className="flex flex-col gap-1.5 text-[14.5px]">
-          {info.phone && (
-            <a
-              href={buildWhatsappUrl(info.phone)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-dark-wine"
-            >
-              WhatsApp {info.phone}
-            </a>
-          )}
           {info.instagram && (
             <a
               href={buildInstagramUrl(info.instagram)}

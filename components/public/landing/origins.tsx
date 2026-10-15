@@ -1,6 +1,10 @@
+import Image from "next/image";
+
 const ORIGINS = [
   {
     key: "serra",
+    image: "/images/ilustracao-serra.png",
+    imageAlt: "Desenho de ervas da serra",
     name: "Da Serra",
     color: "#54573D",
     story:
@@ -8,6 +12,8 @@ const ORIGINS = [
   },
   {
     key: "sertao",
+    image: "/images/ilustracao-sertao.png",
+    imageAlt: "Desenho de macaxeiras do sertão",
     name: "Do Sertão",
     color: "#51433B",
     story:
@@ -15,6 +21,8 @@ const ORIGINS = [
   },
   {
     key: "mar",
+    image: "/images/ilustracao-mar.png",
+    imageAlt: "Desenho de um peixe do mar",
     name: "Do Mar",
     color: "#3B4F54",
     story:
@@ -34,33 +42,43 @@ export function LandingOrigins() {
         As inspirações
       </h2>
       <p className="mx-auto mb-14 max-w-[520px] text-center text-[15px] text-taupe">
-        Mar, serra e sertão não são categorias de cardápio: são territórios
-        que atravessam a cozinha da Feira.
+        Mar, serra e sertão não são categorias de cardápio: são territórios que
+        atravessam a cozinha da Feira.
       </p>
 
       <div className="flex flex-col gap-14">
         {ORIGINS.map((origin) => (
           <div
             key={origin.key}
-            className="border-l-[3px] pl-7"
+            className="flex flex-col gap-6 border-l-[3px] pl-7 sm:flex-row sm:items-center sm:justify-between sm:gap-10"
             style={{ borderColor: origin.color }}
           >
-            <h3
-              className="m-0 mb-3 font-serif text-2xl font-medium"
-              style={{ color: origin.color }}
-            >
-              {origin.name}
-            </h3>
-            <p className="mb-3.5 max-w-[680px] text-[15px] leading-[1.85] text-taupe">
-              {origin.story}
-            </p>
-            <a
-              href="/cardapio"
-              className="text-[13px] font-semibold opacity-85"
-              style={{ color: origin.color }}
-            >
-              Ver no cardápio →
-            </a>
+            <div className="min-w-0">
+              <h3
+                className="m-0 mb-3 font-serif text-2xl font-medium"
+                style={{ color: origin.color }}
+              >
+                {origin.name}
+              </h3>
+              <p className="mb-3.5 max-w-[680px] text-[15px] leading-[1.85] text-taupe">
+                {origin.story}
+              </p>
+              <a
+                href="/cardapio"
+                className="text-[13px] font-semibold opacity-85"
+                style={{ color: origin.color }}
+              >
+                Ver no cardápio →
+              </a>
+            </div>
+            <Image
+              src={origin.image}
+              alt={origin.imageAlt}
+              width={600}
+              height={600}
+              sizes="(max-width: 640px) 160px, 220px"
+              className="h-auto w-[160px] shrink-0 sm:w-[220px]"
+            />
           </div>
         ))}
       </div>

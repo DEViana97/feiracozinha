@@ -6,12 +6,10 @@ export function LandingHero({ reservationsEnabled = true }: { reservationsEnable
   return (
     <section className="relative overflow-hidden bg-dark-wine px-8 pb-[100px] pt-[110px] text-center">
       <PhotoStrip />
-      {/* Escurece a foto para o texto claro continuar legível */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#3a100c]/75 via-[#3a100c]/65 to-[#3a100c]/80" />
       <div className="relative mx-auto max-w-[680px]">
         <h1 className="m-0 mb-8 flex justify-center">
           <Image
-            src="/images/logo-feira-branco.svg"
+            src="/images/logo-feira-branco-cobogo.svg"
             alt="Feira, Cozinha e Mesa"
             width={676}
             height={434}

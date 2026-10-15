@@ -7,7 +7,8 @@ import { LandingIdentityCarousel } from "@/components/public/landing/identity-ca
 import { LandingOrigins } from "@/components/public/landing/origins";
 import { LandingValues } from "@/components/public/landing/values";
 import { LandingVision } from "@/components/public/landing/vision";
-import { LandingEnvironment } from "@/components/public/landing/environment";
+// Seção do ambiente temporariamente desativada: descomentar o import e o uso abaixo.
+// import { LandingEnvironment } from "@/components/public/landing/environment";
 import { LandingReservationCta } from "@/components/public/landing/reservation-cta";
 import { LandingLocation } from "@/components/public/landing/location";
 import { MenuFooter } from "@/components/public/menu-footer";
@@ -38,7 +39,7 @@ export default async function LandingPage() {
       <LandingOrigins />
       <LandingValues />
       <LandingVision />
-      <LandingEnvironment />
+      {/* <LandingEnvironment /> */}
       {reservationsEnabled && <LandingReservationCta />}
       <LandingLocation
         info={{
