@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { areReservationsEnabled } from "@/lib/queries";
+import { areReservationsEnabled, getRestaurantInfo } from "@/lib/queries";
 import { MenuHeader } from "@/components/public/menu-header";
 import { CancelReservationButton } from "@/components/public/cancel-reservation-button";
 import { getReservationByToken } from "@/lib/actions/reservation";
@@ -14,6 +14,12 @@ export default async function CancelarReservaPage({
 }) {
   if (!(await areReservationsEnabled())) notFound();
   const { token } = await params;
+  const info = await getRestaurantInfo();
+  const instagram = info.instagram
+    ? info.instagram.startsWith("@")
+      ? info.instagram
+      : `@${info.instagram}`
+    : null;
   const reservation = await getReservationByToken(token);
 
   const dateLabel = reservation
@@ -35,7 +41,7 @@ export default async function CancelarReservaPage({
                 Reserva não encontrada
               </h1>
               <p className="mb-6 text-[13.5px] leading-relaxed text-taupe">
-                Confira se o link está completo ou fale com a gente pelo WhatsApp.
+                Confira se o link está completo{instagram ? ` ou fale com a gente pelo Instagram ${instagram}` : ""}.
               </p>
             </>
           ) : (

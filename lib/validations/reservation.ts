@@ -28,7 +28,7 @@ export const reservationSchema = z.object({
   contact: z
     .string()
     .trim()
-    .refine((v) => v.replace(/\D/g, "").length >= 10, "Informe um WhatsApp válido com DDD"),
+    .refine((v) => v.replace(/\D/g, "").length >= 10, "Informe um telefone válido com DDD"),
 });
 export type ReservationInput = z.infer<typeof reservationSchema>;
 

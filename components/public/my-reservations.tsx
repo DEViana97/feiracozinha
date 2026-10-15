@@ -45,7 +45,7 @@ export function MyReservations() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (form.name.trim().length < 2 || form.contact.replace(/\D/g, "").length < 10) {
-      setError("Informe seu nome e um WhatsApp válido com DDD.");
+      setError("Informe seu nome e um telefone válido com DDD.");
       return;
     }
     search(form);
@@ -55,7 +55,7 @@ export function MyReservations() {
     <div className="px-[22px] pb-10 pt-[26px]">
       <h1 className="m-0 mb-1.5 font-serif text-[26px] text-espresso">Minhas reservas</h1>
       <p className="mb-6 text-[13.5px] leading-relaxed text-taupe">
-        Informe o nome e o WhatsApp usados na reserva para ver e gerenciar suas mesas, em
+        Informe o nome e o telefone usados na reserva para ver e gerenciar suas mesas, em
         qualquer aparelho.
       </p>
 
@@ -71,7 +71,7 @@ export function MyReservations() {
           />
         </div>
         <div>
-          <label className={labelClass}>WhatsApp</label>
+          <label className={labelClass}>Telefone</label>
           <input
             type="tel"
             placeholder="(85) 99999-0000"
@@ -133,7 +133,7 @@ export function MyReservations() {
 
       {rows && rows.length === 0 && (
         <p className="text-[13.5px] leading-relaxed text-taupe">
-          Não encontramos reservas com esse nome e WhatsApp. Confira os dados, usando o mesmo
+          Não encontramos reservas com esse nome e telefone. Confira os dados, usando o mesmo
           nome e número da reserva.
         </p>
       )}

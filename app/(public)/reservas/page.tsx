@@ -1,15 +1,13 @@
 import { notFound } from "next/navigation";
-import { areReservationsEnabled, getRestaurantInfo } from "@/lib/queries";
+import { areReservationsEnabled } from "@/lib/queries";
 import { MenuHeader } from "@/components/public/menu-header";
 import { ReservationForm } from "@/components/public/reservation-form";
-import { buildWhatsappUrl } from "@/components/public/menu-footer";
 import { restaurantNow } from "@/lib/reservation-availability";
 
 export const dynamic = "force-dynamic";
 
 export default async function ReservasPage() {
   if (!(await areReservationsEnabled())) notFound();
-  const info = await getRestaurantInfo();
   const now = restaurantNow();
   return (
     <div className="flex min-h-screen justify-center bg-[#EDE4D6] font-sans">
@@ -18,7 +16,6 @@ export default async function ReservasPage() {
         <ReservationForm
           today={now.date}
           nowTime={now.time}
-          whatsappUrl={info.phone ? buildWhatsappUrl(info.phone) : null}
         />
       </div>
     </div>

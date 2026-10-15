@@ -63,12 +63,10 @@ function Step({
 export function ReservationForm({
   today,
   nowTime,
-  whatsappUrl,
 }: {
   // "YYYY-MM-DD" e "HH:mm" no fuso do restaurante (o servidor entrega; o do navegador pode diferir).
   today: string;
   nowTime: string;
-  whatsappUrl: string | null;
 }) {
   const [ty, tm] = today.split("-").map(Number);
   const [view, setView] = useState({ y: ty, m: tm - 1 });
@@ -140,7 +138,7 @@ export function ReservationForm({
         : name.trim().length < 2
           ? "Informe seu nome"
           : !contactOk
-            ? "Informe seu WhatsApp"
+            ? "Informe seu telefone"
             : isPending
               ? "Reservando..."
               : "Confirmar reserva";
@@ -322,19 +320,6 @@ export function ReservationForm({
               <Plus className="size-5" />
             </button>
           </div>
-          {whatsappUrl && (
-            <p className="m-0 mt-3.5 text-center text-[12.5px] text-taupe">
-              Grupo acima de {MAX_PEOPLE} pessoas?{" "}
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-dark-wine underline underline-offset-2"
-              >
-                Fale com a gente
-              </a>
-            </p>
-          )}
         </Step>
 
         <Step n={4} title="Ambiente" done={!!selectedEnv}>
@@ -392,7 +377,7 @@ export function ReservationForm({
             />
           </label>
           <label className="mt-3.5 block font-sans text-xs font-semibold uppercase tracking-[1px] text-iron-grey">
-            Contato (WhatsApp)
+            Telefone para contato
             <input
               type="tel"
               placeholder="(85) 99999-0000"

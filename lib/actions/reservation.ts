@@ -225,7 +225,7 @@ export async function cancelReservationByToken(
 
 export type MyReservation = PublicReservation & { token: string };
 
-// Acha as reservas de um cliente por WhatsApp + nome. Exige os dois: o WhatsApp
+// Acha as reservas de um cliente por telefone + nome. Exige os dois: o telefone
 // filtra no banco (contactKey) e o nome confirma, para não listar reservas de
 // quem só adivinhou um número.
 export async function findMyReservations(input: {

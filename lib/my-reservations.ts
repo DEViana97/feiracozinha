@@ -2,8 +2,8 @@
 
 import { useSyncExternalStore } from "react";
 
-// Só o nome/WhatsApp usados na última reserva ficam no aparelho, para preencher
-// formulários. As reservas em si são buscadas no servidor por nome + WhatsApp.
+// Só o nome/telefone usados na última reserva ficam no aparelho, para preencher
+// formulários. As reservas em si são buscadas no servidor por nome + telefone.
 const CONTACT_KEY = "feira:contact";
 const EVENT = "feira:storage";
 

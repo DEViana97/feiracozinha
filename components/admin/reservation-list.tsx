@@ -141,7 +141,7 @@ export function ReservationList({ reservations }: { reservations: Reservation[] 
           </h3>
           {rows.map((r) => {
             const digits = r.contact.replace(/\D/g, "");
-            const wa = `https://wa.me/${digits.startsWith("55") ? digits : `55${digits}`}`;
+            const tel = `tel:+${digits.startsWith("55") ? digits : `55${digits}`}`;
             return (
               <div
                 key={r.id}
@@ -161,7 +161,7 @@ export function ReservationList({ reservations }: { reservations: Reservation[] 
                   <p className="text-sm text-muted-foreground">
                     {r.environment.name} · mesa de {r.tableSeats} ·{" "}
                     <a
-                      href={wa}
+                      href={tel}
                       target="_blank"
                       rel="noreferrer"
                       className="underline underline-offset-2"
