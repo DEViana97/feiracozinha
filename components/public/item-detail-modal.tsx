@@ -47,16 +47,16 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
       </DialogTrigger>
       <DialogContent
         showCloseButton={false}
-        className="max-w-[420px] gap-0 overflow-hidden rounded-2xl border-0 p-0 ring-0 sm:max-w-[420px]"
+        className="max-w-[560px] gap-0 overflow-hidden rounded-2xl border-0 p-0 ring-0 sm:max-w-[560px]"
       >
         <DialogTitle className="sr-only">{item.name}</DialogTitle>
-        <div className="relative aspect-[4/3] w-full bg-taupe/20">
+        <div className="relative aspect-[4/5] max-h-[88dvh] w-full bg-taupe/20">
           {item.imageUrl && (
             <Image
               src={item.imageUrl}
               alt={item.name}
               fill
-              sizes="420px"
+              sizes="(max-width: 640px) 92vw, 560px"
               className="object-cover"
             />
           )}

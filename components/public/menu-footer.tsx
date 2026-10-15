@@ -8,12 +8,6 @@ export type MenuFooterInfo = {
   instagram: string | null;
 };
 
-export function buildWhatsappUrl(phone: string) {
-  const digits = phone.replace(/\D/g, "");
-  const withCountryCode = digits.startsWith("55") ? digits : `55${digits}`;
-  return `https://wa.me/${withCountryCode}`;
-}
-
 export function buildInstagramUrl(instagram: string) {
   return `https://instagram.com/${instagram.replace("@", "")}`;
 }
@@ -39,10 +33,14 @@ export function MenuFooter({
       }`}
     >
       {light ? (
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/cobogo-cream.jpg')" }}
-        />
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/cobogo-cream.jpg')" }}
+          />
+          {/* Véu claro por cima, o mesmo da primeira seção: cobogó mais suave. */}
+          <div aria-hidden className="absolute inset-0 bg-floral-white/45" />
+        </>
       ) : video ? (
         <>
           {/* O mesmo vídeo duas vezes: o BackgroundVideo faz a dissolução entre as
@@ -87,16 +85,6 @@ export function MenuFooter({
         )}
 
         <div className="flex flex-col gap-1.5 text-[12.5px]">
-          {info.phone && (
-            <a
-              href={buildWhatsappUrl(info.phone)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={light ? "text-espresso" : "text-[#F1DFC9]"}
-            >
-              WhatsApp {info.phone}
-            </a>
-          )}
           {info.instagram && (
             <a
               href={buildInstagramUrl(info.instagram)}

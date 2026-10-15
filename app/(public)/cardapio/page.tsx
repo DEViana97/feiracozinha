@@ -89,6 +89,8 @@ export default async function CardapioPage({
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: "url('/images/cobogo-cream.jpg')" }}
             />
+            {/* Véu claro por cima: deixa o cobogó mais suave. */}
+            <div aria-hidden className="absolute inset-0 bg-floral-white/45" />
             <div className="relative">
               <h1 className="m-0 font-serif text-[30px] font-medium leading-tight text-espresso">
                 Cozinha, mesa e território cearense.
