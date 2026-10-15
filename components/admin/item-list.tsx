@@ -25,7 +25,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { formatPrice } from "@/lib/format";
+import { formatPriceExact } from "@/lib/format";
 import { deleteMenuItem, toggleMenuItemActive } from "@/lib/actions/item";
 
 type Item = {
@@ -150,7 +150,7 @@ export function ItemList({
               <p className="truncate font-medium">{item.name}</p>
               <p className="text-xs text-muted-foreground">{item.category.name}</p>
             </div>
-            <span className="shrink-0 text-sm text-primary">{formatPrice(item.basePrice)}</span>
+            <span className="shrink-0 text-sm text-primary">{formatPriceExact(item.basePrice)}</span>
             <Switch
               checked={item.active}
               onCheckedChange={(checked) => handleToggle(item.id, checked)}
