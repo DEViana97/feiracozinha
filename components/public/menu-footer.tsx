@@ -22,10 +22,28 @@ export type MenuFooterVideo = { src: string; poster: string };
 
 // `video` (opcional): usa um vídeo mudo em loop como fundo, com camada escura
 // por cima para o texto claro continuar legível. Sem ele, usa o cobogó.
-export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: MenuFooterVideo }) {
+// `light`: cobogó claro com texto escuro, igual à primeira seção do cardápio.
+export function MenuFooter({
+  info,
+  video,
+  light,
+}: {
+  info: MenuFooterInfo;
+  video?: MenuFooterVideo;
+  light?: boolean;
+}) {
   return (
-    <footer className="relative overflow-hidden bg-espresso px-[22px] py-[26px] pt-[30px] text-floral-white">
-      {video ? (
+    <footer
+      className={`relative overflow-hidden px-[22px] py-[26px] pt-[30px] ${
+        light ? "bg-floral-white text-espresso" : "bg-espresso text-floral-white"
+      }`}
+    >
+      {light ? (
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/cobogo-cream.jpg')" }}
+        />
+      ) : video ? (
         <>
           {/* O mesmo vídeo duas vezes: o BackgroundVideo faz a dissolução entre as
               cópias, então o fim do loop não dá salto. */}
@@ -45,7 +63,7 @@ export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: Menu
         <div className="mb-4 flex items-center gap-2">
           <span
             aria-hidden
-            className="inline-block h-5 w-[11px] bg-floral-white"
+            className={`inline-block h-5 w-[11px] ${light ? "bg-espresso" : "bg-floral-white"}`}
             style={{
               WebkitMaskImage: "url('/images/cobogo-mark.png')",
               maskImage: "url('/images/cobogo-mark.png')",
@@ -63,7 +81,7 @@ export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: Menu
         </div>
 
         {info.address && (
-          <p className="mb-3.5 text-[12.5px] leading-relaxed text-[#E9D9C6]">
+          <p className={`mb-3.5 text-[12.5px] leading-relaxed ${light ? "text-espresso" : "text-[#E9D9C6]"}`}>
             {info.address}
           </p>
         )}
@@ -74,7 +92,7 @@ export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: Menu
               href={buildWhatsappUrl(info.phone)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#F1DFC9]"
+              className={light ? "text-espresso" : "text-[#F1DFC9]"}
             >
               WhatsApp {info.phone}
             </a>
@@ -84,14 +102,14 @@ export function MenuFooter({ info, video }: { info: MenuFooterInfo; video?: Menu
               href={buildInstagramUrl(info.instagram)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#F1DFC9]"
+              className={light ? "text-espresso" : "text-[#F1DFC9]"}
             >
               {info.instagram}
             </a>
           )}
         </div>
 
-        <p className="mt-5 text-[10.5px] uppercase tracking-[1.5px] text-[#D9C3AB]">
+        <p className={`mt-5 text-[10.5px] uppercase tracking-[1.5px] ${light ? "text-dark-wine" : "text-[#D9C3AB]"}`}>
           {info.tagline}
         </p>
       </div>

@@ -110,6 +110,7 @@ export default async function CardapioPage({
           <MenuView categories={menuCategories} initialCategory={categoria} />
 
           <MenuFooter
+            light
             info={{
               name: restaurantInfo.name,
               tagline: restaurantInfo.tagline,
