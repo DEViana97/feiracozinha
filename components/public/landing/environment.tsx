@@ -8,7 +8,7 @@ import { useState } from "react";
 const PHOTOS = [
   { id: "fachada", src: "/images/feira-fachada.jpg", alt: "Fachada do Feira, com cobogó vermelho e o letreiro", position: "center 45%" },
   { id: "salao", src: "/images/feira-mesas.jpg", alt: "Salão com cadeiras e janelas de vidro para o verde", position: "center 55%" },
-  { id: "cozinha-aberta", src: "/images/feira-parede.jpg", alt: "Parede verde com janela para a cozinha", position: "center" },
+  { id: "cozinha-aberta", src: "/images/feira-parede.jpg", alt: "Parede verde com janela para a cozinha", position: "center 22%" },
 ];
 
 function EnvironmentPhoto({
