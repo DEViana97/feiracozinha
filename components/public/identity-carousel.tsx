@@ -39,8 +39,6 @@ export function IdentityCarousel({ slides }: { slides: IdentitySlideData[] }) {
 
   return (
     <section className="relative py-4 pb-[22px]">
-      <CobogoDivider className="mb-3.5" />
-
       <div className="overflow-hidden px-5" ref={emblaRef}>
         <div className="flex gap-3.5">
           {slides.map((slide, i) => (
@@ -87,23 +85,6 @@ export function IdentityCarousel({ slides }: { slides: IdentitySlideData[] }) {
           />
         ))}
       </div>
-
-      <CobogoDivider className="mt-3.5" />
     </section>
-  );
-}
-
-function CobogoDivider({ className }: { className?: string }) {
-  return (
-    <div className={`relative h-3.5 overflow-hidden ${className ?? ""}`}>
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/images/cobogo-cream.jpg')",
-          backgroundSize: "140px auto",
-          backgroundRepeat: "repeat",
-        }}
-      />
-    </div>
   );
 }

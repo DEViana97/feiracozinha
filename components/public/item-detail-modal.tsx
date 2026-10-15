@@ -25,8 +25,9 @@ type ItemDetailModalProps = {
 };
 
 // Modal de detalhe do item, aberto ao tocar no card/linha do cardápio -
-// foto grande no topo, botão de fechar sobreposto (seta pra baixo, como
-// referência de mercado), nome/preço/descrição num painel escuro embaixo.
+// só a foto grande, com botão de fechar sobreposto (seta pra baixo, como
+// referência de mercado). Item sem foto continua mostrando nome/preço/descrição
+// num painel escuro, para o modal não abrir vazio.
 export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
   const scrollYRef = useRef(0);
 
@@ -48,6 +49,7 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
         showCloseButton={false}
         className="max-w-[420px] gap-0 overflow-hidden rounded-2xl border-0 p-0 ring-0 sm:max-w-[420px]"
       >
+        <DialogTitle className="sr-only">{item.name}</DialogTitle>
         <div className="relative aspect-[4/3] w-full bg-taupe/20">
           {item.imageUrl && (
             <Image
@@ -66,37 +68,39 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
           </DialogClose>
         </div>
 
-        <div className="relative overflow-hidden bg-espresso px-5 py-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: "url('/images/cobogo-wine.jpg')",
-              backgroundSize: "140px auto",
-              backgroundRepeat: "repeat",
-              backgroundPosition: "center",
-            }}
-          />
-          <div className="relative">
-            <div className="flex items-start justify-between gap-3">
-              <DialogTitle className="m-0 font-serif text-lg font-medium leading-tight text-floral-white">
-                {item.name}
-              </DialogTitle>
-              {item.isNew && (
-                <span className="mt-0.5 shrink-0 rounded-full bg-copperwood px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[1px] text-floral-white">
-                  Novidade
-                </span>
+        {!item.imageUrl && (
+          <div className="relative overflow-hidden bg-espresso px-5 py-5">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: "url('/images/cobogo-wine.jpg')",
+                backgroundSize: "140px auto",
+                backgroundRepeat: "repeat",
+                backgroundPosition: "center",
+              }}
+            />
+            <div className="relative">
+              <div className="flex items-start justify-between gap-3">
+                <p className="m-0 font-serif text-lg font-medium leading-tight text-floral-white">
+                  {item.name}
+                </p>
+                {item.isNew && (
+                  <span className="mt-0.5 shrink-0 rounded-full bg-copperwood px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[1px] text-floral-white">
+                    Novidade
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 font-sans text-[15px] font-semibold text-[#E3A94A]">
+                {item.price}
+              </p>
+              {item.description && (
+                <p className="mt-3 text-[13.5px] leading-relaxed text-[#F1DFC9]">
+                  {item.description}
+                </p>
               )}
             </div>
-            <p className="mt-1 font-sans text-[15px] font-semibold text-[#E3A94A]">
-              {item.price}
-            </p>
-            {item.description && (
-              <p className="mt-3 text-[13.5px] leading-relaxed text-[#F1DFC9]">
-                {item.description}
-              </p>
-            )}
           </div>
-        </div>
+        )}
       </DialogContent>
     </Dialog>
   );
