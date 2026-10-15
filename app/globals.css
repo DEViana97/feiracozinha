@@ -149,8 +149,9 @@
   }
 }
 
-/* Hero da landing: faixa de fotos deslizando para a direita (ver landing/hero.tsx) */
-@keyframes hero-pan {
+/* Fundo da primeira seção e da seção de reserva: faixa de fotos deslizando para a
+   direita, uma após a outra (ver landing/photo-strip.tsx). A cada 45s passa 1 volta. */
+@keyframes photo-strip {
   from {
     transform: translateX(-25%);
   }
@@ -158,14 +159,14 @@
     transform: translateX(0);
   }
 }
-.hero-pan {
-  animation: hero-pan 30s linear infinite;
+.photo-strip {
+  animation: photo-strip 45s linear infinite;
   will-change: transform;
 }
 /* Quem pede "reduzir movimento" no sistema vê o mesmo deslize, só bem mais lento. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-pan {
-    animation-duration: 120s;
+  .photo-strip {
+    animation-duration: 180s;
   }
 }
 
