@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { MotivationSlideshow } from "@/components/public/landing/motivation-slideshow";
 
 export function LandingMotivation() {
   return (
@@ -22,16 +22,7 @@ export function LandingMotivation() {
         </p>
       </div>
 
-      <div className="relative mx-auto aspect-4/3 w-full max-w-105 overflow-hidden rounded-[10px]">
-        <Image
-          src="/images/feira-why.jpg"
-          alt="Ingredientes cearenses usados na cozinha da Feira"
-          fill
-          sizes="(max-width: 768px) 100vw, 420px"
-          priority
-          className="object-cover"
-        />
-      </div>
+      <MotivationSlideshow />
     </section>
   );
 }
