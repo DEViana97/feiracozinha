@@ -38,17 +38,36 @@ export function hasStarted(date: string, time: string, now = new Date()) {
   return `${date} ${time}` <= `${n.date} ${n.time}`;
 }
 
-// Funcionamento (terça a domingo, 12h às 23h; ver landing/location.tsx). Dias seguem o
-// JavaScript (0 = domingo). A última reserva sai às 21h para a mesa de 2h caber no dia.
-export const OPEN_DAYS = [0, 2, 3, 4, 5, 6];
-export const RESERVATION_TIMES = Array.from({ length: 19 }, (_, i) => {
-  const minutes = 12 * 60 + i * 30;
-  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${minutes % 60 === 0 ? "00" : "30"}`;
-});
+// Funcionamento (ver landing/location.tsx). Dias seguem o JavaScript (0 = domingo);
+// segunda e terça fechado. Cada dia tem faixas [abre, fecha] em "HH:mm".
+export const OPENING_HOURS: Record<number, [string, string][]> = {
+  0: [["12:00", "22:00"]],
+  3: [["12:00", "15:00"], ["17:00", "22:00"]],
+  4: [["12:00", "15:00"], ["17:00", "22:00"]],
+  5: [["12:00", "15:00"], ["17:00", "22:00"]],
+  6: [["12:00", "22:00"]],
+};
+
+function formatMinutes(total: number) {
+  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${total % 60 === 0 ? "00" : "30"}`;
+}
+
+// Horários de reserva de uma data "YYYY-MM-DD": de 30 em 30 minutos, do horário em que
+// abre até 2h antes de fechar (a mesa fica ocupada por RESERVATION_DURATION_MIN).
+export function reservationTimesFor(date: string) {
+  const [y, m, d] = date.split("-").map(Number);
+  const ranges = OPENING_HOURS[new Date(y, m - 1, d).getDay()] ?? [];
+  return ranges.flatMap(([open, close]) => {
+    const times: string[] = [];
+    for (let t = toMinutes(open); t <= toMinutes(close) - RESERVATION_DURATION_MIN; t += 30) {
+      times.push(formatMinutes(t));
+    }
+    return times;
+  });
+}
 
 export function isOpenDate(date: string) {
-  const [y, m, d] = date.split("-").map(Number);
-  return OPEN_DAYS.includes(new Date(y, m - 1, d).getDay());
+  return reservationTimesFor(date).length > 0;
 }
 
 type Group = { seats: number; quantity: number };

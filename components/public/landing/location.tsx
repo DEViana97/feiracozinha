@@ -4,7 +4,11 @@ import { buildWhatsappUrl, buildInstagramUrl } from "@/components/public/menu-fo
 // confirmar com o Fernando e cadastrar em /admin/settings (ou adicionar o
 // campo ao model) quando definido. Endereço/WhatsApp/Instagram já vêm do
 // banco (mesmos dados usados no rodapé do cardápio).
-const HOURS = "Terça a domingo, 12h às 23h";
+const HOURS = [
+  "Quarta a sexta, 12h às 15h e 17h às 22h",
+  "Sábado e domingo, 12h às 22h",
+  "Segunda e terça, fechado",
+];
 
 export type LandingLocationInfo = {
   address: string | null;
@@ -35,7 +39,13 @@ export function LandingLocation({ info }: { info: LandingLocationInfo }) {
             Abrir no Google Maps
           </a>
         )}
-        <p className="mb-5 text-[14.5px] leading-[1.7] text-taupe">{HOURS}</p>
+        <div className="mb-5 text-[14.5px] leading-[1.7] text-taupe">
+          {HOURS.map((line) => (
+            <p key={line} className="m-0">
+              {line}
+            </p>
+          ))}
+        </div>
         <div className="flex flex-col gap-1.5 text-[14.5px]">
           {info.phone && (
             <a

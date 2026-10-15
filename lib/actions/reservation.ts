@@ -11,10 +11,9 @@ import {
   type ReservationInput,
 } from "@/lib/validations/reservation";
 import {
-  RESERVATION_TIMES,
   hasStarted,
-  isOpenDate,
   pickTable,
+  reservationTimesFor,
 } from "@/lib/reservation-availability";
 import { contactKey, namesMatch } from "@/lib/contact-key";
 import { areReservationsEnabled } from "@/lib/queries";
@@ -274,7 +273,7 @@ export async function createReservation(
   const data = parsed.data;
 
   // Só dias e horários em que o restaurante recebe reservas, e que ainda não passaram.
-  if (!isOpenDate(data.date) || !RESERVATION_TIMES.includes(data.time)) {
+  if (!reservationTimesFor(data.date).includes(data.time)) {
     return { ok: false, error: "Esse dia ou horário não está disponível para reservas." };
   }
   if (hasStarted(data.date, data.time)) {

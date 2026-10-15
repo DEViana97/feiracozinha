@@ -9,7 +9,7 @@ import {
   type EnvironmentAvailability,
 } from "@/lib/actions/reservation";
 import { saveContact, useSavedContact } from "@/lib/my-reservations";
-import { RESERVATION_TIMES, isOpenDate } from "@/lib/reservation-availability";
+import { isOpenDate, reservationTimesFor } from "@/lib/reservation-availability";
 
 const MAX_PEOPLE = 20;
 const MONTHS = [
@@ -263,7 +263,7 @@ export function ReservationForm({
               );
             })}
           </div>
-          <p className="m-0 mt-3 text-[12px] text-taupe">Aberto de terça a domingo.</p>
+          <p className="m-0 mt-3 text-[12px] text-taupe">Fechado às segundas e terças.</p>
         </Step>
 
         <Step n={2} title="Horário" done={!!time}>
@@ -273,7 +273,7 @@ export function ReservationForm({
             </p>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {RESERVATION_TIMES.map((t) => {
+              {reservationTimesFor(date).map((t) => {
                 const past = date === today && t <= nowTime;
                 return (
                   <button
