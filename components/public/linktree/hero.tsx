@@ -1,14 +1,14 @@
 import Image from "next/image";
 
 // Cabeçalho estilo "perfil": espaço livre no topo do cartão, com a foto de fundo
-// aparecendo, e a marca (logo vermelho, sem fundo) na base.
+// aparecendo, e a marca (logo em creme, sem fundo) na base.
 export function LinktreeHero() {
   return (
     <section className="pb-0 text-center">
       <div className="relative h-[230px]">
-        {/* Logo vermelho (o mesmo do cardápio), sem fundo, direto sobre a foto. */}
+        {/* Logo em creme (#F1DFC9, o tom do texto claro do site), sem fundo, direto sobre a foto. */}
         <Image
-          src="/images/logo-feira-vermelho.svg"
+          src="/images/logo-feira-creme.svg"
           alt="Feira, Cozinha e Mesa"
           width={676}
           height={434}

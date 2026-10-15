@@ -61,18 +61,13 @@ function IconContact({ className }: { className?: string }) {
   );
 }
 
-function buildWhatsappUrl(phone: string) {
-  const digits = phone.replace(/\D/g, "");
-  const withCountryCode = digits.startsWith("55") ? digits : `55${digits}`;
-  return `https://wa.me/${withCountryCode}`;
-}
-
 function buildLinks(
   address: string | null,
-  phone: string | null,
   reservationsEnabled: boolean,
-  mapsUrl?: string | null
+  mapsUrl?: string | null,
+  instagram?: string | null
 ): LinktreeLink[] {
+  const handle = instagram ? (instagram.startsWith("@") ? instagram : `@${instagram}`) : null;
   const links: LinktreeLink[] = [
     {
       title: "Ver cardápio",
@@ -103,29 +98,33 @@ function buildLinks(
       icon: IconLocation,
       external: true,
     },
-    {
-      title: "Fale conosco",
-      subtitle: phone ? `WhatsApp ${phone}` : "WhatsApp e Instagram",
-      href: phone ? buildWhatsappUrl(phone) : "https://wa.me/55SUBSTITUIR_NUMERO",
-      icon: IconContact,
-      external: true,
-    },
+    ...(handle
+      ? [
+          {
+            title: "Fale conosco",
+            subtitle: `Instagram ${handle}`,
+            href: `https://instagram.com/${handle.replace("@", "")}`,
+            icon: IconContact,
+            external: true,
+          },
+        ]
+      : []),
   ];
   return reservationsEnabled ? links : links.filter((l) => l.href !== "/reservas");
 }
 
 export function LinktreeLinkList({
   address,
-  phone,
   reservationsEnabled = true,
   mapsUrl,
+  instagram,
 }: {
   address: string | null;
-  phone: string | null;
   reservationsEnabled?: boolean;
   mapsUrl?: string | null;
+  instagram?: string | null;
 }) {
-  const links = buildLinks(address, phone, reservationsEnabled, mapsUrl);
+  const links = buildLinks(address, reservationsEnabled, mapsUrl, instagram);
 
   return (
     <section className="flex flex-col gap-3 px-5 pb-[26px] pt-[26px]">
@@ -137,7 +136,7 @@ export function LinktreeLinkList({
             href={link.href}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            className="flex items-center gap-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] px-4 py-3 text-white transition-colors hover:bg-white/[0.12]"
+            className="flex items-center gap-3.5 rounded-xl border border-white/[0.26] bg-white/[0.22] px-4 py-3 text-white transition-colors hover:bg-white/[0.3]"
           >
             <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center text-white">
               <Icon />

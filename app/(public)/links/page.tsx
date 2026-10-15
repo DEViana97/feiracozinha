@@ -55,7 +55,7 @@ export default async function LinktreePage() {
             <LinktreeHero />
             <LinktreeLinkList
               address={info.address}
-              phone={info.phone}
+              instagram={info.instagram}
               reservationsEnabled={reservationsEnabled}
               mapsUrl={(info as { mapsUrl?: string | null }).mapsUrl || null}
             />
