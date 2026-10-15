@@ -4,10 +4,11 @@ import Image from "next/image";
 import { ImageOff } from "lucide-react";
 import { useState } from "react";
 
+// A fachada vem primeiro (célula grande): numa célula pequena, a foto vertical ficaria ampliada demais.
 const PHOTOS = [
-  { id: "salao", src: "/images/ambiente-1.jpg", alt: "Salão do restaurante" },
-  { id: "cozinha-aberta", src: "/images/ambiente-3.jpg", alt: "Bancada e cozinha aberta" },
-  { id: "mesa-posta", src: "/images/ambiente-2.jpg", alt: "Mesa posta" },
+  { id: "fachada", src: "/images/feira-fachada.jpg", alt: "Fachada do Feira, com cobogó vermelho e o letreiro", position: "center 45%" },
+  { id: "salao", src: "/images/feira-mesas.jpg", alt: "Salão com cadeiras e janelas de vidro para o verde", position: "center 55%" },
+  { id: "cozinha-aberta", src: "/images/feira-parede.jpg", alt: "Parede verde com janela para a cozinha", position: "center" },
 ];
 
 function EnvironmentPhoto({
@@ -17,6 +18,7 @@ function EnvironmentPhoto({
   onError,
   className,
   sizes,
+  position,
 }: {
   src: string;
   alt: string;
@@ -24,6 +26,7 @@ function EnvironmentPhoto({
   onError: () => void;
   className: string;
   sizes: string;
+  position?: string;
 }) {
   return (
     <div className={`relative overflow-hidden rounded-[10px] bg-taupe/20 ${className}`}>
@@ -32,7 +35,15 @@ function EnvironmentPhoto({
           <ImageOff className="size-7 text-taupe/50" />
         </div>
       ) : (
-        <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" onError={onError} />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          className="object-cover"
+          style={{ objectPosition: position }}
+          onError={onError}
+        />
       )}
     </div>
   );
@@ -43,7 +54,7 @@ export function LandingEnvironment() {
 
   return (
     <section id="ambiente" className="mx-auto max-w-[1100px] px-8 pb-[110px]">
-      <div className="grid h-[480px] grid-cols-[1.4fr_1fr] grid-rows-2 gap-4">
+      <div className="grid h-[580px] grid-cols-[1.4fr_1fr] grid-rows-[1.35fr_1fr] gap-4">
         <EnvironmentPhoto
           key={PHOTOS[0].id}
           {...PHOTOS[0]}
