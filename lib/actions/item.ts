@@ -113,3 +113,22 @@ export async function toggleMenuItemActive(id: string, active: boolean) {
   revalidatePath("/cardapio");
   revalidatePath("/admin/items");
 }
+
+// Reordena os itens de UMA categoria: `orderedIds` na ordem em que devem aparecer no
+// cardápio (o campo `order` é por categoria).
+export async function reorderMenuItems(orderedIds: string[]) {
+  await requireAuth();
+  if (orderedIds.length === 0) return;
+  const found = await prisma.menuItem.findMany({
+    where: { id: { in: orderedIds } },
+    select: { categoryId: true },
+  });
+  if (found.length !== orderedIds.length || new Set(found.map((i) => i.categoryId)).size > 1) {
+    throw new Error("Os itens precisam ser da mesma categoria.");
+  }
+  await prisma.$transaction(
+    orderedIds.map((id, index) => prisma.menuItem.update({ where: { id }, data: { order: index } }))
+  );
+  revalidatePath("/cardapio");
+  revalidatePath("/admin/items");
+}

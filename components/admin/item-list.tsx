@@ -4,6 +4,19 @@ import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +39,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { formatPriceExact } from "@/lib/format";
-import { deleteMenuItem, toggleMenuItemActive } from "@/lib/actions/item";
+import { SortableItem } from "@/components/admin/sortable-item";
+import {
+  deleteMenuItem,
+  reorderMenuItems,
+  toggleMenuItemActive,
+} from "@/lib/actions/item";
 
 type Item = {
   id: string;
@@ -41,12 +59,19 @@ type Item = {
 const ALL_CATEGORIES = "__all__";
 
 export function ItemList({
-  items,
+  items: serverItems,
   categories,
 }: {
   items: Item[];
   categories: { id: string; name: string }[];
 }) {
+  const [items, setItems] = useState(serverItems);
+  // Ressincroniza quando o servidor manda dados novos (sem useEffect).
+  const [prevServerItems, setPrevServerItems] = useState(serverItems);
+  if (prevServerItems !== serverItems) {
+    setPrevServerItems(serverItems);
+    setItems(serverItems);
+  }
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState(ALL_CATEGORIES);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -58,10 +83,38 @@ export function ItemList({
         ? item.name.toLowerCase().includes(query.toLowerCase())
         : true;
       const matchesCategory =
-        categoryFilter === ALL_CATEGORIES || item.category.id === categoryFilter;
+        categoryFilter === ALL_CATEGORIES ||
+        item.category.id === categoryFilter;
       return matchesQuery && matchesCategory;
     });
   }, [items, query, categoryFilter]);
+
+  // Arrastar só faz sentido dentro de uma categoria (a ordem é por categoria) e sem busca,
+  // senão a lista na tela não é a ordem real do cardápio.
+  const canReorder = categoryFilter !== ALL_CATEGORIES && !query;
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = filtered.findIndex((i) => i.id === active.id);
+    const newIndex = filtered.findIndex((i) => i.id === over.id);
+    const reordered = arrayMove(filtered, oldIndex, newIndex);
+    setItems([
+      ...items.filter((i) => i.category.id !== categoryFilter),
+      ...reordered,
+    ]);
+    startTransition(async () => {
+      try {
+        await reorderMenuItems(reordered.map((i) => i.id));
+      } catch {
+        toast.error("Não foi possível salvar a nova ordem.");
+        setItems(serverItems);
+      }
+    });
+  }
 
   function handleToggle(id: string, active: boolean) {
     startTransition(async () => {
@@ -86,6 +139,52 @@ export function ItemList({
         setDeletingId(null);
       }
     });
+  }
+
+  function renderRow(item: Item) {
+    return (
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <div className="relative size-12 shrink-0 overflow-hidden rounded-md bg-muted">
+          {item.imageUrl && (
+            <Image
+              src={item.imageUrl}
+              alt={item.name}
+              fill
+              sizes="48px"
+              className="object-cover"
+            />
+          )}
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-medium">{item.name}</p>
+          <p className="text-xs text-muted-foreground">{item.category.name}</p>
+        </div>
+        <span className="shrink-0 text-sm text-primary">
+          {formatPriceExact(item.basePrice)}
+        </span>
+        <Switch
+          checked={item.active}
+          onCheckedChange={(checked) => handleToggle(item.id, checked)}
+        />
+        <Button
+          size="icon-sm"
+          variant="ghost"
+          nativeButton={false}
+          render={
+            <Link href={`/admin/items/${item.id}/edit`}>
+              <Pencil className="size-3.5" />
+            </Link>
+          }
+        />
+        <Button
+          size="icon-sm"
+          variant="ghost"
+          onClick={() => setDeletingId(item.id)}
+        >
+          <Trash2 className="size-3.5" />
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -135,41 +234,41 @@ export function ItemList({
         />
       </div>
 
+      {!canReorder && (
+        <p className="text-xs text-muted-foreground">
+          Para mudar a ordem no cardápio, escolha uma categoria e arraste pelo
+          ícone à esquerda.
+        </p>
+      )}
+
       <div className="space-y-2">
-        {filtered.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center gap-3 rounded-lg border border-border bg-card p-2.5"
+        {canReorder ? (
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
           >
-            <div className="relative size-12 shrink-0 overflow-hidden rounded-md bg-muted">
-              {item.imageUrl && (
-                <Image src={item.imageUrl} alt={item.name} fill sizes="48px" className="object-cover" />
-              )}
+            <SortableContext
+              items={filtered.map((i) => i.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {filtered.map((item) => (
+                <SortableItem key={item.id} id={item.id} className="p-2.5 pl-0">
+                  {renderRow(item)}
+                </SortableItem>
+              ))}
+            </SortableContext>
+          </DndContext>
+        ) : (
+          filtered.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center gap-3 rounded-lg border border-border bg-card p-2.5"
+            >
+              {renderRow(item)}
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-medium">{item.name}</p>
-              <p className="text-xs text-muted-foreground">{item.category.name}</p>
-            </div>
-            <span className="shrink-0 text-sm text-primary">{formatPriceExact(item.basePrice)}</span>
-            <Switch
-              checked={item.active}
-              onCheckedChange={(checked) => handleToggle(item.id, checked)}
-            />
-            <Button
-              size="icon-sm"
-              variant="ghost"
-              nativeButton={false}
-              render={
-                <Link href={`/admin/items/${item.id}/edit`}>
-                  <Pencil className="size-3.5" />
-                </Link>
-              }
-            />
-            <Button size="icon-sm" variant="ghost" onClick={() => setDeletingId(item.id)}>
-              <Trash2 className="size-3.5" />
-            </Button>
-          </div>
-        ))}
+          ))
+        )}
         {filtered.length === 0 && (
           <p className="py-8 text-center text-sm text-muted-foreground">
             Nenhum item encontrado.
@@ -177,7 +276,10 @@ export function ItemList({
         )}
       </div>
 
-      <AlertDialog open={!!deletingId} onOpenChange={(o) => !o && setDeletingId(null)}>
+      <AlertDialog
+        open={!!deletingId}
+        onOpenChange={(o) => !o && setDeletingId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Excluir item?</AlertDialogTitle>
@@ -187,7 +289,9 @@ export function ItemList({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Excluir</AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>
+              Excluir
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
