@@ -17,8 +17,9 @@ export function overlaps(a: string, b: string) {
 // então "agora" precisa ser convertido para comparar com date/time das reservas.
 const RESTAURANT_TZ = "America/Fortaleza";
 
-export function hasStarted(date: string, time: string, now = new Date()) {
-  const parts = new Intl.DateTimeFormat("sv-SE", {
+// "Agora" no fuso do restaurante: { date: "YYYY-MM-DD", time: "HH:mm" }.
+export function restaurantNow(now = new Date()) {
+  const [date, time] = new Intl.DateTimeFormat("sv-SE", {
     timeZone: RESTAURANT_TZ,
     year: "numeric",
     month: "2-digit",
@@ -26,8 +27,28 @@ export function hasStarted(date: string, time: string, now = new Date()) {
     hour: "2-digit",
     minute: "2-digit",
     hourCycle: "h23",
-  }).format(now); // "YYYY-MM-DD HH:mm"
-  return `${date} ${time}` <= parts;
+  })
+    .format(now)
+    .split(" ");
+  return { date, time };
+}
+
+export function hasStarted(date: string, time: string, now = new Date()) {
+  const n = restaurantNow(now);
+  return `${date} ${time}` <= `${n.date} ${n.time}`;
+}
+
+// Funcionamento (terça a domingo, 12h às 23h; ver landing/location.tsx). Dias seguem o
+// JavaScript (0 = domingo). A última reserva sai às 21h para a mesa de 2h caber no dia.
+export const OPEN_DAYS = [0, 2, 3, 4, 5, 6];
+export const RESERVATION_TIMES = Array.from({ length: 19 }, (_, i) => {
+  const minutes = 12 * 60 + i * 30;
+  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${minutes % 60 === 0 ? "00" : "30"}`;
+});
+
+export function isOpenDate(date: string) {
+  const [y, m, d] = date.split("-").map(Number);
+  return OPEN_DAYS.includes(new Date(y, m - 1, d).getDay());
 }
 
 type Group = { seats: number; quantity: number };

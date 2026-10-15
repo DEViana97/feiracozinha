@@ -10,7 +10,12 @@ import {
   type EnvironmentInput,
   type ReservationInput,
 } from "@/lib/validations/reservation";
-import { hasStarted, pickTable } from "@/lib/reservation-availability";
+import {
+  RESERVATION_TIMES,
+  hasStarted,
+  isOpenDate,
+  pickTable,
+} from "@/lib/reservation-availability";
 import { contactKey, namesMatch } from "@/lib/contact-key";
 import { areReservationsEnabled } from "@/lib/queries";
 import { escapeHtml, sendTelegramMessage } from "@/lib/telegram";
@@ -267,6 +272,14 @@ export async function createReservation(
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Dados inválidos." };
   }
   const data = parsed.data;
+
+  // Só dias e horários em que o restaurante recebe reservas, e que ainda não passaram.
+  if (!isOpenDate(data.date) || !RESERVATION_TIMES.includes(data.time)) {
+    return { ok: false, error: "Esse dia ou horário não está disponível para reservas." };
+  }
+  if (hasStarted(data.date, data.time)) {
+    return { ok: false, error: "Esse horário já passou. Escolha outro." };
+  }
 
   const result = await prisma
     .$transaction(
