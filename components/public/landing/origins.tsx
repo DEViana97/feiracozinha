@@ -8,7 +8,7 @@ const ORIGINS = [
     name: "Da Serra",
     color: "#54573D",
     story:
-      "Na Ibiapaba e no maciço de Baturité, o clima ameno sustenta hortaliças, queijos e frutas que raramente chegam à mesa fina, tratados como fundo, não como protagonistas. A Feira trabalha direto com pequenos produtores dessas serras, trazendo o queijo coalho, o inhame e as folhas frescas para o centro do prato, na estação e no tempo certos.",
+      "Na Ibiapaba e no maciço de Baturité, o clima ameno sustenta hortaliças, queijos e frutas que raramente chegam à mesa fina, tratados como fundo, não como protagonistas. O Feira trabalha direto com pequenos produtores dessas serras, trazendo o queijo coalho, o inhame e as folhas frescas para o centro do prato, na estação e no tempo certos.",
   },
   {
     key: "sertao",
@@ -17,7 +17,7 @@ const ORIGINS = [
     name: "Do Sertão",
     color: "#51433B",
     story:
-      "O sertão ensinou o Ceará a conservar: a carne de sol, a rapadura, o feijão de corda são respostas a um clima difícil, não modismo. Cozinhar com esses ingredientes na Feira é reconhecer um saber que atravessa gerações e servi-lo com a mesma dignidade de qualquer outra tradição culinária do mundo.",
+      "O sertão ensinou o Ceará a conservar: a carne de sol, a rapadura, o feijão de corda são respostas a um clima difícil, não modismo. Cozinhar com esses ingredientes no Feira é reconhecer um saber que atravessa gerações e servi-lo com a mesma dignidade de qualquer outra tradição culinária do mundo.",
   },
   {
     key: "mar",
@@ -26,7 +26,7 @@ const ORIGINS = [
     name: "Do Mar",
     color: "#3B4F54",
     story:
-      "A costa cearense sustenta comunidades de pescadores há séculos. O peixe do dia, o camarão, a lagosta chegam à Feira pelas mãos de quem conhece a maré, não de intermediários. É um mar de trabalho, não de cenário.",
+      "A costa cearense sustenta comunidades de pescadores há séculos. O peixe do dia, o camarão, a lagosta chegam ao Feira pelas mãos de quem conhece a maré, não de intermediários. É um mar de trabalho, não de cenário.",
   },
 ];
 
@@ -43,7 +43,7 @@ export function LandingOrigins() {
       </h2>
       <p className="mx-auto mb-14 max-w-[520px] text-center text-[15px] text-taupe">
         Mar, serra e sertão não são categorias de cardápio: são territórios que
-        atravessam a cozinha da Feira.
+        atravessam a cozinha do Feira.
       </p>
 
       <div className="flex flex-col gap-14">
