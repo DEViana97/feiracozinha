@@ -26,10 +26,11 @@ type ItemDetailModalProps = {
 
 // Modal de detalhe do item, aberto ao tocar no card/linha do cardápio -
 // só a foto grande, com botão de fechar sobreposto (seta pra baixo, como
-// referência de mercado). Item sem foto continua mostrando nome/preço/descrição
-// num painel escuro, para o modal não abrir vazio.
+// referência de mercado). Item sem foto não abre nada: renderiza só o card, sem clique.
 export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
   const scrollYRef = useRef(0);
+
+  if (!item.imageUrl) return <div className="block w-full text-left">{children}</div>;
 
   return (
     <Dialog
@@ -51,15 +52,13 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
       >
         <DialogTitle className="sr-only">{item.name}</DialogTitle>
         <div className="relative aspect-[4/5] max-h-[88dvh] w-full bg-taupe/20">
-          {item.imageUrl && (
-            <Image
-              src={item.imageUrl}
-              alt={item.name}
-              fill
-              sizes="(max-width: 640px) 92vw, 560px"
-              className="object-cover"
-            />
-          )}
+          <Image
+            src={item.imageUrl}
+            alt={item.name}
+            fill
+            sizes="(max-width: 640px) 92vw, 560px"
+            className="object-cover"
+          />
           <DialogClose
             aria-label="Fechar"
             className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/45 text-floral-white backdrop-blur-sm"
@@ -67,40 +66,6 @@ export function ItemDetailModal({ item, children }: ItemDetailModalProps) {
             <ChevronDown className="size-4" />
           </DialogClose>
         </div>
-
-        {!item.imageUrl && (
-          <div className="relative overflow-hidden bg-espresso px-5 py-5">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: "url('/images/cobogo-wine.jpg')",
-                backgroundSize: "140px auto",
-                backgroundRepeat: "repeat",
-                backgroundPosition: "center",
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-start justify-between gap-3">
-                <p className="m-0 font-serif text-lg font-medium leading-tight text-floral-white">
-                  {item.name}
-                </p>
-                {item.isNew && (
-                  <span className="mt-0.5 shrink-0 rounded-full bg-copperwood px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[1px] text-floral-white">
-                    Novidade
-                  </span>
-                )}
-              </div>
-              <p className="mt-1 font-sans text-[15px] font-semibold text-[#E3A94A]">
-                {item.price}
-              </p>
-              {item.description && (
-                <p className="mt-3 text-[13.5px] leading-relaxed text-[#F1DFC9]">
-                  {item.description}
-                </p>
-              )}
-            </div>
-          </div>
-        )}
       </DialogContent>
     </Dialog>
   );
