@@ -14,12 +14,6 @@ export function LandingMotivation() {
           Por isso, o ingrediente ocupa o centro da nossa cozinha. É a partir dele que pensamos os pratos, construímos combinações e criamos experiências que transitam entre o familiar e o inesperado.
           O Feira existe para valorizar o que é nosso.
         </p>
-        <p className="m-0 text-[15.5px] leading-[1.85] text-taupe">
-          Não precisam. A Feira parte do Ceará como território alimentar,
-          não como tema, não como decoração. O que muda é a técnica, o
-          cuidado e o contexto em que esse ingrediente é servido. A origem
-          permanece intacta.
-        </p>
       </div>
 
       <MotivationSlideshow />
