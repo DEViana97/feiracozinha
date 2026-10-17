@@ -18,6 +18,7 @@ import {
 import { contactKey, namesMatch } from "@/lib/contact-key";
 import { areReservationsEnabled } from "@/lib/queries";
 import { escapeHtml, sendTelegramMessage } from "@/lib/telegram";
+import { sendWhatsappReservationConfirmation } from "@/lib/whatsapp";
 
 function revalidateAll() {
   revalidatePath("/reservas");
@@ -339,6 +340,15 @@ export async function createReservation(
       `<b>Ambiente:</b> ${escapeHtml(result.env.name)} (mesa de ${result.seats} lugares)`,
     ].join("\n")
   );
+
+  // Confirmação ao cliente pelo WhatsApp (não lança; se falhar, a reserva continua valendo).
+  await sendWhatsappReservationConfirmation({
+    name: data.name,
+    contact: data.contact,
+    date: dateBr,
+    time: data.time,
+    people: data.people,
+  });
 
   revalidateAll();
   return {
