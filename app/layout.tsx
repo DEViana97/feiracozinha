@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Faculty_Glyphic } from "next/font/google";
+import { SiteAnalytics } from "@/components/site-analytics";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
         <Toaster richColors position="top-center" />
+        <SiteAnalytics />
       </body>
     </html>
   );
