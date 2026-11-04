@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { restaurantNow } from "@/lib/reservation-availability";
 
 export async function getRestaurantInfo() {
   const info = await prisma.restaurantInfo.findFirst();
@@ -25,9 +26,19 @@ export async function areReservationsEnabled() {
   return (info as { reservationsEnabled?: boolean }).reservationsEnabled !== false;
 }
 
+// Almoço Executivo: só aparece de quarta a sexta, das 06h às 15h (fuso do restaurante).
+const LUNCH_SLUG = "almoco-executivo";
+
+export function isLunchOpen(now = new Date()) {
+  const { date, time } = restaurantNow(now);
+  const [y, m, d] = date.split("-").map(Number);
+  const weekday = new Date(y, m - 1, d).getDay();
+  return weekday >= 3 && weekday <= 5 && time >= "06:00" && time < "15:00";
+}
+
 export async function getCategoriesWithItems() {
   return prisma.category.findMany({
-    where: { active: true },
+    where: { active: true, ...(isLunchOpen() ? {} : { slug: { not: LUNCH_SLUG } }) },
     orderBy: { order: "asc" },
     include: {
       subcategories: {
@@ -71,7 +82,7 @@ export async function getFeaturedItems() {
 
 export async function getAllActiveItemsForSearch() {
   return prisma.menuItem.findMany({
-    where: { active: true },
+    where: { active: true, ...(isLunchOpen() ? {} : { category: { slug: { not: LUNCH_SLUG } } }) },
     orderBy: { order: "asc" },
     select: {
       id: true,
