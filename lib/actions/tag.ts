@@ -4,9 +4,11 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { requireAuth } from "@/lib/require-auth";
 import { tagSchema, type TagInput } from "@/lib/validations/tag";
 
 export async function createTag(input: TagInput) {
+  await requireAuth();
   const data = tagSchema.parse(input);
   await prisma.tag.create({ data });
   revalidatePath("/cardapio");
@@ -15,6 +17,7 @@ export async function createTag(input: TagInput) {
 }
 
 export async function updateTag(id: string, input: TagInput) {
+  await requireAuth();
   const data = tagSchema.parse(input);
   await prisma.tag.update({ where: { id }, data });
   revalidatePath("/cardapio");
@@ -23,6 +26,7 @@ export async function updateTag(id: string, input: TagInput) {
 }
 
 export async function deleteTag(id: string) {
+  await requireAuth();
   await prisma.tag.delete({ where: { id } });
   revalidatePath("/cardapio");
   revalidatePath("/admin/tags");
