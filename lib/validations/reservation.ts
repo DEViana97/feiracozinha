@@ -28,6 +28,7 @@ export const reservationSchema = z.object({
   contact: z
     .string()
     .trim()
+    .max(20, "Telefone muito longo")
     .refine((v) => v.replace(/\D/g, "").length >= 10, "Informe um telefone válido com DDD"),
 });
 export type ReservationInput = z.infer<typeof reservationSchema>;

@@ -14,8 +14,10 @@ import {
   hasStarted,
   pickTable,
   reservationTimesFor,
+  restaurantNow,
 } from "@/lib/reservation-availability";
 import { contactKey, namesMatch } from "@/lib/contact-key";
+import { rateLimited } from "@/lib/rate-limit";
 import { areReservationsEnabled } from "@/lib/queries";
 import { escapeHtml, sendTelegramMessage } from "@/lib/telegram";
 import { sendWhatsappReservationConfirmation } from "@/lib/whatsapp";
@@ -227,8 +229,8 @@ export async function cancelReservationByToken(
 export type MyReservation = PublicReservation & { token: string };
 
 // Acha as reservas de um cliente por telefone + nome. Exige os dois: o telefone
-// filtra no banco (contactKey) e o nome confirma, para não listar reservas de
-// quem só adivinhou um número.
+// filtra no banco (contactKey) e o nome (igual ao da reserva) confirma, para não listar
+// reservas de quem só adivinhou um número. Limitada por telefone (rateLimited).
 export async function findMyReservations(input: {
   name: string;
   contact: string;
@@ -237,6 +239,8 @@ export async function findMyReservations(input: {
   const name = String(input?.name ?? "").slice(0, 80);
   const key = contactKey(String(input?.contact ?? "").slice(0, 40));
   if (key.length < 10 || name.trim().length < 2) return [];
+  // Poucas tentativas por telefone: impede chutar nomes até acertar.
+  if (rateLimited(`minhas:${key}`, 5, 15 * 60_000)) return [];
 
   const found = await prisma.reservation.findMany({
     where: { contactKey: key },
@@ -281,6 +285,23 @@ export async function createReservation(
     return { ok: false, error: "Esse horário já passou. Escolha outro." };
   }
 
+  // Freio a abuso (a ação é pública): por telefone, no máximo 3 reservas futuras e 3 criadas
+  // na última hora.
+  const key = contactKey(data.contact);
+  const hourAgo = new Date(Date.now() - 60 * 60_000);
+  const [upcoming, lastHour] = await Promise.all([
+    prisma.reservation.count({
+      where: { contactKey: key, status: "CONFIRMED", date: { gte: restaurantNow().date } },
+    }),
+    prisma.reservation.count({ where: { contactKey: key, createdAt: { gte: hourAgo } } }),
+  ]);
+  if (upcoming >= 3 || lastHour >= 3) {
+    return {
+      ok: false,
+      error: "Esse telefone já tem reservas demais. Cancele uma ou fale com a gente.",
+    };
+  }
+
   const result = await prisma
     .$transaction(
       async (tx) => {
@@ -308,7 +329,7 @@ export async function createReservation(
             tableSeats: seats,
             name: data.name,
             contact: data.contact,
-            contactKey: contactKey(data.contact),
+            contactKey: key,
           },
         });
         return { ok: true as const, env, seats, cancelToken: created.cancelToken };
@@ -342,13 +363,18 @@ export async function createReservation(
   );
 
   // Confirmação ao cliente pelo WhatsApp (não lança; se falhar, a reserva continua valendo).
-  await sendWhatsappReservationConfirmation({
-    name: data.name,
-    contact: data.contact,
-    date: dateBr,
-    time: data.time,
-    people: data.people,
-  });
+  // O número não é verificado, então há teto global por hora: se alguém despejar reservas com
+  // telefones de terceiros, a reserva vale mas o WhatsApp (cobrado) para de sair.
+  const createdLastHour = await prisma.reservation.count({ where: { createdAt: { gte: hourAgo } } });
+  if (createdLastHour <= 20) {
+    await sendWhatsappReservationConfirmation({
+      name: data.name,
+      contact: data.contact,
+      date: dateBr,
+      time: data.time,
+      people: data.people,
+    });
+  }
 
   revalidateAll();
   return {

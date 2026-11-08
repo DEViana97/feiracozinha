@@ -18,10 +18,10 @@ export function normalizeName(name: string) {
     .trim();
 }
 
-// "Ana" bate com "Ana Souza" e vice-versa, ignorando acento e caixa.
+// Nome igual, ignorando acento, caixa e espaços repetidos. Tem de ser igualdade: com "contém",
+// um chute de 2 letras ("ar", "ma") casaria com quase qualquer nome.
 export function namesMatch(a: string, b: string) {
   const x = normalizeName(a);
   const y = normalizeName(b);
-  if (x.length < 2 || y.length < 2) return false;
-  return x === y || x.includes(y) || y.includes(x);
+  return x.length >= 2 && x === y;
 }
