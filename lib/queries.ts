@@ -36,9 +36,25 @@ export function isLunchOpen(now = new Date()) {
   return weekday >= 3 && weekday <= 5 && time >= "06:00" && time < "15:00";
 }
 
+// Happy Hour: aparece todos os dias, das 15h às 20h (fuso do restaurante).
+const HAPPY_HOUR_SLUG = "happy-hour";
+
+export function isHappyHourOpen(now = new Date()) {
+  const { time } = restaurantNow(now);
+  return time >= "15:00" && time < "20:00";
+}
+
+// Slugs de categorias que estão fora do horário agora e devem ser escondidos do público.
+function closedCategorySlugs(now = new Date()) {
+  const slugs: string[] = [];
+  if (!isLunchOpen(now)) slugs.push(LUNCH_SLUG);
+  if (!isHappyHourOpen(now)) slugs.push(HAPPY_HOUR_SLUG);
+  return slugs;
+}
+
 export async function getCategoriesWithItems() {
   return prisma.category.findMany({
-    where: { active: true, ...(isLunchOpen() ? {} : { slug: { not: LUNCH_SLUG } }) },
+    where: { active: true, slug: { notIn: closedCategorySlugs() } },
     orderBy: { order: "asc" },
     include: {
       subcategories: {
@@ -82,7 +98,7 @@ export async function getFeaturedItems() {
 
 export async function getAllActiveItemsForSearch() {
   return prisma.menuItem.findMany({
-    where: { active: true, ...(isLunchOpen() ? {} : { category: { slug: { not: LUNCH_SLUG } } }) },
+    where: { active: true, category: { slug: { notIn: closedCategorySlugs() } } },
     orderBy: { order: "asc" },
     select: {
       id: true,
