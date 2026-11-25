@@ -23,6 +23,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
+import { CategoryScheduleField } from "@/components/admin/category-schedule-field";
+import { parseAvailability } from "@/lib/category-schedule";
 import { categorySchema, type CategoryInput } from "@/lib/validations/category";
 import { createCategory, updateCategory } from "@/lib/actions/category";
 
@@ -31,6 +33,7 @@ type EditingCategory = {
   name: string;
   coverImageUrl: string | null;
   active: boolean;
+  availability: unknown;
 } | null;
 
 export function CategoryFormDialog({
@@ -46,7 +49,7 @@ export function CategoryFormDialog({
 
   const form = useForm<CategoryInput>({
     resolver: zodResolver(categorySchema),
-    defaultValues: { name: "", coverImageUrl: null, active: true },
+    defaultValues: { name: "", coverImageUrl: null, active: true, availability: [] },
   });
 
   useEffect(() => {
@@ -55,6 +58,7 @@ export function CategoryFormDialog({
         name: category?.name ?? "",
         coverImageUrl: category?.coverImageUrl ?? null,
         active: category?.active ?? true,
+        availability: parseAvailability(category?.availability),
       });
     }
   }, [open, category, form]);
@@ -105,6 +109,19 @@ export function CategoryFormDialog({
                   <FormLabel>Imagem de capa</FormLabel>
                   <FormControl>
                     <ImageUploadField value={field.value} onChange={field.onChange} aspect={3} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="availability"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quando aparece no cardápio</FormLabel>
+                  <FormControl>
+                    <CategoryScheduleField value={field.value ?? []} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

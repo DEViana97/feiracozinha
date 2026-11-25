@@ -39,6 +39,7 @@ import {
   reorderCategories,
   toggleCategoryActive,
 } from "@/lib/actions/category";
+import { describeAvailability } from "@/lib/category-schedule";
 import type { SerializedCategory } from "@/lib/types";
 
 type CategoryWithSub = SerializedCategory;
@@ -130,7 +131,7 @@ export function CategoryManager({ categories }: { categories: CategoryWithSub[] 
                     <p className="font-medium">{cat.name}</p>
                     <p className="text-xs text-muted-foreground">
                       {/* Subcategorias temporariamente desativado: {cat.subcategories.length} subcategoria(s) · */}
-                      {cat.menuItems.length} item(ns)
+                      {cat.menuItems.length} item(ns) · {describeAvailability(cat.availability)}
                     </p>
                   </div>
                   <Switch
@@ -185,6 +186,7 @@ export function CategoryManager({ categories }: { categories: CategoryWithSub[] 
                 name: editing.name,
                 coverImageUrl: editing.coverImageUrl,
                 active: editing.active,
+                availability: editing.availability,
               }
             : null
         }
