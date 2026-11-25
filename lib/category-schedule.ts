@@ -1,11 +1,16 @@
-// Quando uma categoria aparece no cardápio público. Sem janelas = sempre visível.
-// Dias seguem o JavaScript (0 = domingo); "start" entra e "end" não ("06:00" a "15:00" cobre
-// 06:00 até 14:59). Horário no fuso do restaurante. A janela fica dentro do mesmo dia.
+// Quando uma categoria aparece no cardápio público. Sem janelas = sempre visível (todos os dias,
+// o dia todo). Dias seguem o JavaScript (0 = domingo); "start" entra e "end" não ("06:00" a "15:00"
+// cobre 06:00 até 14:59). Horário no fuso do restaurante. A janela fica dentro do mesmo dia.
 import { restaurantNow } from "@/lib/reservation-availability";
 
 export type CategoryWindow = { days: number[]; start: string; end: string };
 
 const HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+// "O dia todo" de certos dias: 00:00 a 23:59 (o 23:59 conta como incluído).
+export const DAY_START = "00:00";
+export const DAY_END = "23:59";
+export const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6] as const;
 
 export const DAY_SHORT = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"] as const;
 // Semana começando na segunda, como no restaurante.
@@ -29,7 +34,9 @@ export function isCategoryOpen(value: unknown, now = new Date()) {
   const { date, time } = restaurantNow(now);
   const [y, m, d] = date.split("-").map(Number);
   const weekday = new Date(y, m - 1, d).getDay();
-  return windows.some((w) => w.days.includes(weekday) && time >= w.start && time < w.end);
+  return windows.some(
+    (w) => w.days.includes(weekday) && time >= w.start && (time < w.end || w.end === DAY_END)
+  );
 }
 
 const hour = (t: string) => {
@@ -62,6 +69,7 @@ export function describeAvailability(value: unknown) {
         );
         days = parts.join(", ");
       }
+      if (w.start === DAY_START && w.end === DAY_END) return `${days}, o dia todo`;
       return `${days} ${hour(w.start)}–${hour(w.end)}`;
     })
     .join(" · ");
