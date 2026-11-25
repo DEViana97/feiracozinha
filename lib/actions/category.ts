@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/require-auth";
 import { slugify } from "@/lib/slugify";
@@ -26,6 +27,11 @@ async function uniqueCategorySlug(name: string, excludeId?: string) {
   return slug;
 }
 
+// Sem janelas = sempre visível (nulo no banco).
+function availabilityValue(windows: CategoryInput["availability"]) {
+  return windows && windows.length > 0 ? windows : Prisma.DbNull;
+}
+
 export async function createCategory(input: CategoryInput) {
   await requireAuth();
   const data = categorySchema.parse(input);
@@ -38,6 +44,7 @@ export async function createCategory(input: CategoryInput) {
       slug,
       coverImageUrl: data.coverImageUrl ?? null,
       active: data.active,
+      availability: availabilityValue(data.availability),
       order: (maxOrder._max.order ?? -1) + 1,
     },
   });
@@ -62,6 +69,7 @@ export async function updateCategory(id: string, input: CategoryInput) {
       slug,
       coverImageUrl: data.coverImageUrl ?? null,
       active: data.active,
+      availability: availabilityValue(data.availability),
     },
   });
 

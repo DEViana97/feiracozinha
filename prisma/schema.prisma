@@ -27,6 +27,9 @@ model Category {
   coverImageUrl String?
   order         Int      @default(0)
   active        Boolean  @default(true)
+  // Quando aparece no cardápio público: [{ "days": [3,4,5], "start": "06:00", "end": "15:00" }]
+  // (0 = domingo; nulo ou vazio = sempre visível). Ver lib/category-schedule.ts.
+  availability  Json?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

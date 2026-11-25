@@ -44,6 +44,7 @@ export type SerializedCategory = {
   coverImageUrl: string | null;
   order: number;
   active: boolean;
+  availability: unknown;
   subcategories: { id: string; name: string; order: number }[];
   menuItems: SerializedMenuItem[];
 };
@@ -58,6 +59,7 @@ export function serializeCategories(
     coverImageUrl: cat.coverImageUrl,
     order: cat.order,
     active: cat.active,
+    availability: cat.availability,
     subcategories: cat.subcategories.map((s) => ({
       id: s.id,
       name: s.name,

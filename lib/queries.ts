@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { restaurantNow } from "@/lib/reservation-availability";
+import { isCategoryOpen } from "@/lib/category-schedule";
 
 export async function getRestaurantInfo() {
   const info = await prisma.restaurantInfo.findFirst();
@@ -26,35 +26,10 @@ export async function areReservationsEnabled() {
   return (info as { reservationsEnabled?: boolean }).reservationsEnabled !== false;
 }
 
-// Almoço Executivo: só aparece de quarta a sexta, das 06h às 15h (fuso do restaurante).
-const LUNCH_SLUG = "almoco-executivo";
-
-export function isLunchOpen(now = new Date()) {
-  const { date, time } = restaurantNow(now);
-  const [y, m, d] = date.split("-").map(Number);
-  const weekday = new Date(y, m - 1, d).getDay();
-  return weekday >= 3 && weekday <= 5 && time >= "06:00" && time < "15:00";
-}
-
-// Happy Hour: aparece todos os dias, das 15h às 20h (fuso do restaurante).
-const HAPPY_HOUR_SLUG = "happy-hour";
-
-export function isHappyHourOpen(now = new Date()) {
-  const { time } = restaurantNow(now);
-  return time >= "15:00" && time < "20:00";
-}
-
-// Slugs de categorias que estão fora do horário agora e devem ser escondidos do público.
-function closedCategorySlugs(now = new Date()) {
-  const slugs: string[] = [];
-  if (!isLunchOpen(now)) slugs.push(LUNCH_SLUG);
-  if (!isHappyHourOpen(now)) slugs.push(HAPPY_HOUR_SLUG);
-  return slugs;
-}
-
+// Categorias com janela de exibição (Happy Hour, Almoço Executivo...) só aparecem dentro dela.
 export async function getCategoriesWithItems() {
-  return prisma.category.findMany({
-    where: { active: true, slug: { notIn: closedCategorySlugs() } },
+  const categories = await prisma.category.findMany({
+    where: { active: true },
     orderBy: { order: "asc" },
     include: {
       subcategories: {
@@ -70,6 +45,8 @@ export async function getCategoriesWithItems() {
       },
     },
   });
+  const now = new Date();
+  return categories.filter((c) => isCategoryOpen(c.availability, now));
 }
 
 export async function getAllCategoriesForAdmin() {
@@ -97,8 +74,8 @@ export async function getFeaturedItems() {
 }
 
 export async function getAllActiveItemsForSearch() {
-  return prisma.menuItem.findMany({
-    where: { active: true, category: { slug: { notIn: closedCategorySlugs() } } },
+  const items = await prisma.menuItem.findMany({
+    where: { active: true },
     orderBy: { order: "asc" },
     select: {
       id: true,
@@ -107,9 +84,14 @@ export async function getAllActiveItemsForSearch() {
       description: true,
       basePrice: true,
       imageUrl: true,
-      category: { select: { name: true, slug: true } },
+      category: { select: { name: true, slug: true, availability: true } },
     },
   });
+  // Itens de categorias fora do horário não entram na busca.
+  const now = new Date();
+  return items
+    .filter((i) => isCategoryOpen(i.category.availability, now))
+    .map(({ category, ...item }) => ({ ...item, category: { name: category.name, slug: category.slug } }));
 }
 
 export async function getCategoriesForSelect() {
